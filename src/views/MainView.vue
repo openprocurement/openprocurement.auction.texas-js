@@ -75,9 +75,7 @@
           >
           </app-list-of-rounds-completed>
     </main>
-    <footer  
-    v-if="state !== 'completed'" 
-    class="footer-container">
+    <footer  v-if="state !== 'completed'" class="footer-container">
           <h4
         v-if="state == 'pendingOfRound'">
         Очікується початок раунду
@@ -97,6 +95,8 @@
        :rateArr="rateArr"
        >
          </app-increasing-and-approval>
+         <app-test-select>
+             </app-test-select>
     </footer>
 </div>
 </template>
@@ -106,105 +106,102 @@
 export default {
   props: {
     id: {
-      type: String
-    }
+      type: String,
+    },
   },
   data(){
     return {
-        state:'active',
-        hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
-        timeOut: false,
-        currentTime: '',
-        tenderNumber: 'UA-EA-2018-07-27-000020-B',
-        companyName: 'AT "УКРГАЗВИДОБУВАННЯ :UA-EA-2018-07-27-000020-B aasdasdasas',
-        descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
-        remainedTimeOfRound: 180,
-        dateOfAuction: {
-        date: Math.trunc(Date.parse("Wed Aug 28 2018 14:07:35 GMT+0200 (EET)") / 1000)
-        },
-        durationOfRound: 180,
-        stoppingTimeOfRound: 30,
-        startRate: 100.65,
-        currentRate: 100.85 ,
-        rateArr: [213213,6546546,2342343,234234,23423423,234,234,234,546],
-        round: 1,
-        roundArr: [],
+      state: 'active',
+      hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
+      timeOut: false,
+      currentTime: '',
+      tenderNumber: 'UA-EA-2018-07-27-000020-B',
+      companyName: 'AT "УКРГАЗВИДОБУВАННЯ :UA-EA-2018-07-27-000020-B aasdasdasas',
+      descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
+      remainedTimeOfRound: 180,
+      dateOfAuction: {
+        date: Math.trunc(Date.parse('Wed Aug 28 2018 14:07:35 GMT+0200 (EET)') / 1000),
+      },
+      durationOfRound: 180,
+      stoppingTimeOfRound: 30,
+      startRate: 100.65,
+      currentRate: 100.85,
+      rateArr: [213213, 6546546, 2342343, 234234, 23423423, 234, 234, 234, 546],
+      round: 1,
+      roundArr: [],
       statusMessage: {
         active: {
           type: 'active',
-        textStatus: `Раунд  `,
-        timeStatus: 'до закінчення раунду'
-       },
-       pendingOfAuction: {
-         type: 'pending-of-auction',
-        textStatus: 'Очікується',
-        timeStatus: 'до початку аукціону'
-       },
+          textStatus: 'Раунд  ',
+          timeStatus: 'до закінчення раунду',
+        },
+        pendingOfAuction: {
+          type: 'pending-of-auction',
+          textStatus: 'Очікується',
+          timeStatus: 'до початку аукціону',
+        },
 
         pendingOfRound: {
-         type: 'pending-of-round',
-        textStatus: 'Очікується',
-        timeStatus: 'до початку раунду'
-       },
-       
-       completed: {
-         type: 'completed',
-        textStatus: 'Завершений',
-        timeStatus: 'аукціон завершився'
-       },
+          type: 'pending-of-round',
+          textStatus: 'Очікується',
+          timeStatus: 'до початку раунду',
+        },
+        completed: {
+          type: 'completed',
+          textStatus: 'Завершений',
+          timeStatus: 'аукціон завершився',
+        },
 
         canceled: {
-         type: 'canceled',
-        textStatus: 'Скасований',
-        timeStatus: 'аукціон скасований'
-       },
- 
-      }
-    }
+          type: 'canceled',
+          textStatus: 'Скасований',
+          timeStatus: 'аукціон скасований',
+        },
+      },
+    };
   },
-  
   methods: {
-    addNewRate(rate){
-     this.currentRate = rate * 1.05;
-     this.rateArr.push(rate);
-     this.roundArr.push(this.round)
-     this.round ++;
-     this.dateOfAuction.date = this.currentTime + this.durationOfRound;
+    addNewRate(rate) {
+      this.currentRate = rate * 1.05;
+      this.rateArr.push(rate);
+      this.roundArr.push(this.round);
+      this.round++;
+      this.dateOfAuction.date = this.currentTime + this.durationOfRound;
     },
 
-    calculateCurrentRate(rate){
-     this.currentRate = rate * 1.05;
-     this.dateOfAuction.date = this.currentTime + this.durationOfRound;
+    calculateCurrentRate(rate) {
+      this.currentRate = rate * 1.05;
+      this.dateOfAuction.date = this.currentTime + this.durationOfRound;
     },
 
-    holdRoundTime(){
-     this.dateOfAuction.date = this.currentTime + this.stoppingTimeOfRound;
-     this.state = 'pendingOfRound';
+    holdRoundTime() {
+      this.dateOfAuction.date = this.currentTime + this.stoppingTimeOfRound;
+      this.state = 'pendingOfRound';
     },
 
-    checkTimeOut(res){
-     this.timeOut = res
-    if(res){
-       this.dateOfAuction.date = this.dateOfAuction.date + this.durationOfRound
-       this.state = "active"
-     }
+    checkTimeOut(res) {
+      this.timeOut = res;
+      if (res) {
+        this.dateOfAuction.date = this.dateOfAuction.date + this.durationOfRound;
+        this.state = 'active';
+      }
     },
-    getRemainedTimeofRound(remainedTime){
-      this.remainedTimeOfRound =  remainedTime;
+    getRemainedTimeofRound(remainedTime) {
+      this.remainedTimeOfRound = remainedTime;
     },
-    getCurrentTime(currentTime){
-      this.currentTime =  currentTime;
-    }
+    getCurrentTime(currentTime) {
+      this.currentTime = currentTime;
+    },
   },
     computed: {
-        changeStateFromUrl(){
-        this.state = this.id
-        }
+    changeStateFromUrl() {
+      this.state = this.id;
     },
+  },
 
-    mounted(){
-        window.scrollTo(0,document.body.scrollHeight);
-    }
+  mounted() {
+    window.scrollTo(0, document.body.scrollHeight);
+  },
 };
 </script>
 

@@ -12,10 +12,10 @@
 
 <script>
 export default {
-    props:['remainedTimeOfRound', 'durationOfRound', "state" ],
+props:['remainedTimeOfRound', 'durationOfRound', "state" ],
 
     computed: { 
-        progressStyles(){
+        progressStyles() {
             return {
                 width: (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)) + '%'
             }

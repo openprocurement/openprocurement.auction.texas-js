@@ -2,33 +2,37 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400|Roboto:100);
 
 <template>
-<div class="clock-container">
-    <h6 class="start-acrtin-remain-text"
-    
+<div class="clock-container-wrapper">
+    <div class="clock-container__burger-icon">
+        <img
+        src="/static/images/burger_icon.png"
+         alt="calendar-icon">
+    </div>
+    <div class="clock-container-wrapper_time">
+    <div class="clock-container__calendar-icon">
+        <img 
+        class="clock-container__calendar-icon_img" 
+        src="/static/images/calendar_icon.png"
+         alt="calendar-icon">
+    </div>
+    <div class="clock-container">
+    <h6 class="clock-container__status-time"
     >{{timeStatus}}</h6>
-<div class="clock">
-    <div class="block">
-        <p class="digit">{{ days }}</p>
-        <p class="text">Days</p>
-    </div>
-    <div class="block">
-        <p class="digit">{{ hours }}</p>
-        <p class="text">Hours</p>
-    </div>
-    <div class="block">
-        <p class="digit">{{ minutes }}</p>
-        <p class="text">Minutes</p>
-    </div>
-    <div class="block">
-        <p class="digit">{{ seconds }}</p>
-        <p class="text">Seconds
+<div class="clock-container__time">
+        <div class="digit" v-show="days !==0">{{ days }}дн</div>
+        <div class="digit" v-show="hours !==0">{{ hours }}год</div>
+        <div class="digit" v-show="minutes !==0">{{ minutes }}мін</div>
+        <div class="digit" v-show="seconds !==0">{{ seconds }}сек
             {{checkTimeOut}}
             {{getRemainedTimeofRound}}
             {{getCurrentTime}}
-        </p>
+        </div>
+</div>
+</div>
     </div>
+
 </div>
-</div>
+
 </template>
 
 <script>
@@ -54,26 +58,26 @@ export default {
         seconds() {
             return (this.date - this.now) % 60;
         },
-        minutes() {
+    minutes() {
             return Math.trunc((this.date - this.now) / 60) % 60;
         },
-        hours() {
+    hours() {
             return Math.trunc((this.date- this.now) / 60 / 60) % 24;
         },
-        days() {
+    days() {
             return Math.trunc((this.date - this.now) / 60 / 60 / 24);
         },
-        checkTimeOut() {
+    checkTimeOut() {
             ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
             (this.$emit('checkTimeOut', true))
             :
             ( this.$emit('checkTimeOut', false))
         },
-        getRemainedTimeofRound(){
+    getRemainedTimeofRound(){
             this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60))
         },
 
-        getCurrentTime(){
+    getCurrentTime(){
             this.$emit('getCurrentTime', this.now)
         }
     },
@@ -82,12 +86,9 @@ export default {
 </script>
 
 <style>
-.clock{
+.clock-container__time{
     display: flex;
-    width: 175px;
-    height: 35px;
-    background-color: aquamarine;
-    margin-left: 40px;
+    justify-content: space-between;
 }
 
 .clock-container{
@@ -95,31 +96,33 @@ export default {
     flex-direction: column;
 }
 
-.start-acrtin-remain-text{
-    width: 175px;
+.clock-container-wrapper{
     display: flex;
-    justify-content: flex-end;
+    width: 340px;
+    justify-content: space-around;
 }
 
-.block {
+.clock-container-wrapper_time{
     display: flex;
-    flex-direction: column;
+    width: 195px;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.text {
-    color: red;
-    font-size: 10px;
-    font-family: 'Roboto Condensed', serif;
-    text-align: center;
-    margin-right: 5px;
+.clock-container__burger-icon{
+    display: flex;
+    align-items: center;
+}
+
+.clock-container__calendar-icon{
+    display: flex;
+    align-self: center;
 }
 
 .digit {
-    color: black;
-    font-size: 10px;
-    font-weight: 10;
-    font-family: 'Roboto', serif;
-    margin: 2px;
-    text-align: center;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
 }
 </style>

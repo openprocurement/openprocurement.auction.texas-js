@@ -55,7 +55,7 @@ export default {
     },
 
   computed: {
-      checkSelected(){
+      checkSelected() {
           return {
                selected: null,
                options: [
@@ -66,23 +66,24 @@ export default {
       }
   },
     methods: {
-      addNewRateIncrease(){
+      addNewRateIncrease() {
         this.$emit('calculateCurrentRate', this.currentRate);
-        this.$emit('addNewRate',this.selected);
+        this.$emit('addNewRate', this.selected);
+        this.$emit('holdRoundTime');
         this.selected = null;
       },
 
-      addNewRateApprove(){
+      addNewRateApprove() {
         this.$emit('calculateCurrentRate', this.currentRate);
-        this.$emit('addNewRate',this.currentRate);
+        this.$emit('addNewRate', this.currentRate);
+        this.$emit('holdRoundTime');
         this.selected = null;
-      }
-    }
-}
+    },
+  },
+};
 </script>
 
 <style>
-
 .footer-container{
     height: 200px;
 }
@@ -105,7 +106,6 @@ export default {
     min-width: 50%;
     height: 120px;
     background-color: #ffffff;
-    
 }
 
 .button{
@@ -120,7 +120,7 @@ export default {
 
 .button__approval{
     background-color: #848484;
-}
+}   
 
 .approval-container{
     margin-left: 10px;
@@ -152,6 +152,4 @@ export default {
     border: 1px solid lightgrey;
     color: lightgrey;
 }
-
-    
 </style>

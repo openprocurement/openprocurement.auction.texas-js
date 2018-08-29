@@ -7,15 +7,15 @@
 
 <script>
 
-    export default {
-        props: ['hongTrack'],
+export default {
+  props: ['hongTrack'],
 
   mounted: function () {
-  	this.$watch('hongTrack', function () {
-        this.$refs.player.load()
-    })
+    this.$watch('hongTrack', function () {
+      this.$refs.player.load();
+    });
   },
-}
+};
 
 </script>
 

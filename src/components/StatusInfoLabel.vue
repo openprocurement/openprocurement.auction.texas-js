@@ -19,17 +19,44 @@
     <div 
     class="status-label-container__sign" 
     :class="'status-label-container__sign_' + type ">
+    <fade-loader 
+    v-if="state === 'pendingOfAuction'"
+    :loading="loading" 
+    :color="color" 
+    :height="height" 
+    :width="width"></fade-loader>
      <img 
-     :src="'../assets/images/sign_' + type + '.svg'" 
+        v-if="state === 'canceled' || state === 'completed' || state === 'active'"
+     :src="'/static/images/sign_' + type + '.png'" 
      :alt="type">
+     <div v-if="state == 'pendingOfRound'">
+         {{remainedMinutesToStartRound}} хв
+         </div>
     </div>
 
         </div>
 </template>
 
 <script>
+import FadeLoader from 'vue-spinner/src/FadeLoader.vue'
 export default {
-    props: ['type', 'textStatus', 'round', 'state']
+    data(){
+        return{
+            width: '4px',
+            height: '9px',
+            color: '#ffffff'
+        }
+    },
+    props: ['type', 'textStatus', 'round', 'state', 'remainedTimeOfRound'],
+    computed: {
+        remainedMinutesToStartRound() {
+            return Math.ceil(this.remainedTimeOfRound / 60)
+        }
+    },
+
+     components: {
+    FadeLoader
+  }
 
 };
 </script>
@@ -70,7 +97,11 @@ export default {
    background-color: #e1e7d9;
 }
 
-.status-label-container__sign_panding{
+.status-label-container__sign_pending-of-auction{
+   background-color: #d38812;
+}
+
+.status-label-container__sign_pending-of-round{
    background-color: #d38812;
 }
 
@@ -78,7 +109,11 @@ export default {
    background-color: #cb5e46;
 }
 
-.status-label-container__panding{
+.status-label-container__pending-of-auction{
+    background-color: #f39c11;
+}
+
+.status-label-container__pending-of-round{
     background-color: #f39c11;
 }
 

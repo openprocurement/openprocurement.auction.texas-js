@@ -18,14 +18,13 @@ export default new Vuex.Store({
   },
   actions: {
     getUserInfo(context) {
- 
-     axios.get(context.state.apiUrl)
+      axios.get(context.state.apiUrl)
         .then((response) => {
           context.commit('setUserInfo', response);
         })
         .catch((error) => {
-          console.log(error.response.statusText);
-       });
+          // console.log(error.response.statusText);
+        });
     },
   },
 });

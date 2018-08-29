@@ -4,7 +4,7 @@
             <div class="round-container">
                 <div class="round-container__time-patricipant">
             <div class="round-container_time">
-                +++ 
+                     <img src="/static/images/watchInRound.png" alt="watch">
             </div>
             <div class="round-container_participant">
                 <div class="round-container_participant__order-number">
@@ -21,12 +21,12 @@
             </div>
      </div>
 
-          <div id="active-round" class="max-round">
+          <div  id="active-round" class="max-round">
             <h6><strong>Оголошення результатів</strong></h6>
             <div  class="round-container round-container_max">
                 <div class="round-container__time-patricipant">
             <div class="round-container_time round-container_time_max">
-                +++ 
+                    <img src="/static/images/watchInRoundMax.png" alt="watch">
             </div>
 
                 <div class="round-container_participant">
@@ -37,7 +37,6 @@
                 MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
                </div>
             </div>
-             
                 </div>
                 <div class="round-container_rate round-container_rate_max">
                    <h4 class="round-container_rate_max__rate-count">{{currentRate}} грн</h4>
@@ -56,12 +55,13 @@
 
 <script>
 export default {
-    props: ['round', 'rate', 'rateArr', 'startRate', 'rateArr', 'currentTime', 'currentRate'],
+    props: ['round', 'rate', 'rateArr', 'startRate', 'rateArr', 'currentTime', 'currentRate', 'remainedTimeOfRound'],
      data () {
-    return {
+       return {
          currentRate: this.startRate * 1.05,
+         turn: 0
     }
-  },
+  }
 }
 </script>
 
@@ -81,7 +81,7 @@ export default {
 }
 
 .round-container_max{
-    border: 1px solid lightgreen;
+    border: 1px solid #a0be22;
     margin-top: 15px;
 }
 
@@ -100,6 +100,7 @@ export default {
 
 .round-container_time_max{
     color: lightgreen;
+    transform: rotate(20deg);
 }
 
 .round-container_participant{
@@ -124,10 +125,13 @@ export default {
     height: 90%;
     background-color: #e9e9e9;
     margin-right: 3px;
+    font-family: Oswald;
+    font-size: 20px;
+    font-weight: 400;
 }
 .round-container_rate_max{
-  background-color: lightgreen;
-  justify-content: space-between;
+    background-color: #e7f5ac;
+    justify-content: space-between;
 
 }
 
@@ -135,7 +139,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     height: 100%;
     width: 17px;
 }
@@ -145,7 +149,9 @@ export default {
 }
 
 .round-container_rate_max-block-count{
- transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    color: #000000;
+    font-family: Montserrat;
 }
 
 </style>
