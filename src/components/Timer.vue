@@ -1,12 +1,13 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400|Roboto:100);
-
 <template>
 <div class="clock-container-wrapper">
-    <div class="clock-container__burger-icon">
+    <div class="clock-container__burger-icon"
+    @click="showOrHideModalWindow"
+    >
         <img
         src="/static/images/burger_icon.png"
-         alt="calendar-icon">
+        alt="calendar-icon">
     </div>
     <div class="clock-container-wrapper_time">
     <div class="clock-container__calendar-icon">
@@ -79,9 +80,13 @@ export default {
 
     getCurrentTime(){
             this.$emit('getCurrentTime', this.now)
-        }
+        },
     },
-    
+    methods: {
+    showOrHideModalWindow(){
+            this.$emit('showOrHideModalWindow')
+        },
+    }
 };
 </script>
 
@@ -112,6 +117,7 @@ export default {
 .clock-container__burger-icon{
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .clock-container__calendar-icon{

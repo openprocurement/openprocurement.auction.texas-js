@@ -1,5 +1,14 @@
 <template>
-<div>
+<div class="app-wrapper">
+    <app-modal-info-window
+            v-show="showOrHide"
+            :tenderNumber="tenderNumber"
+            :startRate="startRate"
+            :browserId="browserId"
+            :companyName="companyName"
+            :descriptionOfProducts="descriptionOfProducts"
+            >
+              </app-modal-info-window>
     <header class="header_container">
           <app-timer 
           @checkTimeOut="checkTimeOut"
@@ -8,6 +17,7 @@
           :date="dateOfAuction.date"
           :timeStatus="statusMessage[state].timeStatus"
           :state="state"
+          @showOrHideModalWindow="showOrHideModalWindow"
           >
             </app-timer>
       <app-status-info-label 
@@ -95,8 +105,6 @@
        :rateArr="rateArr"
        >
          </app-increasing-and-approval>
-         <app-test-select>
-             </app-test-select>
     </footer>
 </div>
 </template>
@@ -112,21 +120,23 @@ export default {
   data(){
     return {
       state: 'active',
+      showOrHide: false,
       hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
       timeOut: false,
       currentTime: '',
+      browserId: 'b9c09979-7d7e-4ed5-81a7-730274f42e67',
       tenderNumber: 'UA-EA-2018-07-27-000020-B',
       companyName: 'AT "УКРГАЗВИДОБУВАННЯ :UA-EA-2018-07-27-000020-B aasdasdasas',
       descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
       remainedTimeOfRound: 180,
       dateOfAuction: {
-        date: Math.trunc(Date.parse('Wed Aug 28 2018 14:07:35 GMT+0200 (EET)') / 1000),
+        date: Math.trunc(Date.parse('Wed Aug 29 2018 10:47:35 GMT+0200 (EET)') / 1000),
       },
       durationOfRound: 180,
       stoppingTimeOfRound: 30,
       startRate: 100.65,
       currentRate: 100.85,
-      rateArr: [213213, 6546546, 2342343, 234234, 23423423, 234, 234, 234, 546],
+      rateArr: [1232, 5656, 465345, 4534, 3243 , 234],
       round: 1,
       roundArr: [],
       statusMessage: {
@@ -192,6 +202,15 @@ export default {
     getCurrentTime(currentTime) {
       this.currentTime = currentTime;
     },
+    showOrHideModalWindow() {
+      this.showOrHide = !this.showOrHide;
+      if (this.showOrHide) {
+        document.body.className = "body__modal-window"
+      }
+      else{
+        document.body.className -= "body__modal-window";
+      }
+    },
   },
     computed: {
     changeStateFromUrl() {
@@ -206,6 +225,16 @@ export default {
 </script>
 
 <style>
+
+  .body__modal-window{
+    background-color: #000;
+    opacity: .5;
+  }
+
+  .app-wrapper{
+    background: white;
+  }
+
   footer{
     position: fixed;
     left: 0;
@@ -213,6 +242,7 @@ export default {
     width: 100%;
     text-align: center;
   }
+
 .header_container{
     position: fixed;
     left: 0;
@@ -228,7 +258,7 @@ export default {
 
 .container-main{
   margin-bottom: 250px;
-  margin-top: 100px;
+  margin-top: 20px;
 }
 
 .footer-container{
