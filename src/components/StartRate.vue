@@ -1,7 +1,7 @@
 <template>
- <div class="start-pricing">
-            <h3>Стартова ціна</h3>
-            <div class="start-pricing-label">
+ <div class="start-pricing-container">
+            <h5 class="start-pricing-container__label">Стартова ціна</h5>
+            <div class="start-pricing-container__block">
                    <h4>{{startRate}} грн</h4>
             </div>
         </div>
@@ -17,7 +17,7 @@ export default {
 <style>
 
 
-.start-pricing-label{
+.start-pricing-container__block{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,7 +27,16 @@ export default {
     margin-bottom: 50px;
 }
 
-.start-pricing{
+.start-pricing-container__label{
+    color: #000000;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 16px;
+    margin-bottom: 20px;
+}
+
+.start-pricing-container{
     margin-top: 30px;
 }
 
