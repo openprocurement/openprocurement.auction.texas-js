@@ -14,7 +14,7 @@ import AppListOfRoundsActive from './components/ListOfRoundsActive';
 import AppListOfRoundsCompleted from './components/ListOfRoundsCompleted';
 import AppStatusTimerLine from './components/StatusTimerLine';
 import AppHongAudioTrack from './components/HongAudioTrack';
-import AppTestSelect from './components/TestSelect';
+import AppModalInfoWindow from './components/ModalInfoWindow';
 
 Vue.component('AppStartRate', AppStartRate);
 Vue.component('AppTimer', AppTimer);
@@ -24,7 +24,7 @@ Vue.component('AppListOfRoundsCompleted', AppListOfRoundsCompleted);
 Vue.component('AppIncreasingAndApproval', AppIncreasingAndApproval);
 Vue.component('AppStatusTimerLine', AppStatusTimerLine);
 Vue.component('AppHongAudioTrack', AppHongAudioTrack);
-Vue.component('AppTestSelect', AppTestSelect);
+Vue.component('AppModalInfoWindow', AppModalInfoWindow);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
