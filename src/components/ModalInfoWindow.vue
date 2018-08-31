@@ -41,7 +41,6 @@
       powered by:
     </div>
 </div>
-
 </template>
 
 <script>
@@ -66,24 +65,24 @@ export default {
   },
   components:{
       AppLanguagesToggleSwitch
-  }
+  },
 }
 </script>
 
 <style scoped>
 .modal-container-wrapper{
     min-width: 50%;
-    height: 90%;
+    height: 91vh;
     background-color: #ffffff;
     position: fixed;
-    top: 99px;
+    top: 96px;
     z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    
+    box-shadow: -1px -20px 0px 5700px rgba(36, 30, 30, 0.5);
 }
 
 .modal-container{
