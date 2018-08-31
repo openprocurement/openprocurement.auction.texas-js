@@ -1,5 +1,9 @@
 <template>
  <div class="list-rounds-container">
+<app-list-initial-offers
+:rateArr="rateArr"
+>
+  </app-list-initial-offers>
      <div v-for="(rate, index) in rateArr" :key="index">
             <h3>Раунд {{index + 1}}</h3>
             <div class="round-container">
@@ -38,10 +42,13 @@
             class="round-container_time round-container_time-active">
              <div 
              class="round-container_time-active__watch-icon">
-                     <img 
-                     :style='activateMovingWatch'
-                    src="/static/images/watchInRound.png" 
-                     alt="watch">
+                <radial-progress-bar
+                        v-if="state !== 'pendingOfRound' && (value > 0 && value < 100)"
+                        min="0" max="100" :value="value" :text="remainedTimeOfRound"
+                       :remainedTimeOfRound='remainedTimeOfRound'
+                       :durationOfRound='durationOfRound'
+                        >
+                </radial-progress-bar>
                 </div>
                   <div class="round-container_time-active__watch">
                    {{currentTime | moment("hh:mm:ss")}}
@@ -49,7 +56,6 @@
             </div>
 
              <div class="round-container_participant">
-    
             </div>        
                 </div>
                 <div class="round-container_rate round-container_rate_active">
@@ -64,32 +70,29 @@
 
 
 <script>
+ import RadialProgressBar from './RadialProgressBar.vue'
+ import AppListInitialOffers from './ListInitialOffers.vue'
 export default {
     props: ['round', 'rate', 'rateArr', 'startRate', 'currentTime',
-    'currentRate', 'remainedTimeOfRound'],
+    'currentRate', 'remainedTimeOfRound', 'durationOfRound', 'state'],
 data () {
     return {
-         turn: 0,
+         value: 0,
     }
   },
       computed: {
-    activateMovingWatch() {
-            return{
-                transform: 'rotate(' + this.turn + 'deg)',
-      };
-    },
     calculateMovingRotate() {
-      if (this.turn === 360) {
-        this.turn = 0;
-      }
-      this.turn = (this.currentTime * 0) + (this.turn + 10);
+        this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
     },
+  },
+  components: {
+      RadialProgressBar,
+      AppListInitialOffers
   },
 };
 </script>
 
 <style scoped>
-
 .round-container{
     display: flex;
     justify-content: space-between;
