@@ -19,12 +19,16 @@
     <div 
     class="status-label-container__sign" 
     :class="'status-label-container__sign_' + type ">
-    <fade-loader 
-    v-if="state === 'pendingOfAuction'"
-    :loading="loading" 
-    :color="color" 
-    :height="height" 
-    :width="width"></fade-loader>
+    <spinner-loader 
+    v-if="state === 'pendingOfAuction'">
+    </spinner-loader>
+           <!-- <radial-progress-bar
+                        v-if="state === 'pendingOfAuction'"
+                        min="0" max="100" :value="value" :text="remainedTimeOfRound"
+                       :remainedTimeOfRound='remainedTimeOfRound'
+                       :durationOfRound='durationOfRound'
+                        >
+            </radial-progress-bar> -->
      <img 
         v-if="state === 'canceled' || state === 'completed' || state === 'active'"
      :src="'/static/images/sign_' + type + '.png'" 
@@ -38,24 +42,27 @@
 </template>
 
 <script>
-import FadeLoader from 'vue-spinner/src/FadeLoader.vue'
+import SpinnerLoader from './SpinnerLoader.vue'
+import RadialProgressBar from './RadialProgressBar.vue'
 export default {
     data(){
         return{
-            width: '4px',
-            height: '9px',
-            color: '#ffffff'
+            value:0
         }
     },
-    props: ['type', 'textStatus', 'round', 'state', 'remainedTimeOfRound'],
+    props: ['type', 'textStatus', 'round', 'state', 'remainedTimeOfRound', 'durationOfRound'],
     computed: {
         remainedMinutesToStartRound() {
             return Math.ceil(this.remainedTimeOfRound / 60)
-        }
+        },
+        calculateMovingRotate() {
+        this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
+    },
     },
 
      components: {
-    FadeLoader
+    SpinnerLoader,
+    RadialProgressBar
   }
 
 };
