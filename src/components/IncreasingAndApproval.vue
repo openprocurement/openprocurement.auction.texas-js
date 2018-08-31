@@ -2,7 +2,7 @@
 <div class="increase-approval-container">
   <div class="increase-rate-container">
       <div class="choice-rate">
-     <select class= "select-rate" v-model="selected"
+     <select class="select-rate" v-model="selected"
      >
    <option 
    value=null disabled hidden>
@@ -61,6 +61,7 @@ export default {
                options: [
                  { value: this.currentRate * 1.05, text: this.currentRate * 1.05 },
                  { value: this.currentRate * 1.1, text: this.currentRate * 1.1 },
+                 { value: this.currentRate * 1.2, text: this.currentRate * 1.2 },
                ]
              }
       }
@@ -98,6 +99,7 @@ export default {
 .increase-approval-container{
     display: flex;
     width: 40%;
+    cursor: pointer;
 }
 .increase-rate-container{
     display: flex;
@@ -112,15 +114,26 @@ export default {
     height: 60px;
     color:#ffffff;
     font-size: 18px;
+    cursor: pointer;
 }
 
 .butoon__increase{
     background-color: #9ab913;
+    border-bottom: 3px solid #85a10f;
+}
+
+.butoon__increase:hover{
+    background-color: #bdce73;
 }
 
 .button__approval{
     background-color: #848484;
-}   
+    border-bottom: 3px solid #777775;
+}
+
+.button__approval:hover{
+    background-color: hsl(0, 2%, 41%);
+}
 
 .approval-container{
     margin-left: 10px;
@@ -151,5 +164,10 @@ export default {
     text-align: center;
     border: 1px solid lightgrey;
     color: lightgrey;
+}
+
+.select-rate:hover{
+    border: 2px solid #9ab913;
+    cursor: pointer;
 }
 </style>
