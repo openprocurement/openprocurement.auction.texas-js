@@ -9,7 +9,7 @@ import VueChatScroll from 'vue-chat-scroll';
 import VueScrollTo from 'vue-scrollto';
 import ToggleSwitch from 'vuejs-toggle-switch';
 
-Vue.use(ToggleSwitch)
+Vue.use(ToggleSwitch);
 Vue.use(VueScrollTo);
 Vue.use(VueMoment);
 Vue.use(BootstrapVue);
