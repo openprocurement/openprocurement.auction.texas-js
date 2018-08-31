@@ -58,7 +58,6 @@ export default {
     props: ['round', 'rate', 'rateArr', 'startRate', 'rateArr', 'currentTime', 'currentRate', 'remainedTimeOfRound'],
      data () {
        return {
-         currentRate: this.startRate * 1.05,
          turn: 0
     }
   }
