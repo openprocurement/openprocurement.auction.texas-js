@@ -28,7 +28,6 @@
       :remainedTimeOfRound="remainedTimeOfRound"
       >
         </app-status-info-label>
-
     </header>
         <app-status-timer-line 
         v-if="state == 'active'"
@@ -37,6 +36,10 @@
         :state="state"
         >
           </app-status-timer-line>
+                  <app-hong-sounds-text
+                  v-if="state == 'active'"
+                  >
+      </app-hong-sounds-text>
     <main class="container container-main">
       <app-hong-audio-track
       v-if="state === 'active'"
@@ -63,6 +66,11 @@
         :startRate="startRate">
           </app-start-rate>
 
+          <app-list-initial-offers 
+          :rateArr="rateArr"
+          v-if="state == 'pendingOfAuction' && (remainedTimeOfRound < 300)" >
+          </app-list-initial-offers>
+
           <app-list-of-rounds-active v-if="state == 'active' || state == 'pendingOfRound'" 
           :roundArr="roundArr"
           :round="round"
@@ -71,6 +79,8 @@
           :currentRate="currentRate"
           :currentTime="currentTime"
           :remainedTimeOfRound="remainedTimeOfRound"
+          :durationOfRound='durationOfRound'
+          :state="state"
           >
           {{changeStateFromUrl}}
           </app-list-of-rounds-active>
@@ -111,6 +121,17 @@
 
 
 <script>
+import AppHongSoundsText from '../components/HongSoundsText';
+import AppStartRate from '../components/StartRate';
+import AppTimer from '../components/Timer';
+import AppStatusTimerLine from '../components/StatusTimerLine';
+import AppHongAudioTrack from '../components/HongAudioTrack';
+import AppModalInfoWindow from '../components/ModalInfoWindow';
+import AppListInitialOffers from '../components/ListInitialOffers';
+import AppStatusInfoLabel from '../components/StatusInfoLabel';
+import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
+import AppListOfRoundsActive from '../components/ListOfRoundsActive';
+import AppListOfRoundsCompleted from '../components/ListOfRoundsCompleted';
 export default {
   props: {
     id: {
@@ -130,10 +151,10 @@ export default {
       descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
       remainedTimeOfRound: 180,
       dateOfAuction: {
-        date: Math.trunc(Date.parse('Wed Aug 29 2018 10:47:35 GMT+0200 (EET)') / 1000),
+        date: Math.trunc(Date.parse('Wed Aug 31 2018 15:24:35 GMT+0200 (EET)') / 1000),
       },
       durationOfRound: 180,
-      stoppingTimeOfRound: 30,
+      stoppingTimeOfRound: 10,
       startRate: 100.65,
       currentRate: 100.85,
       rateArr: [1232, 5656, 465345, 4534, 3243 , 234],
@@ -204,12 +225,6 @@ export default {
     },
     showOrHideModalWindow() {
       this.showOrHide = !this.showOrHide;
-      if (this.showOrHide) {
-        document.body.className = "body__modal-window"
-      }
-      else{
-        document.body.className -= "body__modal-window";
-      }
     },
   },
     computed: {
@@ -217,19 +232,26 @@ export default {
       this.state = this.id;
     },
   },
-
   mounted() {
     window.scrollTo(0, document.body.scrollHeight);
   },
+  components :{
+    AppHongSoundsText,
+    AppStartRate,
+    AppTimer,
+    AppStatusTimerLine,
+    AppHongAudioTrack,
+    AppModalInfoWindow,
+    AppListInitialOffers,
+    AppStatusInfoLabel,
+    AppIncreasingAndApproval,
+    AppListOfRoundsActive,
+    AppListOfRoundsCompleted
+  }
 };
 </script>
 
 <style>
-
-  .body__modal-window{
-    background-color: #000;
-    opacity: .5;
-  }
 
   .app-wrapper{
     background: white;
@@ -257,8 +279,8 @@ export default {
     }
 
 .container-main{
-  margin-bottom: 250px;
-  margin-top: 20px;
+    margin-bottom: 250px;
+    margin-top: 120px;
 }
 
 .footer-container{
