@@ -1,11 +1,7 @@
 <template>
 <toggle-switch
   :options="myOptions"
-  @change="updateMap($event.value)" 
-  @selected="selectedMethod()" 
-  v-model="selectedMapOption"
-  :value="selectedMapOption" 
-  :group="switchGroup"
+  @change="$ml.change($event.value)"
   /> 
 </template>
 
@@ -13,6 +9,7 @@
 export default {
     data(){
         return{
+          language: 'english',
             myOptions: {
   layout: {
     color: 'black',
@@ -36,9 +33,9 @@ export default {
     preSelected: 'unknown',
     disabled: false,
     labels: [
-      {name: 'English', color: '#000', backgroundColor: 'lightgrey'}, 
-      {name: 'Українська', color: '#000', backgroundColor: 'lightgrey'},
-      {name: 'Русский', color: '#000', backgroundColor: 'lightgrey'}
+      {name: 'english', color: '#000', backgroundColor: 'lightgrey'}, 
+      {name: 'українська', color: '#000', backgroundColor: 'lightgrey'},
+      {name: 'русский', color: '#000', backgroundColor: 'lightgrey'}
     ]
   }
 }
