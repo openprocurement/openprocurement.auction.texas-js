@@ -5,7 +5,9 @@
 >
   </app-list-initial-offers>
      <div v-for="(bid, index) in bidsArr" :key="index">
-            <h3>Раунд {{index + 1}}</h3>
+            <h3>
+                {{$ml.get('Round')}}
+                 {{index + 1}}</h3>
             <div class="round-container">
                 <div class="round-container__time-patricipant">
 
@@ -23,7 +25,8 @@
             </div>
 
             <div class="round-container_participant">
-                Учасник {{index + 1}}
+                {{$ml.get('Bidder')}}
+                 {{index + 1}}
             </div>
 
                 </div>
@@ -35,7 +38,9 @@
      </div>
 
           <div id="active-round">
-            <h3>Раунд {{round}}</h3>
+            <h3>
+                {{$ml.get('Round')}}
+                 {{bidsArr.length + 1}}</h3>
             <div  class="round-container round-container_active">
                 <div class="round-container__time-patricipant round-container__time-patricipant-active">
             <div 
@@ -73,7 +78,7 @@
  import RadialProgressBar from './RadialProgressBar.vue'
  import AppListInitialOffers from './ListInitialOffers.vue'
 export default {
-    props: ['round', 'bid', 'bidsArr', 'startBid', 'currentTime',
+    props: ['bid', 'bidsArr', 'startBid', 'currentTime',
     'currentBid', 'remainedTimeOfRound', 'durationOfRound', 'state'],
 data () {
     return {

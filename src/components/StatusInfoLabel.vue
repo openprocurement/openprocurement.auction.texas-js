@@ -6,15 +6,15 @@
         <div
         class="status-label-container__text"
          v-if="state == 'active'">
-            {{textStatus}}
+            {{$ml.get(textStatus)}}
             <div class="status-label-container-active__round">
-            {{round}}
+            {{bidsArr.length + 1}}
             </div>
         </div>
           <div v-else
           class="status-label-container__text"
           >
-            {{textStatus}}
+           {{$ml.get(textStatus)}}
         </div>
     <div 
     class="status-label-container__sign" 
@@ -50,7 +50,7 @@ export default {
             value:0
         }
     },
-    props: ['type', 'textStatus', 'round', 'state', 'remainedTimeOfRound', 'durationOfRound'],
+    props: ['type', 'textStatus', 'bidsArr', 'state', 'remainedTimeOfRound', 'durationOfRound'],
     computed: {
         remainedMinutesToStartRound() {
             return Math.ceil(this.remainedTimeOfRound / 60)

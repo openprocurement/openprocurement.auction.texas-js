@@ -18,12 +18,21 @@
     </div>
     <div class="clock-container">
     <h6 class="clock-container__status-time"
-    >{{timeStatus}}</h6>
+    >
+    {{$ml.get(timeStatus)}}
+    </h6>
 <div class="clock-container__time">
-        <div class="digit" v-show="days !==0">{{ days }}дн</div>
-        <div class="digit" v-show="hours !==0">{{ hours }}год</div>
-        <div class="digit" v-show="minutes !==0">{{ minutes }}мін</div>
-        <div class="digit" v-show="seconds !==0">{{ seconds }}сек
+        <div class="digit" v-show="days !==0">{{ days }}
+            {{$ml.get('days')}}
+            </div>
+        <div class="digit" v-show="hours !==0">{{ hours }}
+            {{$ml.get('hours')}}
+            </div>
+        <div class="digit" v-show="minutes !==0">{{ minutes }}
+            {{$ml.get('minutes')}}
+            </div>
+        <div class="digit" v-show="seconds !==0">{{ seconds }}
+            {{$ml.get('seconds')}}
             {{checkTimeOut}}
             {{getRemainedTimeofRound}}
             {{getCurrentTime}}

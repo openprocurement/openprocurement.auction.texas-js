@@ -8,7 +8,8 @@
             </div>
             <div class="round-container_participant">
                 <div class="round-container_participant__order-number">
-                Учасник {{index + 1}}
+                {{$ml.get('Bidder')}}
+                {{index + 1}}
                 </div>
                   <div class="round-container_participant-expended">
                 MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
@@ -22,7 +23,9 @@
      </div>
 
           <div  id="active-round" class="max-round">
-            <h6><strong>Оголошення результатів</strong></h6>
+            <h6><strong>
+                {{$ml.get('Announcement')}}
+                </strong></h6>
             <div  class="round-container round-container_max">
                 <div class="round-container__time-patricipant">
             <div class="round-container_time round-container_time_max">
@@ -31,7 +34,8 @@
 
                 <div class="round-container_participant">
                 <div class="round-container_participant__order-number">
-                      Учасник 10
+                      {{$ml.get('Bidder')}}
+                       10
                       </div>
                 <div class="round-container_participant-expended">
                 MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu

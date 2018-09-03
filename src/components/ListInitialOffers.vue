@@ -1,14 +1,16 @@
 <template>
  <div class="list-offers-container">
-     <h5 class="list-offers-container__start-offers-label">Початкові пропозиції</h5>
-     <div v-for="(bid, index) in bidsArr" :key="index">
+     <h5 class="list-offers-container__start-offers-label">
+         {{$ml.get('Initial bids')}}
+         </h5>
+     <div v-for="(bid, index) in initialBidsArr" :key="index">
             <div class="offer-container">
                 <div class="offer-container__participant">
             <div class="offer-container__participant-name">
-                Учасник {{index + 1}}
+                {{$ml.get('Bidder')}}
+                {{index + 1}}
             </div>
                 </div>
-
                 <div class="offer-container_bid">
                    <h4>{{bid}} грн</h4>
                 </div>
@@ -21,7 +23,7 @@
 <script>
  import RadialProgressBar from './RadialProgressBar.vue'
 export default {
-    props: ['bidsArr']
+    props: ['initialBidsArr']
 };
 </script>
 

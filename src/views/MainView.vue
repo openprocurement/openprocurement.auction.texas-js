@@ -23,7 +23,7 @@
       <app-status-info-label 
       :type="statusMessage[state].type"
       :textStatus="statusMessage[state].textStatus"
-      :round="round"
+      :bidsArr="bidsArr"
       :state="state"
       :remainedTimeOfRound="remainedTimeOfRound"
       >
@@ -67,7 +67,7 @@
           </app-start-bid>
 
           <app-list-initial-offers 
-          :bidsArr="bidsArr"
+          :initialBidsArr="initialBidsArr"
           v-if="state == 'pendingOfAuction' && (remainedTimeOfRound < 300)" >
           </app-list-initial-offers>
 
@@ -98,12 +98,13 @@
     <footer  v-if="state !== 'completed'" class="footer-container">
           <h4
         v-if="state == 'pendingOfRound'">
-        Очікується початок раунду
+        {{$ml.get('Waiting for start of round')}}
         </h4>
 
         <h4
         v-else-if="state == 'pendingOfAuction'"
-        >Очікується початок аукціону
+        >
+        {{$ml.get('Waiting for start of auction')}}
         </h4>
 
        <app-increasing-and-approval v-else-if="state == 'active'"
@@ -159,35 +160,36 @@ export default {
       startBid: 100.65,
       currentBid: 100.85,
       bidsArr: [1232, 5656, 465345, 4534, 3243 , 234],
+      initialBidsArr: [32, 56, 345, 434, 243 , 34],
       round: 1,
       roundArr: [],
       statusMessage: {
         active: {
           type: 'active',
-          textStatus: 'Раунд  ',
-          timeStatus: 'до закінчення раунду',
+          textStatus: 'Round',
+          timeStatus: 'until the round ends',
         },
         pendingOfAuction: {
           type: 'pending-of-auction',
-          textStatus: 'Очікується',
-          timeStatus: 'до початку аукціону',
+          textStatus: 'Waiting',
+          timeStatus: 'until the auction starts',
         },
 
         pendingOfRound: {
           type: 'pending-of-round',
-          textStatus: 'Очікується',
-          timeStatus: 'до початку раунду',
+          textStatus: 'Waiting',
+          timeStatus: 'until the round starts',
         },
         completed: {
           type: 'completed',
-          textStatus: 'Завершений',
-          timeStatus: 'аукціон завершився',
+          textStatus: 'Completed',
+          timeStatus: 'Аuction was completed',
         },
 
         canceled: {
           type: 'canceled',
-          textStatus: 'Скасований',
-          timeStatus: 'аукціон скасований',
+          textStatus: 'Canceled',
+          timeStatus: 'Аuction was canceled',
         },
       },
     };

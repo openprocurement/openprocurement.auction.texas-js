@@ -6,7 +6,7 @@
      >
    <option 
    value=null disabled hidden>
-   Виберіть суму
+   {{$ml.get('Select amount')}}
    </option>
   <option 
   v-for="(option, index) in checkSelected.options" :key="index" v-bind:value="option.value"
@@ -22,12 +22,15 @@
 
     @click="addNewBidIncrease"
     >
-    Підвищення</button>
+    {{$ml.get('Increase')}}
+    </button>
   </div>
 
    <div class="approval-container">
       <div class="approval-question-container">
-          <h6 class="approval-question">Чи погоджуєтеся на суму</h6>
+          <h6 class="approval-question">
+              {{$ml.get('Do you agree on the amount')}}
+              </h6>
           <strong>{{currentBid}}</strong>
       </div>
     <button 
@@ -35,7 +38,9 @@
     type="button" 
     class="button button__approval" 
      @click="addNewBidApprove"
-    >Погоджуюсь</button>
+    >
+    {{$ml.get('Agree')}}
+    </button>
   </div>
 </div>
 </template>
