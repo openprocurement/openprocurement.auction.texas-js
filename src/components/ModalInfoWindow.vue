@@ -8,14 +8,14 @@
         {{descriptionOfProducts}}
     </div>
 
-    <div class="modal-container__info modal-container__info_step-rate">
+    <div class="modal-container__info modal-container__info_step-bid">
         Крок зменшення торгів:
-        <strong>{{startRate}}</strong>
+        <strong>{{startBid}}</strong>
     </div>
 
-    <div class="modal-container__info modal-container__info_start-rate">
+    <div class="modal-container__info modal-container__info_start-bid">
         Стартова сума:
-        {{startRate}}
+        {{startBid}}
     </div>
      <div class="modal-container__info modal-container__info_browser-id">
     <hr>
@@ -50,7 +50,7 @@ export default {
     tenderNumber: {
       type: String,
     },
-    startRate: {
+    startBid: {
       type: Number,
     },
     browserId: {

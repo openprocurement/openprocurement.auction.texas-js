@@ -3,7 +3,7 @@
     <app-modal-info-window
             v-show="showOrHide"
             :tenderNumber="tenderNumber"
-            :startRate="startRate"
+            :startBid="startBid"
             :browserId="browserId"
             :companyName="companyName"
             :descriptionOfProducts="descriptionOfProducts"
@@ -36,16 +36,16 @@
         :state="state"
         >
           </app-status-timer-line>
-                  <app-hong-sounds-text
-                  v-if="state == 'active'"
-                  >
-      </app-hong-sounds-text>
-    <main class="container container-main">
-      <app-hong-audio-track
+            <app-hong-audio-track
       v-if="state === 'active'"
       :hongTrack="hongTrack"
       >
         </app-hong-audio-track>
+                  <app-hong-sounds-text
+                  v-if="state == 'active' && showHongSoundsText"
+                  >
+      </app-hong-sounds-text>
+    <main class="container container-main">
         <div class="container-main__tender-number">
           <div class="container-main__image-container">
             <img src="/static/images/numberOfTender_icon.png" alt="number-Of-tender">
@@ -62,21 +62,21 @@
             </li>
           </ul>
         </div>
-        <app-start-rate 
-        :startRate="startRate">
-          </app-start-rate>
+        <app-start-bid 
+        :startBid="startBid">
+          </app-start-bid>
 
           <app-list-initial-offers 
-          :rateArr="rateArr"
+          :bidsArr="bidsArr"
           v-if="state == 'pendingOfAuction' && (remainedTimeOfRound < 300)" >
           </app-list-initial-offers>
 
           <app-list-of-rounds-active v-if="state == 'active' || state == 'pendingOfRound'" 
           :roundArr="roundArr"
           :round="round"
-          :rateArr="rateArr"
-          :startRate="startRate"
-          :currentRate="currentRate"
+          :bidsArr="bidsArr"
+          :startBid="startBid"
+          :currentBid="currentBid"
           :currentTime="currentTime"
           :remainedTimeOfRound="remainedTimeOfRound"
           :durationOfRound='durationOfRound'
@@ -88,9 +88,9 @@
            <app-list-of-rounds-completed v-if="state == 'completed'" 
           :roundArr="roundArr"
           :round="round"
-          :rateArr="rateArr"
-          :startRate="startRate"
-          :currentRate="currentRate"
+          :bidsArr="bidsArr"
+          :startBid="startBid"
+          :currentBid="currentBid"
           :currentTime="currentTime"
           >
           </app-list-of-rounds-completed>
@@ -107,12 +107,12 @@
         </h4>
 
        <app-increasing-and-approval v-else-if="state == 'active'"
-       @addNewRate="addNewRate"
-       @calculateCurrentRate="calculateCurrentRate"
+       @addNewBid="addNewBid"
+       @calculateCurrentBid="calculateCurrentBid"
        @holdRoundTime="holdRoundTime"
-       :startRate="startRate"
-       :currentRate="currentRate"
-       :rateArr="rateArr"
+       :startBid="startBid"
+       :currentBid="currentBid"
+       :bidsArr="bidsArr"
        >
          </app-increasing-and-approval>
     </footer>
@@ -122,7 +122,7 @@
 
 <script>
 import AppHongSoundsText from '../components/HongSoundsText';
-import AppStartRate from '../components/StartRate';
+import AppStartBid from '../components/StartBid';
 import AppTimer from '../components/Timer';
 import AppStatusTimerLine from '../components/StatusTimerLine';
 import AppHongAudioTrack from '../components/HongAudioTrack';
@@ -142,6 +142,7 @@ export default {
     return {
       state: 'active',
       showOrHide: false,
+      showHongSoundsText: false,
       hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
       timeOut: false,
       currentTime: '',
@@ -151,13 +152,13 @@ export default {
       descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
       remainedTimeOfRound: 180,
       dateOfAuction: {
-        date: Math.trunc(Date.parse('Wed Aug 31 2018 15:24:35 GMT+0200 (EET)') / 1000),
+        date: Math.trunc(Date.parse('Wed Sep 03 2018 9:24:35 GMT+0200 (EET)') / 1000),
       },
       durationOfRound: 180,
       stoppingTimeOfRound: 10,
-      startRate: 100.65,
-      currentRate: 100.85,
-      rateArr: [1232, 5656, 465345, 4534, 3243 , 234],
+      startBid: 100.65,
+      currentBid: 100.85,
+      bidsArr: [1232, 5656, 465345, 4534, 3243 , 234],
       round: 1,
       roundArr: [],
       statusMessage: {
@@ -192,16 +193,16 @@ export default {
     };
   },
   methods: {
-    addNewRate(rate) {
-      this.currentRate = rate * 1.05;
-      this.rateArr.push(rate);
+    addNewBid(bid) {
+      this.currentBid = bid * 1.05;
+      this.bidsArr.push(bid);
       this.roundArr.push(this.round);
       this.round++;
       this.dateOfAuction.date = this.currentTime + this.durationOfRound;
     },
 
-    calculateCurrentRate(rate) {
-      this.currentRate = rate * 1.05;
+    calculateCurrentBid(bid) {
+      this.currentBid = bid * 1.05;
       this.dateOfAuction.date = this.currentTime + this.durationOfRound;
     },
 
@@ -237,7 +238,7 @@ export default {
   },
   components :{
     AppHongSoundsText,
-    AppStartRate,
+    AppStartBid,
     AppTimer,
     AppStatusTimerLine,
     AppHongAudioTrack,

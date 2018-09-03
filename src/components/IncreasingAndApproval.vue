@@ -1,8 +1,8 @@
 <template>
 <div class="increase-approval-container">
-  <div class="increase-rate-container">
-      <div class="choice-rate">
-     <select class="select-rate" v-model="selected"
+  <div class="increase-bid-container">
+      <div class="choice-bid">
+     <select class="select-bid" v-model="selected"
      >
    <option 
    value=null disabled hidden>
@@ -20,7 +20,7 @@
     class="button butoon__increase" 
     :disabled="selected === null"
 
-    @click="addNewRateIncrease"
+    @click="addNewBidIncrease"
     >
     Підвищення</button>
   </div>
@@ -28,13 +28,13 @@
    <div class="approval-container">
       <div class="approval-question-container">
           <h6 class="approval-question">Чи погоджуєтеся на суму</h6>
-          <strong>{{currentRate}}</strong>
+          <strong>{{currentBid}}</strong>
       </div>
     <button 
      v-scroll-to="'#active-round'"
     type="button" 
     class="button button__approval" 
-     @click="addNewRateApprove"
+     @click="addNewBidApprove"
     >Погоджуюсь</button>
   </div>
 </div>
@@ -43,9 +43,9 @@
 <script>
 export default {
         props : {
-        startRate : Number,
-        currentRate:Number,
-        rateArr: Array
+        startBid : Number,
+        currentBid:Number,
+        bidsArr: Array
     },
 
     data(){
@@ -59,24 +59,24 @@ export default {
           return {
                selected: null,
                options: [
-                 { value: this.currentRate * 1.05, text: this.currentRate * 1.05 },
-                 { value: this.currentRate * 1.1, text: this.currentRate * 1.1 },
-                 { value: this.currentRate * 1.2, text: this.currentRate * 1.2 },
+                 { value: this.currentBid * 1.05, text: this.currentBid * 1.05 },
+                 { value: this.currentBid * 1.1, text: this.currentBid * 1.1 },
+                 { value: this.currentBid * 1.2, text: this.currentBid * 1.2 },
                ]
              }
       }
   },
     methods: {
-      addNewRateIncrease() {
-        this.$emit('calculateCurrentRate', this.currentRate);
-        this.$emit('addNewRate', this.selected);
+      addNewBidIncrease() {
+        this.$emit('calculateCurrentBid', this.currentBid);
+        this.$emit('addNewBid', this.selected);
         this.$emit('holdRoundTime');
         this.selected = null;
       },
 
-      addNewRateApprove() {
-        this.$emit('calculateCurrentRate', this.currentRate);
-        this.$emit('addNewRate', this.currentRate);
+      addNewBidApprove() {
+        this.$emit('calculateCurrentBid', this.currentBid);
+        this.$emit('addNewBid', this.currentBid);
         this.$emit('holdRoundTime');
         this.selected = null;
     },
@@ -89,7 +89,7 @@ export default {
     height: 200px;
 }
 
-.choice-rate{
+.choice-bid{
     display: flex;
     align-items: center;
     height: 100px;
@@ -101,7 +101,7 @@ export default {
     width: 40%;
     cursor: pointer;
 }
-.increase-rate-container{
+.increase-bid-container{
     display: flex;
     flex-direction: column;
     justify-content:space-between;
@@ -159,14 +159,14 @@ export default {
     font-size: 16px;
 }
 
-.select-rate{
+.select-bid{
     width: 100%;
     text-align: center;
     border: 1px solid lightgrey;
     color: lightgrey;
 }
 
-.select-rate:hover{
+.select-bid:hover{
     border: 2px solid #9ab913;
     cursor: pointer;
 }

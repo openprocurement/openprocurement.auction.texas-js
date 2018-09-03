@@ -1,6 +1,6 @@
 <template>
  <div class="list-rounds-container">
-     <div v-for="(rate, index) in rateArr" :key="index">
+     <div v-for="(bid, index) in bidsArr" :key="index">
             <div class="round-container">
                 <div class="round-container__time-patricipant">
             <div class="round-container_time">
@@ -15,8 +15,8 @@
                </div>
             </div>
                 </div>
-                <div class="round-container_rate">
-                   <h4>{{rate}} грн</h4>
+                <div class="round-container_bid">
+                   <h4>{{bid}} грн</h4>
                 </div>
             </div>
      </div>
@@ -38,10 +38,10 @@
                </div>
             </div>
                 </div>
-                <div class="round-container_rate round-container_rate_max">
-                   <h4 class="round-container_rate_max__rate-count">{{currentRate}} грн</h4>
-                   <div class="round-container_rate_max-block">
-                <div class="round-container_rate_max-block-count">
+                <div class="round-container_bid round-container_bid_max">
+                   <h4 class="round-container_bid_max__bid-count">{{currentBid}} грн</h4>
+                   <div class="round-container_bid_max-block">
+                <div class="round-container_bid_max-block-count">
                     MAX
                     </div>
                    </div>
@@ -55,7 +55,7 @@
 
 <script>
 export default {
-    props: ['round', 'rate', 'rateArr', 'startRate', 'rateArr', 'currentTime', 'currentRate', 'remainedTimeOfRound'],
+    props: ['round', 'bid', 'bidsArr', 'startBid', 'currentTime', 'currentBid', 'remainedTimeOfRound'],
      data () {
        return {
          turn: 0
@@ -115,7 +115,7 @@ export default {
     display: flex;
 }
 
-.round-container_rate{
+.round-container_bid{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -128,13 +128,13 @@ export default {
     font-size: 20px;
     font-weight: 400;
 }
-.round-container_rate_max{
+.round-container_bid_max{
     background-color: #e7f5ac;
     justify-content: space-between;
 
 }
 
-.round-container_rate_max-block{
+.round-container_bid_max-block{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,11 +143,11 @@ export default {
     width: 17px;
 }
 
-.round-container_rate_max__rate-count{
+.round-container_bid_max__bid-count{
     margin: 0 auto;
 }
 
-.round-container_rate_max-block-count{
+.round-container_bid_max-block-count{
     transform: rotate(-90deg);
     color: #000000;
     font-family: Montserrat;

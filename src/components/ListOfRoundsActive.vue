@@ -1,10 +1,10 @@
 <template>
  <div class="list-rounds-container">
 <app-list-initial-offers
-:rateArr="rateArr"
+:bidsArr="bidsArr"
 >
   </app-list-initial-offers>
-     <div v-for="(rate, index) in rateArr" :key="index">
+     <div v-for="(bid, index) in bidsArr" :key="index">
             <h3>Раунд {{index + 1}}</h3>
             <div class="round-container">
                 <div class="round-container__time-patricipant">
@@ -27,8 +27,8 @@
             </div>
 
                 </div>
-                <div class="round-container_rate">
-                   <h4>{{rate}} грн</h4>
+                <div class="round-container_bid">
+                   <h4>{{bid}} грн</h4>
                 </div>
             </div>
             
@@ -58,8 +58,8 @@
              <div class="round-container_participant">
             </div>        
                 </div>
-                <div class="round-container_rate round-container_rate_active">
-                   <h4>{{currentRate}} грн</h4>
+                <div class="round-container_bid round-container_bid_active">
+                   <h4>{{currentBid}} грн</h4>
                    {{calculateMovingRotate}}
                 </div>
             </div>
@@ -73,8 +73,8 @@
  import RadialProgressBar from './RadialProgressBar.vue'
  import AppListInitialOffers from './ListInitialOffers.vue'
 export default {
-    props: ['round', 'rate', 'rateArr', 'startRate', 'currentTime',
-    'currentRate', 'remainedTimeOfRound', 'durationOfRound', 'state'],
+    props: ['round', 'bid', 'bidsArr', 'startBid', 'currentTime',
+    'currentBid', 'remainedTimeOfRound', 'durationOfRound', 'state'],
 data () {
     return {
          value: 0,
@@ -123,7 +123,7 @@ data () {
     margin-left: 1px;
 }
 
-.round-container_rate{
+.round-container_bid{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,7 +134,7 @@ data () {
     margin-right: 3px;
     font-family: Oswald;
 }
-.round-container_rate_active{
+.round-container_bid_active{
     height: 95%;
     background-color: #e7f5ac;
     margin: auto;
