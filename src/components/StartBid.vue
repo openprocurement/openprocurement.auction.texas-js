@@ -2,14 +2,14 @@
  <div class="start-pricing-container">
             <h5 class="start-pricing-container__label">Стартова ціна</h5>
             <div class="start-pricing-container__block">
-                   <h4>{{startRate}} грн</h4>
+                   <h4>{{startBid}} грн</h4>
             </div>
         </div>
 </template>
 
 <script>
 export default {
-    props: ['startRate']
+    props: ['startBid']
 
 }
 </script>
