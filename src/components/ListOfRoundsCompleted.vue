@@ -56,11 +56,6 @@
 <script>
 export default {
     props: ['round', 'bid', 'bidsArr', 'startBid', 'currentTime', 'currentBid', 'remainedTimeOfRound'],
-     data () {
-       return {
-         turn: 0
-    }
-  }
 }
 </script>
 
@@ -99,7 +94,6 @@ export default {
 
 .round-container_time_max{
     color: lightgreen;
-    transform: rotate(20deg);
 }
 
 .round-container_participant{
