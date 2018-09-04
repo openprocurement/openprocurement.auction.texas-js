@@ -1,7 +1,7 @@
 <template>
 <toggle-switch
   :options="myOptions"
-  @change = "$i18n.set($event.value)"
+  @change = "$store.commit('language', $event.value)"
   /> 
 </template>
 
