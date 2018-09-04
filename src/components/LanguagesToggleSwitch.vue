@@ -1,7 +1,7 @@
 <template>
 <toggle-switch
   :options="myOptions"
-  @change="$ml.change($event.value)"
+  @change = "$i18n.set($event.value)"
   /> 
 </template>
 
@@ -9,7 +9,6 @@
 export default {
     data(){
         return{
-          language: 'english',
             myOptions: {
   layout: {
     color: 'black',
@@ -33,9 +32,9 @@ export default {
     preSelected: 'unknown',
     disabled: false,
     labels: [
-      {name: 'english', color: '#000', backgroundColor: 'lightgrey'}, 
-      {name: 'українська', color: '#000', backgroundColor: 'lightgrey'},
-      {name: 'русский', color: '#000', backgroundColor: 'lightgrey'}
+      {name: 'English', color: '#000', backgroundColor: 'lightgrey'}, 
+      {name: 'Українська', color: '#000', backgroundColor: 'lightgrey'},
+      {name: 'Русский', color: '#000', backgroundColor: 'lightgrey'}
     ]
   }
 }

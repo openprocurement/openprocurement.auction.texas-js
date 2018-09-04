@@ -1,13 +1,13 @@
 <template>
  <div class="list-offers-container">
      <h5 class="list-offers-container__start-offers-label">
-         {{$ml.get('Initial bids')}}
+         {{$t('Initial bids')}}
          </h5>
      <div v-for="(bid, index) in initialBidsArr" :key="index">
             <div class="offer-container">
                 <div class="offer-container__participant">
             <div class="offer-container__participant-name">
-                {{$ml.get('Bidder')}}
+                {{$t('Bidder')}}
                 {{index + 1}}
             </div>
                 </div>

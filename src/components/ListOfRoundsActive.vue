@@ -6,7 +6,7 @@
   </app-list-initial-offers>
      <div v-for="(bid, index) in bidsArr" :key="index">
             <h3>
-                {{$ml.get('Round')}}
+                {{$t('Round')}}
                  {{index + 1}}</h3>
             <div class="round-container">
                 <div class="round-container__time-patricipant">
@@ -25,7 +25,7 @@
             </div>
 
             <div class="round-container_participant">
-                {{$ml.get('Bidder')}}
+                {{$t('Bidder')}}
                  {{index + 1}}
             </div>
 
@@ -39,7 +39,7 @@
 
           <div id="active-round">
             <h3>
-                {{$ml.get('Round')}}
+                {{$t('Round')}}
                  {{bidsArr.length + 1}}</h3>
             <div  class="round-container round-container_active">
                 <div class="round-container__time-patricipant round-container__time-patricipant-active">

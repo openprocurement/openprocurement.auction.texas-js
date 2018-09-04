@@ -6,7 +6,7 @@
         <div
         class="status-label-container__text"
          v-if="state == 'active'">
-            {{$ml.get(textStatus)}}
+            {{$t(textStatus)}}
             <div class="status-label-container-active__round">
             {{bidsArr.length + 1}}
             </div>
@@ -14,7 +14,7 @@
           <div v-else
           class="status-label-container__text"
           >
-           {{$ml.get(textStatus)}}
+           {{$t(textStatus)}}
         </div>
     <div 
     class="status-label-container__sign" 

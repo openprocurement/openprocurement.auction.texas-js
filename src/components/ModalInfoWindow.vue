@@ -9,12 +9,12 @@
     </div>
 
     <div class="modal-container__info modal-container__info_step-bid">
-             {{$ml.get('Step reduction of Bid')}}:
+             {{$t('Step reduction of Bid')}}:
         <strong>{{startBid}}</strong>
     </div>
 
     <div class="modal-container__info modal-container__info_start-bid">
-        {{$ml.get('Start value')}}:
+        {{$t('Start value')}}:
         {{startBid}}
     </div>
      <div class="modal-container__info modal-container__info_browser-id">
@@ -28,7 +28,7 @@
         <hr>
     </div>
     <div class="modal-container__info modal-container__choose-languages">
-      <div>{{$ml.get('Language')}}</div><br/>
+      <div>{{$t('Language')}}</div><br/>
       <div>
       <app-languages-toggle-switch>
       </app-languages-toggle-switch>

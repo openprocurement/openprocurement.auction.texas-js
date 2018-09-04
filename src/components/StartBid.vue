@@ -1,7 +1,7 @@
 <template>
  <div class="start-pricing-container">
             <h5 class="start-pricing-container__label">
-                {{$ml.get('Start value')}}
+                {{$t('Start value')}}
                 </h5>
             <div class="start-pricing-container__block">
                    <h4>{{startBid}} грн</h4>
