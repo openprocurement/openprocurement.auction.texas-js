@@ -23,13 +23,13 @@ export default {
   },
   size: {
     fontSize: 14,
-    height: 34,
+    height: 42,
     padding: 7,
     width: 250
   },
   items: {
     delay: .4,
-    preSelected: 'unknown',
+    preSelected: localStorage.getItem('language'),
     disabled: false,
     labels: [
       {name: 'English', color: '#000', backgroundColor: 'lightgrey'}, 
@@ -45,6 +45,9 @@ export default {
 </script>
 
 <style>
+.toggle-switch{
+  max-width: 90%;
+}
 
 </style>
 
