@@ -133,7 +133,7 @@ data () {
     justify-content: center;
     align-items: center;
     align-self: center;
-    width: 30%;
+    min-width: 30%;
     height: 90%;
     background-color: #e9e9e9;
     margin-right: 3px;
