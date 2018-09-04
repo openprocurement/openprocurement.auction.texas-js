@@ -71,8 +71,9 @@ export default {
 
 <style scoped>
 .modal-container-wrapper{
-    min-width: 50%;
+    min-width: 30%;
     height: 91vh;
+    margin-right: 30px;
     background-color: #ffffff;
     position: fixed;
     top: 96px;
