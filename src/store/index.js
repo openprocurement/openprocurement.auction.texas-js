@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
 import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
@@ -10,6 +11,7 @@ const debug = process.env.NODE_ENV !== 'production';
 
 const store =  new Vuex.Store({
   strict: debug,
+  plugins: [createPersistedState()],
   state: {
     apiUrl: 'http://127.0.0.1:8000/',
     auctionURL: 'http://127.0.0.1:8090/',
@@ -31,6 +33,9 @@ const store =  new Vuex.Store({
       state.loginInfo.isLogged = true
       state.loginInfo.accessToken = data.access
       state.loginInfo.refreshToken = data.refresh
+    },
+    language(state, data){
+      state.i18n.locale = data
     },
     logout (state) {
       state.loginInfo.isLogged = false
@@ -55,9 +60,14 @@ const store =  new Vuex.Store({
       .catch( error => {
         console.log(error.response.statusText)
       })
-    }
+    },
   },
 });
+
+window.onbeforeunload = function() {
+return localStorage.setItem('language', store.state.i18n.locale);
+};
+const language = localStorage.getItem('language');
 
 import vuexI18n from 'vuex-i18n'
 Vue.use(vuexI18n.plugin, store);
@@ -65,5 +75,7 @@ Vue.use(vuexI18n.plugin, store);
 Vue.i18n.add('English', english);
 Vue.i18n.add('Українська', ukrainian);
 Vue.i18n.add('Русский', russian);
-Vue.i18n.set('English');
+Vue.i18n.fallback("English");
+Vue.i18n.set(language);
+
 export default store
