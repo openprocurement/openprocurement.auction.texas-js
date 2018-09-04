@@ -1,17 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios'
+import english from '../translations/english.js';
+import ukrainian from '../translations/ukrainian.js';
+import russian from '../translations/russian.js';
 
 Vue.use(Vuex);
+const debug = process.env.NODE_ENV !== 'production';
 
-export default new Vuex.Store({
+const store =  new Vuex.Store({
+  strict: debug,
   state: {
     apiUrl: 'http://127.0.0.1:8000/',
     auctionURL: 'http://127.0.0.1:8090/',
     loginInfo: {
       isLogged: false,
       accessToken: '',
-      refreshToken: ''
     },
     userInfo: {
       auctions: [],
@@ -54,3 +58,12 @@ export default new Vuex.Store({
     }
   },
 });
+
+import vuexI18n from 'vuex-i18n'
+Vue.use(vuexI18n.plugin, store);
+
+Vue.i18n.add('English', english);
+Vue.i18n.add('Українська', ukrainian);
+Vue.i18n.add('Русский', russian);
+Vue.i18n.set('English');
+export default store
