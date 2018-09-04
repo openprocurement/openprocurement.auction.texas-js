@@ -22,6 +22,11 @@ const store =  new Vuex.Store({
     userInfo: {
       auctions: [],
       bids: []
+    },
+
+    infoFromCouch: {
+      auction: '',
+      dateOfAuction: ''
     }
   },
   mutations: {
@@ -36,6 +41,10 @@ const store =  new Vuex.Store({
     },
     language(state, data){
       state.i18n.locale = data
+    },
+    setInfoFromCouch(state, data) {
+      state.infoFromCouch.auction = data
+      state.infoFromCouch.auction = data
     },
     logout (state) {
       state.loginInfo.isLogged = false
