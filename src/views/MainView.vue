@@ -66,6 +66,9 @@
         :startBid="startBid">
           </app-start-bid>
 
+          <app-pouch-couch>
+          </app-pouch-couch>
+
           <app-list-initial-offers 
           :initialBidsArr="initialBidsArr"
           v-if="state == 'pendingOfAuction' && (remainedTimeOfRound < 300)" >
@@ -133,6 +136,7 @@ import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppListOfRoundsActive from '../components/ListOfRoundsActive';
 import AppListOfRoundsCompleted from '../components/ListOfRoundsCompleted';
+import AppPouchCouch from '../components/PouchCouch';
 export default {
   props: {
     id: {
@@ -153,9 +157,9 @@ export default {
       descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
       remainedTimeOfRound: 180,
       dateOfAuction: {
-        date: Math.trunc(Date.parse('Wed Sep 03 2018 9:24:35 GMT+0200 (EET)') / 1000),
+        date: Math.trunc(Date.parse('Wed Sep 04 2018 16:47:55 GMT+0200 (EET)') / 1000),
       },
-      durationOfRound: 180,
+      durationOfRound: 15,
       stoppingTimeOfRound: 10,
       startBid: 100.65,
       currentBid: 100.85,
@@ -214,10 +218,16 @@ export default {
     },
 
     checkTimeOut(res) {
-      this.timeOut = res;
-      if (res) {
-        this.dateOfAuction.date = this.dateOfAuction.date + this.durationOfRound;
+      if(res){
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+      if (res && this.state === 'pendingOfAuction' || res && this.state === 'pendingOfRound' ) {
         this.state = 'active';
+        this.dateOfAuction.date = this.dateOfAuction.date + this.durationOfRound;
+      }
+
+       else if (res) {
+        this.state = 'completed';
       }
     },
     getRemainedTimeofRound(remainedTime) {
@@ -238,6 +248,10 @@ export default {
   mounted() {
     window.scrollTo(0, document.body.scrollHeight);
   },
+
+  updated() {
+     window.scrollTo(0, document.body.scrollHeight);
+  },
   components :{
     AppHongSoundsText,
     AppStartBid,
@@ -249,7 +263,8 @@ export default {
     AppStatusInfoLabel,
     AppIncreasingAndApproval,
     AppListOfRoundsActive,
-    AppListOfRoundsCompleted
+    AppListOfRoundsCompleted,
+    AppPouchCouch
   }
 };
 </script>
