@@ -3,7 +3,6 @@ import App from './App';
 import router from './router';
 import store from './store';
 import './plugins/plugins';
-import './plugins/ml'
 
 Vue.config.productionTip = false;
 new Vue({
