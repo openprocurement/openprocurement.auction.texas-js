@@ -65,7 +65,7 @@ export default {
         },1000);
     },
     computed: {
-        seconds() {
+    seconds() {
             return (this.date - this.now) % 60;
         },
     minutes() {
@@ -81,14 +81,16 @@ export default {
             ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
             (this.$emit('checkTimeOut', true))
             :
-            ( this.$emit('checkTimeOut', false))
+            (null)
         },
     getRemainedTimeofRound(){
             this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60))
         },
 
     getCurrentTime(){
+        if (this.state === 'active'){
             this.$emit('getCurrentTime', this.now)
+        }
         },
     },
     methods: {
