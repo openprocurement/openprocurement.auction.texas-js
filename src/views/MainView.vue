@@ -98,13 +98,13 @@
     <footer  v-if="state !== 'completed'" class="footer-container">
           <h4
         v-if="state == 'pendingOfRound'">
-        {{$ml.get('Waiting for start of round')}}
+        {{$t('Waiting for start of round')}}
         </h4>
 
         <h4
         v-else-if="state == 'pendingOfAuction'"
         >
-        {{$ml.get('Waiting for start of auction')}}
+        {{$t('Waiting for start of auction')}}
         </h4>
 
        <app-increasing-and-approval v-else-if="state == 'active'"

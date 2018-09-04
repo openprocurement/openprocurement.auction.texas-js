@@ -6,7 +6,7 @@
      >
    <option 
    value=null disabled hidden>
-   {{$ml.get('Select amount')}}
+   {{$t('Select amount')}}
    </option>
   <option 
   v-for="(option, index) in checkSelected.options" :key="index" v-bind:value="option.value"
@@ -22,14 +22,14 @@
 
     @click="addNewBidIncrease"
     >
-    {{$ml.get('Increase')}}
+    {{$t('Increase')}}
     </button>
   </div>
 
    <div class="approval-container">
       <div class="approval-question-container">
           <h6 class="approval-question">
-              {{$ml.get('Do you agree on the amount')}}
+              {{$t('Do you agree on the amount')}}
               </h6>
           <strong>{{currentBid}}</strong>
       </div>
@@ -39,7 +39,7 @@
     class="button button__approval" 
      @click="addNewBidApprove"
     >
-    {{$ml.get('Agree')}}
+    {{$t('Agree')}}
     </button>
   </div>
 </div>

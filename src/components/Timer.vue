@@ -19,20 +19,20 @@
     <div class="clock-container">
     <h6 class="clock-container__status-time"
     >
-    {{$ml.get(timeStatus)}}
+    {{$t(timeStatus)}}
     </h6>
 <div class="clock-container__time">
         <div class="digit" v-show="days !==0">{{ days }}
-            {{$ml.get('days')}}
+            {{$t('days')}}
             </div>
         <div class="digit" v-show="hours !==0">{{ hours }}
-            {{$ml.get('hours')}}
+            {{$t('hours')}}
             </div>
         <div class="digit" v-show="minutes !==0">{{ minutes }}
-            {{$ml.get('minutes')}}
+            {{$t('minutes')}}
             </div>
         <div class="digit" v-show="seconds !==0">{{ seconds }}
-            {{$ml.get('seconds')}}
+            {{$t('seconds')}}
             {{checkTimeOut}}
             {{getRemainedTimeofRound}}
             {{getCurrentTime}}

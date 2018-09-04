@@ -8,7 +8,7 @@
             </div>
             <div class="round-container_participant">
                 <div class="round-container_participant__order-number">
-                {{$ml.get('Bidder')}}
+                {{$t('Bidder')}}
                 {{index + 1}}
                 </div>
                   <div class="round-container_participant-expended">
@@ -24,7 +24,7 @@
 
           <div  id="active-round" class="max-round">
             <h6><strong>
-                {{$ml.get('Announcement')}}
+                {{$t('Announcement')}}
                 </strong></h6>
             <div  class="round-container round-container_max">
                 <div class="round-container__time-patricipant">
@@ -34,7 +34,7 @@
 
                 <div class="round-container_participant">
                 <div class="round-container_participant__order-number">
-                      {{$ml.get('Bidder')}}
+                      {{$t('Bidder')}}
                        10
                       </div>
                 <div class="round-container_participant-expended">
