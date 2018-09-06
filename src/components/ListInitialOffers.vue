@@ -12,7 +12,9 @@
             </div>
                 </div>
                 <div class="offer-container_bid">
-                   <h4>{{bid}} грн</h4>
+                   <h4>{{bid}} 
+                       {{$t('UAH')}}
+                       </h4>
                 </div>
             </div>
      </div>
