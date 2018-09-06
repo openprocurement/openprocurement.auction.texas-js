@@ -4,7 +4,9 @@
                 {{$t('Start value')}}
                 </h5>
             <div class="start-pricing-container__block">
-                   <h4>{{startBid}} грн</h4>
+                   <h4>{{startBid}} 
+                       {{$t('UAH')}}
+                       </h4>
             </div>
         </div>
 </template>

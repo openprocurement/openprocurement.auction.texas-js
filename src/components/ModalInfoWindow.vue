@@ -2,7 +2,8 @@
 <div class="modal-container-wrapper">
     <div class="modal-container">
            <div class="modal-container__info modal-container__tender-number">
-        {{tenderNumber}}
+        {{auctionID}}
+               <i class="fa fa-info-circle"></i>
     </div>
     <div class="modal-container__info modal-container__info_description-Products">
         {{descriptionOfProducts}}
@@ -47,7 +48,7 @@
 import AppLanguagesToggleSwitch from './LanguagesToggleSwitch';
 export default {
      props: {
-    tenderNumber: {
+    auctionID: {
       type: String,
     },
     startBid: {
@@ -114,6 +115,16 @@ export default {
 .modal-container__choose-languages{
     display: flex;
     flex-direction: column;
+}
+
+.modal-container__tender-number{
+    display: flex;
+    justify-content: space-between;
+}
+
+.fa-info-circle{
+    color: grey;
+    font-size: 27px;
 }
 
 </style>
