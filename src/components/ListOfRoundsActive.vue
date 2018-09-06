@@ -90,9 +90,6 @@ data () {
         this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
     },
   },
-//    updated() {
-//      window.scrollTo(0, document.body.scrollHeight);
-//   },
   components: {
       RadialProgressBar,
       AppListInitialOffers
