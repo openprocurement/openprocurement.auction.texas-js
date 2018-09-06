@@ -17,7 +17,9 @@
             </div>
                 </div>
                 <div class="round-container_bid">
-                   <h4>{{bid}} грн</h4>
+                   <h4>{{bid}} 
+                       {{$t('UAH')}}
+                       </h4>
                 </div>
             </div>
      </div>
@@ -43,7 +45,9 @@
             </div>
                 </div>
                 <div class="round-container_bid round-container_bid_max">
-                   <h4 class="round-container_bid_max__bid-count">{{currentBid}} грн</h4>
+                   <h4 class="round-container_bid_max__bid-count">{{currentBid}}
+                        {{$t('UAH')}}
+                        </h4>
                    <div class="round-container_bid_max-block">
                 <div class="round-container_bid_max-block-count">
                     MAX
