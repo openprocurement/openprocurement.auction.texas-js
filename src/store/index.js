@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
+import utils from '../utils/utils.js';
 import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
@@ -25,8 +26,6 @@ const store =  new Vuex.Store({
     },
 
     infoFromCouch: {
-      auction: '',
-      dateOfAuction: ''
     }
   },
   mutations: {
@@ -43,8 +42,7 @@ const store =  new Vuex.Store({
       state.i18n.locale = data
     },
     setInfoFromCouch(state, data) {
-      state.infoFromCouch.auction = data
-      state.infoFromCouch.auction = data
+      state.infoFromCouch = data
     },
     logout (state) {
       state.loginInfo.isLogged = false
@@ -61,16 +59,19 @@ const store =  new Vuex.Store({
     }
   },
   actions: {
-    getUserInfo (context) {
-      axios.get(context.state.apiUrl + 'authoriz/my-items/', utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
+    makeBidOfRound (context, jsonToSubmit) {
+      axios.post(
+        context.state.apiUrl,
+         jsonToSubmit,
+          utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
       .then(response => {
-          context.commit('setUserInfo', response.data)
+          context.commit('setInfoFromCouch', response)
       })
-      .catch( error => {
-        console.log(error.response.statusText)
+      .catch(error => {
+        console.log(context.state.apiUrl, jsonToSubmit, utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
       })
     },
-  },
+  }
 });
 
 window.onbeforeunload = function() {
