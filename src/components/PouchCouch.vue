@@ -2,11 +2,12 @@
 </template>
 <script>
 import PouchDB from 'pouchdb'
+import infoPouch from '@/fakeInfo/infoPouchCouch'
 export default {
     db: null,
     data(){
         return{
-            dataa: []
+            data: []
         }
     },
 
@@ -15,8 +16,8 @@ export default {
       this.db.allDocs({include_docs: true})
         .then(r => r.rows)
         .then(list => {
-          this.dataa = list
-          console.log('fetched %d data', this.$store.commit('setInfoFromCouch', 'data'))
+          this.data = infoPouch;
+          this.$store.commit('setInfoFromCouch', this.data);
         })
         .catch(console.error)
     }
@@ -28,7 +29,8 @@ export default {
       live: true,
       retry: true
     }).on('change', change => {
-      console.log('data change', change)
+      this.data = change
+      this.$store.commit('setInfoFromCouch', this.data);
       this.fetch()
     }).on('error', function (err) {
       console.log('sync error', err)
