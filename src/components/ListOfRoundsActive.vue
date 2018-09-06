@@ -1,9 +1,5 @@
 <template>
  <div class="list-rounds-container">
-<app-list-initial-offers
-:bidsArr="bidsArr"
->
-  </app-list-initial-offers>
      <div v-for="(bid, index) in bidsArr" :key="index">
             <h3>
                 {{$t('Round')}}
@@ -19,7 +15,7 @@
                 </div>
 
                  <div class="round-container_time__watch">
-                   {{currentTime | moment("hh:mm:ss")}}
+                   {{pauseTime | moment("hh:mm:ss")}}
                 </div>
 
             </div>
@@ -31,7 +27,9 @@
 
                 </div>
                 <div class="round-container_bid">
-                   <h4>{{bid}} грн</h4>
+                   <h4>{{bid}} 
+                       {{$t('UAH')}}
+                       </h4>
                 </div>
             </div>
             
@@ -64,7 +62,9 @@
             </div>        
                 </div>
                 <div class="round-container_bid round-container_bid_active">
-                   <h4>{{currentBid}} грн</h4>
+                   <h4>{{currentBid}} 
+                       {{$t('UAH')}}
+                       </h4>
                    {{calculateMovingRotate}}
                 </div>
             </div>
@@ -79,7 +79,7 @@
  import AppListInitialOffers from './ListInitialOffers.vue'
 export default {
     props: ['bid', 'bidsArr', 'startBid', 'currentTime',
-    'currentBid', 'remainedTimeOfRound', 'durationOfRound', 'state'],
+    'currentBid', 'remainedTimeOfRound', 'durationOfRound', 'state', 'pauseTime'],
 data () {
     return {
          value: 0,
@@ -90,6 +90,9 @@ data () {
         this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
     },
   },
+//    updated() {
+//      window.scrollTo(0, document.body.scrollHeight);
+//   },
   components: {
       RadialProgressBar,
       AppListInitialOffers
@@ -149,6 +152,10 @@ data () {
 .round-container_participant{
     width: 35%;
     text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 21.18px;
 }
 
 </style>
