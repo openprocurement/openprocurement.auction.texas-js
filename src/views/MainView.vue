@@ -2,7 +2,7 @@
 <div class="app-wrapper">
     <app-modal-info-window
             v-show="showOrHide"
-            :tenderNumber="tenderNumber"
+            :auctionID="auctionID"
             :startBid="startBid"
             :browserId="browserId"
             :companyName="companyName"
@@ -30,7 +30,7 @@
         </app-status-info-label>
     </header>
         <app-status-timer-line 
-        v-if="state == 'active'"
+        v-if="state == 'active' && (remainedTimeOfRound > 0)"
         :durationOfRound="durationOfRound"
         :remainedTimeOfRound="remainedTimeOfRound"
         :state="state"
@@ -50,7 +50,7 @@
           <div class="container-main__image-container">
             <img src="/static/images/numberOfTender_icon.png" alt="number-Of-tender">
           </div>
-        {{tenderNumber}}
+        {{auctionID}}
         </div>
         <div class="container-main__discribe-tender">
           <div class="container-main__discribe-tender_company-name">
@@ -71,7 +71,7 @@
 
           <app-list-initial-offers 
           :initialBidsArr="initialBidsArr"
-          v-if="state == 'pendingOfAuction' && (remainedTimeOfRound < 300)" >
+          v-if="(state === 'pendingOfAuction' || state === 'active') && (remainedTimeOfRound < 300)" >
           </app-list-initial-offers>
 
           <app-list-of-rounds-active v-if="state == 'active' || state == 'pendingOfRound'" 
@@ -79,8 +79,9 @@
           :round="round"
           :bidsArr="bidsArr"
           :startBid="startBid"
-          :currentBid="currentBid"
+          :currentBid="stages[1].amount"
           :currentTime="currentTime"
+          :pauseTime="stages[0].start"
           :remainedTimeOfRound="remainedTimeOfRound"
           :durationOfRound='durationOfRound'
           :state="state"
@@ -93,12 +94,14 @@
           :round="round"
           :bidsArr="bidsArr"
           :startBid="startBid"
-          :currentBid="currentBid"
+          :currentBid="stages[1].amount"
           :currentTime="currentTime"
           >
           </app-list-of-rounds-completed>
     </main>
-    <footer  v-if="state !== 'completed'" class="footer-container">
+    <footer  v-if="state !== 'completed'" 
+    class="footer-container"
+    :class="'footer-container_' + state">
           <h4
         v-if="state == 'pendingOfRound'">
         {{$t('Waiting for start of round')}}
@@ -115,7 +118,7 @@
        @calculateCurrentBid="calculateCurrentBid"
        @holdRoundTime="holdRoundTime"
        :startBid="startBid"
-       :currentBid="currentBid"
+       :currentBid="stages[1].amount"
        :bidsArr="bidsArr"
        >
          </app-increasing-and-approval>
@@ -151,22 +154,35 @@ export default {
       hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
       timeOut: false,
       currentTime: '',
+      pauseTime : '',
       browserId: 'b9c09979-7d7e-4ed5-81a7-730274f42e67',
-      tenderNumber: 'UA-EA-2018-07-27-000020-B',
+      auctionID: this.$store.state.infoFromCouch.auctionID,
       companyName: 'AT "УКРГАЗВИДОБУВАННЯ :UA-EA-2018-07-27-000020-B aasdasdasas',
       descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
       remainedTimeOfRound: 180,
       dateOfAuction: {
-        date: Math.trunc(Date.parse('Wed Sep 04 2018 16:47:55 GMT+0200 (EET)') / 1000),
+        date: Math.trunc(Date.parse(this.$store.state.infoFromCouch.stages[0].start) / 1000),
       },
-      durationOfRound: 15,
+      durationOfRound: 180,
       stoppingTimeOfRound: 10,
-      startBid: 100.65,
+      startBid: this.$store.state.infoFromCouch.initial_value,
       currentBid: 100.85,
-      bidsArr: [1232, 5656, 465345, 4534, 3243 , 234],
-      initialBidsArr: [32, 56, 345, 434, 243 , 34],
+      bidsArr: [],
+      initialBidsArr: [100, 130, 150, 154],
       round: 1,
       roundArr: [],
+      stages: [
+       {
+           start: this.$store.state.infoFromCouch.stages[0].start,
+           type: this.$store.state.infoFromCouch.stages[0].type
+       },
+       {
+           amount: this.$store.state.infoFromCouch.stages[1].amount,
+           start: this.$store.state.infoFromCouch.stages[1].start,
+           time: this.$store.state.infoFromCouch.stages[1].time,
+           type: this.$store.state.infoFromCouch.stages[1].type
+       }
+   ],
       statusMessage: {
         active: {
           type: 'active',
@@ -213,7 +229,7 @@ export default {
     },
 
     holdRoundTime() {
-      this.dateOfAuction.date = this.currentTime + this.stoppingTimeOfRound;
+      this.dateOfAuction.date = Math.trunc(Date.parse(this.stages[1].start)/1000);
       this.state = 'pendingOfRound';
     },
 
@@ -247,10 +263,6 @@ export default {
   },
   mounted() {
     window.scrollTo(0, document.body.scrollHeight);
-  },
-
-  updated() {
-     window.scrollTo(0, document.body.scrollHeight);
   },
   components :{
     AppHongSoundsText,
@@ -306,9 +318,13 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 95px;
     background-color: #e9e9e9;
     border-top: 3px solid #d9d9d9;
+    height: 95px;
+}
+
+.footer-container_active{
+    height: 200px;
 }
 
 .container-main__tender-number{
