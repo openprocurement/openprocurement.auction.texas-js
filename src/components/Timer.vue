@@ -134,6 +134,7 @@ export default {
 .clock-container__calendar-icon{
     display: flex;
     align-self: center;
+    margin-top: 17px;
 }
 
 .digit {
