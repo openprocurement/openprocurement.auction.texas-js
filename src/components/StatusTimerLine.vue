@@ -33,7 +33,7 @@ props:['remainedTimeOfRound', 'durationOfRound', "state" ],
     top: 92px;
     height: 4px;
     background-color: #9ab913;
-    transition: width 2s;
+    transition: width .6s ease;
 }
 
 </style>
