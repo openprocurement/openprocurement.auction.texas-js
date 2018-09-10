@@ -1,69 +1,95 @@
 <template>
- <div class="list-rounds-container">
-     <div v-for="(bid, index) in bidsArr" :key="index">
-            <div class="round-container">
-                <div class="round-container__time-patricipant">
-            <div class="round-container_time">
-                     <img src="/static/images/watchInRound.png" alt="watch">
+  <div class="list-rounds-container">
+    <div v-for="(bid, index) in bidsArr" :key="index">
+      <div class="round-container">
+        <div class="round-container__time-patricipant">
+          <div class="round-container_time">
+            <img src="/static/images/watchInRound.png" alt="watch">
+          </div>
+          <div class="round-container_participant">
+            <div class="round-container_participant__order-number">
+              {{ $t('Bidder') }}
+              {{ index + 1 }}
             </div>
-            <div class="round-container_participant">
-                <div class="round-container_participant__order-number">
-                {{$t('Bidder')}}
-                {{index + 1}}
-                </div>
-                  <div class="round-container_participant-expended">
-                MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
-               </div>
+            <div class="round-container_participant-expended">
+              MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
             </div>
-                </div>
-                <div class="round-container_bid">
-                   <h4>{{bid}} 
-                       {{$t('UAH')}}
-                       </h4>
-                </div>
-            </div>
-     </div>
-
-          <div  id="active-round" class="max-round">
-            <h6><strong>
-                {{$t('Announcement')}}
-                </strong></h6>
-            <div  class="round-container round-container_max">
-                <div class="round-container__time-patricipant">
-            <div class="round-container_time round-container_time_max">
-                    <img src="/static/images/watchInRoundMax.png" alt="watch">
-            </div>
-
-                <div class="round-container_participant">
-                <div class="round-container_participant__order-number">
-                      {{$t('Bidder')}}
-                       10
-                      </div>
-                <div class="round-container_participant-expended">
-                MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
-               </div>
-            </div>
-                </div>
-                <div class="round-container_bid round-container_bid_max">
-                   <h4 class="round-container_bid_max__bid-count">{{currentBid}}
-                        {{$t('UAH')}}
-                        </h4>
-                   <div class="round-container_bid_max-block">
-                <div class="round-container_bid_max-block-count">
-                    MAX
-                    </div>
-                   </div>
-                </div>
-            </div>
-     </div>
-
+          </div>
         </div>
-</template>
+        <div class="round-container_bid">
+          <h4>{{ bid }} 
+            {{ $t('UAH') }}
+          </h4>
+        </div>
+      </div>
+    </div>
 
+    <div id="active-round" class="max-round">
+      <h6><strong>
+        {{ $t('Announcement') }}
+      </strong></h6>
+      <div class="round-container round-container_max">
+        <div class="round-container__time-patricipant">
+          <div class="round-container_time round-container_time_max">
+            <img src="/static/images/watchInRoundMax.png" alt="watch">
+          </div>
+          <div class="round-container_participant">
+            <div class="round-container_participant__order-number">
+              {{ $t('Bidder') }}
+              10
+            </div>
+            <div class="round-container_participant-expended">
+              MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
+            </div>
+          </div>
+        </div>
+        <div class="round-container_bid round-container_bid_max">
+          <h4 class="round-container_bid_max__bid-count">{{ currentBid }}
+            {{ $t('UAH') }}
+          </h4>
+          <div class="round-container_bid_max-block">
+            <div class="round-container_bid_max-block-count">
+              MAX
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <script>
 export default {
-    props: ['round', 'bid', 'bidsArr', 'startBid', 'currentTime', 'currentBid', 'remainedTimeOfRound'],
+  props: {
+    bid: {
+      type: Number,
+      default: null
+    },
+    bidsArr: {
+      type: Array,
+      default: null
+    },
+    startBid: {
+      type: Number,
+      default: null
+    },
+    currentTime: {
+      type: Number,
+      default: null
+    },
+    currentBid: {
+      type: Number,
+      default: null
+    },
+    remainedTimeOfRound: {
+      type: Number,
+      default: null
+    },
+    round: {
+      type: Number,
+      default: null
+    },
+  },
 }
 </script>
 
@@ -111,6 +137,7 @@ export default {
     justify-content: center;
     height: 100%;
     width: 70%;
+    
 }
 
 .round-container_participant__order-number{

@@ -1,21 +1,26 @@
 <template>
- <div class="start-pricing-container">
-            <h5 class="start-pricing-container__label">
-                {{$t('Start value')}}
-                </h5>
-            <div class="start-pricing-container__block">
-                   <h4>{{startBid}} 
-                       {{$t('UAH')}}
-                       </h4>
-            </div>
-        </div>
+  <div class="start-pricing-container">
+    <h5 class="start-pricing-container__label">
+      {{ $t('Start value') }}
+    </h5>
+    <div class="start-pricing-container__block">
+      <h4>{{ startBid }} 
+        {{ $t('UAH') }}
+      </h4>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: ['startBid'],
-    data () {
-    return { friends: 5 }
+  props: {
+    startBid: {
+      type: Number,
+      default: null 
+    }
+  },
+  data () {
+    return { friends: 5 }  
   }
 }
 </script>

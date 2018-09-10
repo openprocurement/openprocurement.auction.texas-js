@@ -19,85 +19,88 @@
     <div class="clock-container">
     <h6 class="clock-container__status-time"
     >
-    {{$t(timeStatus)}}
+    {{ $t(timeStatus) }}
     </h6>
 <div class="clock-container__time">
-        <div class="digit" v-show="days !==0">{{ days }}
-            {{$t('days')}}
+        <div v-show="days !==0" class="digit" >{{ days }}
+            {{ $t('days') }}
             </div>
-        <div class="digit" v-show="hours !==0">{{ hours }}
-            {{$t('hours')}}
+        <div v-show="hours !==0" class="digit">{{ hours }}
+            {{ $t('hours') }}
             </div>
-        <div class="digit" v-show="minutes !==0">{{ minutes }}
+          <div v-show="minutes !==0" class="digit" >{{ minutes }}
             {{$t('minutes')}}
             </div>
-        <div class="digit" v-show="seconds !==0">{{ seconds }}
-            {{$t('seconds')}}
-            {{checkTimeOut}}
-            {{getRemainedTimeofRound}}
-            {{getCurrentTime}}
+            <div v-show="seconds !==0" class="digit" >{{ seconds }}
+            {{ $t('seconds') }}
+            {{ checkTimeOut }}
+            {{ getRemainedTimeofRound }}
+            {{ getCurrentTime }}
         </div>
 </div>
 </div>
     </div>
-
-</div>
-
+  </div>
 </template>
 
 <script>
 export default {
-    props : {
-        date : {
-            coerce: date => date
-        },
-        state:String,
-        timeStatus:String
+  props : {
+    date : {
+      coerce: date => date,
     },
-    data() {
-        return {
-            now: Math.trunc((new Date()).getTime() / 1000)
-        }
+    state: {
+      type: String,
+      default: null
     },
-    mounted() {
-        window.setInterval(() => {
-            this.now = Math.trunc((new Date()).getTime() / 1000);
-        },1000);
-    },
-    computed: {
-    seconds() {
-            return (this.date - this.now) % 60;
-        },
-    minutes() {
-            return Math.trunc((this.date - this.now) / 60) % 60;
-        },
-    hours() {
-            return Math.trunc((this.date- this.now) / 60 / 60) % 24;
-        },
-    days() {
-            return Math.trunc((this.date - this.now) / 60 / 60 / 24);
-        },
-    checkTimeOut() {
-            ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
-            (this.$emit('checkTimeOut', true))
-            :
-            (null)
-        },
-    getRemainedTimeofRound(){
-            this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60))
-        },
-
-    getCurrentTime(){
-        if (this.state === 'active'){
-            this.$emit('getCurrentTime', this.now)
-        }
-        },
-    },
-    methods: {
-    showOrHideModalWindow(){
-            this.$emit('showOrHideModalWindow')
-        },
+    timeStatus: {
+      type: String,
+      default: null
     }
+  },
+  data() {
+    return {
+      now: Math.trunc((new Date()).getTime() / 1000)
+    }
+  },
+  computed: {
+    seconds() {
+      return (this.date - this.now) % 60;
+    },
+    minutes() {
+      return Math.trunc((this.date - this.now) / 60) % 60;
+    },
+    hours() {
+      return Math.trunc((this.date- this.now) / 60 / 60) % 24;
+    },
+    days() {
+      return Math.trunc((this.date - this.now) / 60 / 60 / 24);
+    },
+    checkTimeOut() {
+      ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
+        (this.$emit('checkTimeOut', true))
+        :
+        (null)
+    },
+    getRemainedTimeofRound(){
+      this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60))
+    },
+    getCurrentTime(){
+      if (this.state === 'active'){
+        this.$emit('getCurrentTime', this.now)
+      }
+    },
+  },
+  mounted() {
+    window.setInterval(() => {
+      this.now = Math.trunc((new Date()).getTime() / 1000);
+    },1000);
+  },
+  methods: {
+    showOrHideModalWindow(){
+      this.$emit('showOrHideModalWindow')
+    },
+  }
 };
 </script>
 

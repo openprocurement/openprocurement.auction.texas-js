@@ -1,12 +1,10 @@
 
 <template>
-<div class="hong-container"
-     :class="'hong-container_'"
->
+  <div :class="'hong-container_'" class="hong-container">
     <div class="hong-container__text">
-        ЛУНАЄ ГОНГ!
+      ЛУНАЄ ГОНГ!
     </div>
-</div>
+  </div>
 </template>
 
 <script>
