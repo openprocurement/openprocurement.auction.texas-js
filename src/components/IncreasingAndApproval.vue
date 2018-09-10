@@ -1,135 +1,122 @@
 <template>
-<div class="increase-approval-container">
-  <div class="container-bid increase-bid-container">
-          <div class="select-choice-bid-wrapper">
-<div class="select-choice-bid-container">
-     <select class="select-bid"
-      v-model="selected"
-      @click.stop = "makeMaxSize"
-      :size = "size">
-   <option
-   value=null disabled hidden>
-   {{$t('Select amount')}}
-   </option>
-  <option 
-  @click.stop = "makeSizeOne"
-  v-for="(option, index) in valueForOptionSelect.options" 
-  :key="index" 
-  :value="option.value"
-  type="number"
-  >
-    {{ option.text }}
-  </option>
-</select>
-   <i 
-   class="fa"
-   :class="'fa-angle-' + direction"
-    @click.stop = "makeMaxSize($event)"
-   ></i>
-      </div>
+  <div class="increase-approval-container">
+    <div class="container-bid increase-bid-container">
+      <div class="select-choice-bid-wrapper">
+        <div class="select-choice-bid-container">
+          <select v-model="selected" :size = "size" class="select-bid" 
+                  @click.stop = "makeMaxSize" >
+            <option
+              value= "null" disabled hidden>
+   {{ $t('Select amount') }}
+            </option>
+            <option 
+              v-for="(option, index) in valueForOptionSelect.options"
+              :key="index" 
+              :value="option.value"
+              type="number"
+              @click.stop = "makeSizeOne">
+              {{ option.text }}
+            </option>
+          </select>
+          <i :class="'fa-angle-' + direction" class="fa" @click.stop = "makeMaxSize($event)" />
+        </div>
 </div>
     <button 
-    type="submit" 
-    v-scroll-to="'#active-round'"
-    class='button'
-    :class="'butoon__increase_' + type" 
-    :disabled="selected === null"
-    @click="addNewBidIncrease"
-    >
-    {{$t('Increase')}}
+        type="submit" 
+        v-scroll-to="'#active-round'"
+        class='button'
+        :class="'butoon__increase_' + type" 
+        :disabled="selected === null"
+    @click="addNewBidIncrease">
+        {{ $t('Increase') }}
     </button>
-  </div>
-
+    </div>
    <div class="container-bid approval-container">
       <div class="approval-question-container">
-          <h6 class="approval-question">
-              {{$t('Do you agree on the amount')}}
-              </h6>
-          <strong>{{currentBid}}</strong>
+        <h6 class="approval-question">
+              {{ $t('Do you agree on the amount') }}
+        </h6>
+          <strong>{{ currentBid }}</strong>
       </div>
-    <button 
+      <button 
      v-scroll-to="'#active-round'"
-    type="submit" 
+        type="submit" 
     class="button button__approval" 
-     @click="addNewBidApprove"
-    >
-    {{$t('Agree')}}
-    </button>
-  </div>
+         @click="addNewBidApprove">
+        {{ $t('Agree') }}
+      </button>
 </div>
+  </div>
 </template>
 
 <script>
 import validators from '../utils/validators.js'
 export default {
-        props : {
-        startBid : Number,
-        currentBid:Number,
-        bidsArr: Array,
-    },
+  props : {
+      startBid : Number,
+      currentBid:Number,
+      bidsArr: Array,
+  },
 
     data(){
         return{
-            selected:null,
-            size: 1,
-            type: '',
-            calculatedValue: this.currentBid,
-            direction: 'down'
-        }
-    },
+      selected:null,
+      size: 1,
+      type: '',
+      calculatedValue: this.currentBid,
+      direction: 'down'
+    }
+  },
 
   computed: {
       valueForOptionSelect() {
           let options = [];
             for (let i = 0; i <= 10; i++){
-                this.calculatedValue = (this.calculatedValue * 1.05).toFixed(2);
-                options.push(
-                    {value: this.calculatedValue, text: this.calculatedValue},
-                )
-               }
-          return {
-               selected: null,
-               options
-             }
-      },
+        this.calculatedValue = (this.calculatedValue * 1.05).toFixed(2);
+        options.push(
+          {value: this.calculatedValue, text: this.calculatedValue},
+        )
+      }
+      return {
+        selected: null,
+        options
+      }
+    },
   },
-    methods: {
-      addNewBidIncrease() {
-          if(!this.selected) return 
-        this.$emit('calculateCurrentBid', this.currentBid);
-        this.$emit('addNewBid', this.selected);
-        this.$emit('holdRoundTime');
-        this.submitBid(this.selected);
-        this.selected = null;
-      },
-
-      addNewBidApprove() {
-        
-        this.$emit('calculateCurrentBid', this.currentBid);
-        this.$emit('addNewBid', this.currentBid);
-        this.$emit('holdRoundTime');
-        this.submitBid(this.currentBid);
-        this.selected = null;
+  methods: {
+    addNewBidIncrease() {
+      if(!this.selected) return 
+      this.$emit('calculateCurrentBid', this.currentBid);
+      this.$emit('addNewBid', this.selected);
+      this.$emit('holdRoundTime');
+      this.submitBid(this.selected);
+      this.selected = null;
     },
-      makeSizeOne(){
+    addNewBidApprove() {
+      this.$emit('calculateCurrentBid', this.currentBid);
+      this.$emit('addNewBid', this.currentBid);
+      this.$emit('holdRoundTime');
+      this.submitBid(this.currentBid);
+      this.selected = null;
+    },
+    makeSizeOne(){
+      this.size = 1;
+      this.type = '';
+      this.direction = 'down'
+    },
+    makeMaxSize(event){
+      this.size = 7;
+      this.type = 'none';
+      this.direction = 'up'
+      if(event.target.className === 'fa fa-angle-up'){
         this.size = 1;
-        this.type = '';
         this.direction = 'down'
-        },
-      makeMaxSize(event){
-        this.size = 7;
-        this.type = 'none';
-        this.direction = 'up'
-        if(event.target.className === 'fa fa-angle-up'){
-            this.size = 1;
-            this.direction = 'down'
-            this.type = '';
-        }
+        this.type = '';
+      }
     },
-    
-      submitBid (amount) {
+    submitBid (amount) {
       let jsonToSend = {
-          'amount': amount
+        'amount': amount
       }
       this.$store.dispatch('makeBidOfRound', jsonToSend)
     }

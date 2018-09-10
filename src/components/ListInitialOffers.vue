@@ -1,31 +1,35 @@
 <template>
- <div class="list-offers-container">
-     <h5 class="list-offers-container__start-offers-label">
-         {{$t('Initial bids')}}
-         </h5>
-     <div v-for="(bid, index) in initialBidsArr" :key="index">
-            <div class="offer-container">
-                <div class="offer-container__participant">
-            <div class="offer-container__participant-name">
-                {{$t('Bidder')}}
-                {{index + 1}}
-            </div>
-                </div>
-                <div class="offer-container_bid">
-                   <h4>{{bid}} 
-                       {{$t('UAH')}}
-                       </h4>
-                </div>
-            </div>
-     </div>
+  <div class="list-offers-container">
+    <h5 class="list-offers-container__start-offers-label">
+      {{ $t('Initial bids') }}
+    </h5>
+    <div v-for="(bid, index) in initialBidsArr" :key="index">
+      <div class="offer-container">
+        <div class="offer-container__participant">
+          <div class="offer-container__participant-name">
+            {{ $t('Bidder') }}
+            {{ index + 1 }}
+          </div>
         </div>
+        <div class="offer-container_bid">
+          <h4>{{ bid }} 
+            {{ $t('UAH') }}
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-
 <script>
- import RadialProgressBar from './RadialProgressBar.vue'
+import RadialProgressBar from './RadialProgressBar.vue'
 export default {
-    props: ['initialBidsArr']
+  props: {
+    initialBidsArr: {
+      type: Array,
+      default: null
+    }
+  }
 };
 </script>
 

@@ -1,71 +1,72 @@
 <template>
-<div class="modal-container-wrapper">
+  <div class="modal-container-wrapper">
     <div class="modal-container">
-           <div class="modal-container__info modal-container__tender-number">
-        {{auctionID}}
-               <i class="fa fa-info-circle"></i>
-    </div>
-    <div class="modal-container__info modal-container__info_description-Products">
-        {{descriptionOfProducts}}
-    </div>
-
-    <div class="modal-container__info modal-container__info_step-bid">
-             {{$t('Step reduction of Bid')}}:
-        <strong>{{startBid}}</strong>
-    </div>
-
-    <div class="modal-container__info modal-container__info_start-bid">
-        {{$t('Start value')}}:
-        {{startBid}}
-    </div>
-     <div class="modal-container__info modal-container__info_browser-id">
-    <hr>
-        Browser ID:
-        {{browserId}}
-    </div>
-     <div class="modal-container__info modal-container__info_sesion-id">
-        Sesion ID:
-        {{browserId}}
-        <hr>
-    </div>
-    <div class="modal-container__info modal-container__choose-languages">
-      <div>{{$t('Language')}}</div><br/>
-      <div>
-      <app-languages-toggle-switch>
-      </app-languages-toggle-switch>
+      <div class="modal-container__info modal-container__tender-number">
+        {{ auctionID }}
+        <i class="fa fa-info-circle" />
       </div>
-    <hr>
+      <div class="modal-container__info modal-container__info_description-Products">
+        {{ descriptionOfProducts }}
+      </div>
+      <div class="modal-container__info modal-container__info_step-bid">
+        {{ $t('Step reduction of Bid') }}:
+        <strong>{{ startBid }}</strong>
+      </div>
+      <div class="modal-container__info modal-container__info_start-bid">
+        {{ $t('Start value') }}:
+        {{ startBid }}
+      </div>
+      <div class="modal-container__info modal-container__info_browser-id">
+        <hr>
+        Browser ID:
+        {{ browserId }}
+      </div>
+      <div class="modal-container__info modal-container__info_sesion-id">
+        Sesion ID:
+        {{ browserId }}
+        <hr>
+      </div>
+      <div class="modal-container__info modal-container__choose-languages">
+        <div>{{ $t('Language') }}</div>
+        <div>
+          <app-languages-toggle-switch />
+        </div>
+        <hr>
+      </div>
     </div>
-    </div>
- 
-        <div class="modal-container__info modal-container__powered-by">
+    <div class="modal-container__info modal-container__powered-by">
       powered by:
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 import AppLanguagesToggleSwitch from './LanguagesToggleSwitch';
 export default {
-     props: {
+  components:{
+    AppLanguagesToggleSwitch
+  },
+  props: {
     auctionID: {
       type: String,
+      default: null
     },
     startBid: {
       type: Number,
+      default: null
     },
     browserId: {
       type: String,
+      default: null
     },
     companyName: {
       type: String,
+      default: null
     },
     descriptionOfProducts: {
       type: String,
+      default: null
     },
-  },
-  components:{
-      AppLanguagesToggleSwitch
   },
 }
 </script>

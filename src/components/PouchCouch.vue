@@ -1,25 +1,11 @@
-<template>
-</template>
 <script>
 import PouchDB from 'pouchdb'
 import infoPouch from '@/fakeInfo/infoPouchCouch'
 export default {
-    db: null,
-    data(){
-        return{
-            data: []
-        }
-    },
-
-    methods: {
-    fetch() {
-      this.db.allDocs({include_docs: true})
-        .then(r => r.rows)
-        .then(list => {
-          this.data = infoPouch;
-          this.$store.commit('setInfoFromCouch', this.data);
-        })
-        .catch(console.error)
+  db: null,
+  data(){
+    return{
+      data: []
     }
   },
   created() {
@@ -36,6 +22,17 @@ export default {
       console.log('sync error', err)
     });
     this.fetch() // fetch initial
+  },
+  methods: {
+    fetch() {
+      this.db.allDocs({include_docs: true})
+        .then(r => r.rows)
+        .then(list => {
+          this.data = infoPouch;
+          this.$store.commit('setInfoFromCouch', this.data);
+        })
+        .catch(console.error)
+    }
   },
 }
 </script>

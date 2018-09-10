@@ -1,41 +1,24 @@
 <template>
-        <div 
-        class="status-label-container" 
-        :class="'status-label-container__' + type"
-        >
-        <div
-        class="status-label-container__text"
-         v-if="state == 'active'">
-            {{$t(textStatus)}}
-            <div class="status-label-container-active__round">
-            {{bidsArr.length + 1}}
-            </div>
-        </div>
-          <div v-else
-          class="status-label-container__text"
-          >
-           {{$t(textStatus)}}
-        </div>
-    <div 
-    class="status-label-container__sign" 
-    :class="'status-label-container__sign_' + type ">
-    <spinner-loader 
-    v-if="state === 'pendingOfAuction'">
-    </spinner-loader>
-           <!-- <radial-progress-bar
-                        v-if="state === 'pendingOfAuction'"
-                        min="0" max="100" :value="value" :text="remainedTimeOfRound"
-                       :remainedTimeOfRound='remainedTimeOfRound'
-                       :durationOfRound='durationOfRound'
-                        >
-            </radial-progress-bar> -->
-     <img 
+  <div :class="'status-label-container__' + type" class="status-label-container">
+    <div v-if="state == 'active'" class="status-label-container__text">
+      {{ $t(textStatus) }}
+      <div class="status-label-container-active__round">
+        {{ bidsArr.length + 1 }}
+      </div>
+    </div>
+    <div v-else class="status-label-container__text">
+      {{ $t( textStatus) }}
+    </div>
+    <div :class="'status-label-container__sign_' + type " class="status-label-container__sign">
+      <spinner-loader 
+        v-if="state === 'pendingOfAuction'" />
+      <img 
         v-if="state === 'canceled' || state === 'completed' || state === 'active'"
-     :src="'/static/images/sign_' + type + '.png'" 
-     :alt="type">
-     <div v-if="state == 'pendingOfRound'">
-         {{remainedMinutesToStartRound}} хв
-         </div>
+        :src="'/static/images/sign_' + type + '.png'" 
+        :alt="type">
+      <div v-if="state == 'pendingOfRound'">
+        {{ remainedMinutesToStartRound }} хв
+</div>
     </div>
 
         </div>
@@ -45,12 +28,37 @@
 import SpinnerLoader from './SpinnerLoader.vue'
 import RadialProgressBar from './RadialProgressBar.vue'
 export default {
-    data(){
-        return{
+  data(){
+    return{
             value:0
-        }
+    }
     },
-    props: ['type', 'textStatus', 'bidsArr', 'state', 'remainedTimeOfRound', 'durationOfRound'],
+  props: {
+    type: {
+      type: String,
+      default: null
+    },
+    textStatus: {
+      type: String,
+      default: null
+    },
+    bidsArr: {
+      type: Array,
+      default: null
+    },
+    state: {
+      type: String,
+      default: null
+    },
+    remainedTimeOfRound: {
+      type: Number,
+      default: null
+    },
+    durationOfRound: {
+      type: Number,
+      default: null
+    }
+  },
     computed: {
         remainedMinutesToStartRound() {
             return Math.ceil(this.remainedTimeOfRound / 60)

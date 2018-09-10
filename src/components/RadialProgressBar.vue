@@ -1,15 +1,32 @@
 <template>
   <svg class="progress-ring" viewBox="-50,-50,100,100">
     <circle class="progress-ring_circle" r="46"/>
-    <path class="progress-ring_ring" :d="path"/>
-    <circle class="progress-ring_end" :cx="endX" :cy="endY" r="4"/>
+    <path :d="path" class="progress-ring_ring" />
+    <circle :cx="endX" :cy="endY" r="4" class="progress-ring_end" />
     <text class="progress-ring_text" alignment-baseline="middle" text-anchor="middle">{{ text }}</text>
   </svg>
 </template>
 
 <script>
 export default {
-    props: ['max', 'min', 'value', 'text'],
+  props: {
+    max: {
+      type: Number,
+      default: null
+    },
+    min: {
+      type: Number,
+      default: null
+    },
+    value: {
+      type:  Number,
+      default: null
+    },
+    text: {
+      type:  Number,
+      default: null
+    },
+  },
   computed: {
     theta() {
       const frac = (this.value - this.min) / (this.max - this.min) || 0;

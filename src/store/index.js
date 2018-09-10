@@ -29,7 +29,7 @@ const store =  new Vuex.Store({
     }
   },
   mutations: {
-     setUserInfo (state, data) {
+    setUserInfo (state, data) {
       state.userInfo.auctions = data.auctions
       state.userInfo.bids = data.bids
     },
@@ -62,20 +62,20 @@ const store =  new Vuex.Store({
     makeBidOfRound (context, jsonToSubmit) {
       axios.post(
         context.state.apiUrl,
-         jsonToSubmit,
-          utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
-      .then(response => {
+        jsonToSubmit,
+        utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
+        .then(response => {
           context.commit('setInfoFromCouch', response)
-      })
-      .catch(error => {
-        console.log(context.state.apiUrl, jsonToSubmit, utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
-      })
+        })
+        .catch(error => {
+          console.log(context.state.apiUrl, jsonToSubmit, utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
+        })
     },
   }
 });
 
 window.onbeforeunload = function() {
-return localStorage.setItem('language', store.state.i18n.locale);
+  return localStorage.setItem('language', store.state.i18n.locale);
 };
 const language = localStorage.getItem('language');
 
