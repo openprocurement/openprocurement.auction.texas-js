@@ -1,6 +1,10 @@
-# auction-vue
+# Introduction
 
-> A Vue.js project
+> A Vue.js project.
+
+`openprocurement.auction.texas-js` repository contains frontend part for The State Service of Ukraine for Geodesy, Cartography & Cadastre auctions.
+
+Code of this auction can be found here https://github.com/openprocurement/openprocurement.auction.texas.
 
 ## Build Setup
 
@@ -28,3 +32,7 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## License
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/openprocurement/openprocurement.auction.texas-js/blob/master/LICENSE.txt)
