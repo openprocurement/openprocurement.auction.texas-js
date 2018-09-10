@@ -1,44 +1,38 @@
 
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400|Roboto:100);
 <template>
-<div class="clock-container-wrapper">
+  <div class="clock-container-wrapper">
     <div class="clock-container__burger-icon"
-    @click="showOrHideModalWindow"
-    >
-        <img
-        src="/static/images/burger_icon.png"
-        alt="calendar-icon">
+         @click="showOrHideModalWindow">
+      <img src="/static/images/burger_icon.png" alt="calendar-icon">
     </div>
     <div class="clock-container-wrapper_time">
-    <div class="clock-container__calendar-icon">
+      <div class="clock-container__calendar-icon">
         <img 
-        class="clock-container__calendar-icon_img" 
-        src="/static/images/calendar_icon.png"
-         alt="calendar-icon">
-    </div>
-    <div class="clock-container">
-    <h6 class="clock-container__status-time"
-    >
-    {{ $t(timeStatus) }}
-    </h6>
-<div class="clock-container__time">
-        <div v-show="days !==0" class="digit" >{{ days }}
+          class="clock-container__calendar-icon_img" 
+          src="/static/images/calendar_icon.png" alt="calendar-icon">
+      </div>
+      <div class="clock-container">
+        <h6 class="clock-container__status-time">
+          {{ $t(timeStatus) }}
+        </h6>
+        <div class="clock-container__time">
+          <div v-show="days !==0" class="digit" >{{ days }}
             {{ $t('days') }}
-            </div>
-        <div v-show="hours !==0" class="digit">{{ hours }}
+          </div>
+          <div v-show="hours !==0" class="digit">{{ hours }}
             {{ $t('hours') }}
-            </div>
+          </div>
           <div v-show="minutes !==0" class="digit" >{{ minutes }}
-            {{$t('minutes')}}
-            </div>
-            <div v-show="seconds !==0" class="digit" >{{ seconds }}
+            {{ $t('minutes') }}
+          </div>
+          <div v-show="seconds !==0" class="digit" >{{ seconds }}
             {{ $t('seconds') }}
             {{ checkTimeOut }}
             {{ getRemainedTimeofRound }}
             {{ getCurrentTime }}
+          </div>
         </div>
-</div>
-</div>
+      </div>
     </div>
   </div>
 </template>
@@ -47,7 +41,8 @@
 export default {
   props : {
     date : {
-      coerce: date => date,
+      type: Number,
+      default: null
     },
     state: {
       type: String,
@@ -87,7 +82,7 @@ export default {
     },
     getCurrentTime(){
       if (this.state === 'active'){
-        this.$emit('getCurrentTime', this.now)
+      this.$emit('getCurrentTime', this.now)
       }
     },
   },
