@@ -49,9 +49,8 @@
       </div>
       <app-start-bid :start-bid="startBid" />
       <app-pouch-couch />
-      <app-list-initial-offers :initial-bids-arr="initialBidsArr"
-          v-if="(state === 'pendingOfAuction' || state === 'active') && (remainedTimeOfRound < 300)" />
-          <app-list-of-rounds-active v-if="state == 'active' || state == 'pendingOfRound'" 
+      <app-list-initial-offers v-if="(state === 'pendingOfAuction' || state === 'active') && (remainedTimeOfRound < 300)" :initial-bids-arr="initialBidsArr" />
+      <app-list-of-rounds-active v-if="state == 'active' || state == 'pendingOfRound'" 
                                  :round-arr="roundArr"
                                  :round="round"
                                  :bids-arr="bidsArr"
@@ -60,7 +59,7 @@
                                  :current-time="currentTime"
                                  :pause-time="stages[0].start"
                                  :remained-time-of-round="remainedTimeOfRound"
-                                 :durationOfRound="durationOfRound"
+                                 :duration-of-round="durationOfRound"
                                  :state="state">
         {{ changeStateFromUrl }}
       </app-list-of-rounds-active>

@@ -18,21 +18,19 @@
         :alt="type">
       <div v-if="state == 'pendingOfRound'">
         {{ remainedMinutesToStartRound }} хв
-</div>
+      </div>
     </div>
-
-        </div>
+  </div>
 </template>
 
 <script>
 import SpinnerLoader from './SpinnerLoader.vue'
 import RadialProgressBar from './RadialProgressBar.vue'
 export default {
-  data(){
-    return{
-            value:0
-    }
-    },
+  components: {
+    SpinnerLoader,
+    RadialProgressBar
+  },
   props: {
     type: {
       type: String,
@@ -59,22 +57,23 @@ export default {
       default: null
     }
   },
-    computed: {
-        remainedMinutesToStartRound() {
-            return Math.ceil(this.remainedTimeOfRound / 60)
-        },
-        calculateMovingRotate() {
-        this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
-    },
-    },
-      updated() {
-     window.scrollTo(0, document.body.scrollHeight);
+  data(){
+    return{
+      value:0
+    }
   },
-     components: {
-    SpinnerLoader,
-    RadialProgressBar
-  }
-
+  computed: {
+    remainedMinutesToStartRound() {
+      return Math.ceil(this.remainedTimeOfRound / 60)
+    },
+    calculateMovingRotate() {
+      this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
+      return this.value
+    },
+  },
+  updated() {
+    window.scrollTo(0, document.body.scrollHeight);
+  },
 };
 </script>
 

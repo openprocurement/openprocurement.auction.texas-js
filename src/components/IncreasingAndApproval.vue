@@ -7,7 +7,7 @@
                   @click.stop = "makeMaxSize" >
             <option
               value= "null" disabled hidden>
-   {{ $t('Select amount') }}
+              {{ $t('Select amount') }}
             </option>
             <option 
               v-for="(option, index) in valueForOptionSelect.options"
@@ -20,32 +20,30 @@
           </select>
           <i :class="'fa-angle-' + direction" class="fa" @click.stop = "makeMaxSize($event)" />
         </div>
-</div>
-    <button 
-        type="submit" 
-        v-scroll-to="'#active-round'"
-        class='button'
-        :class="'butoon__increase_' + type" 
-        :disabled="selected === null"
-    @click="addNewBidIncrease">
+      </div>
+      <button v-scroll-to="'#active-round'" :disabled="selected === null" 
+              :class="'butoon__increase_' + type" 
+              class="button"
+              type="submit" 
+              @click="addNewBidIncrease">
         {{ $t('Increase') }}
-    </button>
+      </button>
     </div>
-   <div class="container-bid approval-container">
+    <div class="container-bid approval-container">
       <div class="approval-question-container">
         <h6 class="approval-question">
-              {{ $t('Do you agree on the amount') }}
+          {{ $t('Do you agree on the amount') }}
         </h6>
-          <strong>{{ currentBid }}</strong>
+        <strong>{{ currentBid }}</strong>
       </div>
       <button 
-     v-scroll-to="'#active-round'"
+        v-scroll-to="'#active-round'"
         type="submit" 
-    class="button button__approval" 
-         @click="addNewBidApprove">
+        class="button button__approval" 
+        @click="addNewBidApprove">
         {{ $t('Agree') }}
       </button>
-</div>
+    </div>
   </div>
 </template>
 
@@ -53,13 +51,21 @@
 import validators from '../utils/validators.js'
 export default {
   props : {
-      startBid : Number,
-      currentBid:Number,
-      bidsArr: Array,
+    startBid : {
+      type: Number,
+      default: null
+    },
+    currentBid : {
+      type: Number,
+      default: null
+    },
+    bidsArr : {
+      type: Array,
+      default: null
+    }
   },
-
-    data(){
-        return{
+  data(){
+    return{
       selected:null,
       size: 1,
       type: '',
@@ -69,9 +75,9 @@ export default {
   },
 
   computed: {
-      valueForOptionSelect() {
-          let options = [];
-            for (let i = 0; i <= 10; i++){
+    valueForOptionSelect() {
+      let options = [];
+      for (let i = 0; i <= 10; i++){
         this.calculatedValue = (this.calculatedValue * 1.05).toFixed(2);
         options.push(
           {value: this.calculatedValue, text: this.calculatedValue},

@@ -1,3 +1,6 @@
+<template>
+  <div>pouch</div>
+</template>
 <script>
 import PouchDB from 'pouchdb'
 import infoPouch from '@/fakeInfo/infoPouchCouch'
