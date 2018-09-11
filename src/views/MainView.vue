@@ -2,7 +2,7 @@
   <div class="app-wrapper">
     <app-modal-info-window
       v-show="showOrHide"
-      :auction-id="auctionID"
+      :auction-id="auctionId"
       :start-bid="startBid"
       :browser-id="browserId"
       :company-name="companyName"
@@ -35,7 +35,7 @@
         <div class="container-main__image-container">
           <img src="/static/images/numberOfTender_icon.png" alt="number-Of-tender">
         </div>
-        {{ auctionID }}
+        {{ auctionId }}
       </div>
       <div class="container-main__discribe-tender">
         <div class="container-main__discribe-tender_company-name">
@@ -135,7 +135,7 @@ export default {
       currentTime: '',
       pauseTime : '',
       browserId: 'b9c09979-7d7e-4ed5-81a7-730274f42e67',
-      auctionID: this.$store.state.infoFromCouch.auctionID,
+      auctionId: this.$store.state.infoFromCouch.auctionId,
       companyName: 'AT "УКРГАЗВИДОБУВАННЯ :UA-EA-2018-07-27-000020-B aasdasdasas',
       descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
       remainedTimeOfRound: 180,

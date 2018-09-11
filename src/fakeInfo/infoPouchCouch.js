@@ -1,7 +1,7 @@
 const info =   {
   "_id": "0af908b20b3e4803ba025b2f8b2a554f",
   "_rev": "5-4e38b7c3cd3872ecfc481ef13c69d28c",
-  "auctionID": "UA-11111",
+  "auctionId": "UA-11111",
   "description": "Tender Description",
   "initial_value": 35000,
   "minimalStep": {
