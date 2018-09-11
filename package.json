@@ -24,6 +24,7 @@
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1",
     "vue-scrollto": "^2.11.0",
+    "vue-search-select": "^2.6.2",
     "vue-simple-audio": "^1.0.6",
     "vuejs-toggle-switch": "^1.1.24",
     "vuetify": "^1.1.13",
