@@ -22,16 +22,18 @@ export default {
       searchText: '', // If value is falsy, reset searchText & searchItem
       item: {
         value: '',
-        text: '',
+        text: ''
       }
     }
   },
   computed: {
     valueForOptionSelect() {
       let options = [];
+      let calculateBid = this.calculatedValue;
       for (let i = 0; i <= 10; i++){
+        calculateBid  =  (calculateBid * 1.05).toFixed(2);
         options.push(
-          {value: (this.calculatedValue * 1.05).toFixed(2), text: (this.calculatedValue * 1.05).toFixed(2)},
+          {value: calculateBid, text: calculateBid},
         )
       }
       return options
