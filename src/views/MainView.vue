@@ -60,9 +60,7 @@
                                  :pause-time="stages[0].start"
                                  :remained-time-of-round="remainedTimeOfRound"
                                  :duration-of-round="durationOfRound"
-                                 :state="state">
-        {{ changeStateFromUrl }}
-      </app-list-of-rounds-active>
+                                 :state="state" />
       <app-list-of-rounds-completed v-if="state == 'completed'" 
                                     :round-arr="roundArr"
                                     :round="round"
@@ -127,12 +125,12 @@ export default {
   },
   data(){
     return {
-      state: 'active',
+      state: this.id,
       showOrHide: false,
       showHongSoundsText: false,
       hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
       timeOut: false,
-      currentTime: '',
+      currentTime: null,
       pauseTime : '',
       browserId: 'b9c09979-7d7e-4ed5-81a7-730274f42e67',
       auctionId: this.$store.state.infoFromCouch.auctionId,
@@ -192,11 +190,6 @@ export default {
         },
       },
     };
-  },
-  computed: {
-    changeStateFromUrl() {
-      this.state = this.id;
-    },
   },
   mounted() {
     window.scrollTo(0, document.body.scrollHeight);

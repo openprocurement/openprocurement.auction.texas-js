@@ -54,7 +54,6 @@
             {{ currentBid }} 
             {{ $t('UAH') }}
           </h4>
-          {{ calculateMovingRotate }}
         </div>
       </div>
     </div>
@@ -112,8 +111,8 @@ export default {
       value: 0,
     }
   },
-  computed: {
-    calculateMovingRotate() {
+  watch: {
+    remainedTimeOfRound() {
       this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
     },
   },

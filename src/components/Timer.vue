@@ -27,9 +27,6 @@
           </div>
           <div v-show="seconds !==0" class="digit" >{{ seconds }}
             {{ $t('seconds') }}
-            {{ checkTimeOut }}
-            {{ getRemainedTimeofRound }}
-            {{ getCurrentTime }}
           </div>
         </div>
       </div>
@@ -71,20 +68,16 @@ export default {
     days() {
       return Math.trunc((this.date - this.now) / 60 / 60 / 24);
     },
-    checkTimeOut() {
+  },
+  watch: {
+    now(){
+      this.$emit('getCurrentTime', this.now);
+      this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60));
       ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
         (this.$emit('checkTimeOut', true))
         :
         (null)
-    },
-    getRemainedTimeofRound(){
-      this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60))
-    },
-    getCurrentTime(){
-      if (this.state === 'active'){
-      this.$emit('getCurrentTime', this.now)
-      }
-    },
+    }
   },
   mounted() {
     window.setInterval(() => {

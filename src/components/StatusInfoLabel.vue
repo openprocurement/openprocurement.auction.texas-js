@@ -57,18 +57,10 @@ export default {
       default: null
     }
   },
-  data(){
-    return{
-      value:0
-    }
-  },
+
   computed: {
     remainedMinutesToStartRound() {
       return Math.ceil(this.remainedTimeOfRound / 60)
-    },
-    calculateMovingRotate() {
-      this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
-      return this.value
     },
   },
   updated() {
