@@ -2,31 +2,15 @@
   <div class="increase-approval-container">
     <div class="container-bid increase-bid-container">
       <div class="select-choice-bid-wrapper">
-        <div class="select-choice-bid-container">
-          <select v-model="selected" :size = "size" class="select-bid" 
-                  @click.stop = "makeMaxSize" >
-            <option
-              value= "null" disabled hidden>
-              {{ $t('Select amount') }}
-            </option>
-            <option 
-              v-for="(option, index) in valueForOptionSelect.options"
-              :key="index" 
-              :value="option.value"
-              type="number"
-              @click.stop = "makeSizeOne">
-              {{ option.text }}
-            </option>
-          </select>
-          <i :class="'fa-angle-' + direction" class="fa" @click.stop = "makeMaxSize($event)" />
-        </div>
+        <vue-search-select
+          :current-bid="currentBid"
+          @setSelectedValue="setSelectedValue"/>
       </div>
-      <button v-scroll-to="'#active-round'" :disabled="selected === null" 
-              :class="'butoon__increase_' + type" 
-              class="button"
+      <button v-scroll-to="'#active-round'" :disabled="selected === null"  
+              class="button butoon__increase"
               type="submit" 
               @click="addNewBidIncrease">
-        {{ $t('Increase') }}
+        {{ $t("Increase") }}
       </button>
     </div>
     <div class="container-bid approval-container">
@@ -49,7 +33,11 @@
 
 <script>
 import validators from '../utils/validators.js'
+import VueSearchSelect from './VueSearchSelect.vue'
 export default {
+  components: {
+    VueSearchSelect
+  },
   props : {
     startBid : {
       type: Number,
@@ -66,28 +54,8 @@ export default {
   },
   data(){
     return{
-      selected:null,
-      size: 1,
-      type: '',
-      calculatedValue: this.currentBid,
-      direction: 'down'
+      selected: null
     }
-  },
-
-  computed: {
-    valueForOptionSelect() {
-      let options = [];
-      for (let i = 0; i <= 10; i++){
-        this.calculatedValue = (this.calculatedValue * 1.05).toFixed(2);
-        options.push(
-          {value: this.calculatedValue, text: this.calculatedValue},
-        )
-      }
-      return {
-        selected: null,
-        options
-      }
-    },
   },
   methods: {
     addNewBidIncrease() {
@@ -105,20 +73,8 @@ export default {
       this.submitBid(this.currentBid);
       this.selected = null;
     },
-    makeSizeOne(){
-      this.size = 1;
-      this.type = '';
-      this.direction = 'down'
-    },
-    makeMaxSize(event){
-      this.size = 7;
-      this.type = 'none';
-      this.direction = 'up'
-      if(event.target.className === 'fa fa-angle-up'){
-        this.size = 1;
-        this.direction = 'down'
-        this.type = '';
-      }
+    setSelectedValue(value){
+      this.selected = value;
     },
     submitBid (amount) {
       let jsonToSend = {
@@ -165,14 +121,10 @@ export default {
     cursor: pointer;
 }
 
-.butoon__increase_{
+.butoon__increase{
     background-color: #9ab913;
     border-bottom: 3px solid #85a10f;
     height: 41px;
-}
-
-.butoon__increase_none{
-    display: none;
 }
 
 .butoon__increase:hover{
