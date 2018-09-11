@@ -2,7 +2,7 @@
   <div class="modal-container-wrapper">
     <div class="modal-container">
       <div class="modal-container__info modal-container__tender-number">
-        {{ auctionID }}
+        {{ auctionId }}
         <i class="fa fa-info-circle" />
       </div>
       <div class="modal-container__info modal-container__info_description-Products">
@@ -47,7 +47,7 @@ export default {
     AppLanguagesToggleSwitch
   },
   props: {
-    auctionID: {
+    auctionId: {
       type: String,
       default: null
     },
