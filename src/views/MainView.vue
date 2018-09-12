@@ -90,6 +90,9 @@
 </template>
 
 <script>
+// We store the reference to the SSE object out here
+// so we can access it from other methods
+let msgServer;
 import AppHongSoundsText from '../components/HongSoundsText';
 import AppStartBid from '../components/StartBid';
 import AppTimer from '../components/Timer';
@@ -192,7 +195,58 @@ export default {
     };
   },
   mounted() {
+    //scrolling on bottom
     window.scrollTo(0, document.body.scrollHeight);
+
+    // init event-source
+    this.$sse(`${this.$store.state.apiUrl}/event_source`, { withCredentials: true, format: 'json' })
+      .then(sse => {
+        // Store SSE object at a higher scope
+        msgServer = sse;
+        // Catch any errors (ie. lost connections, etc.)
+        sse.onError(e => {
+          console.error('lost connection; giving up!', e);
+          // This is purely for example; EventSource will automatically
+          // attempt to reconnect indefinitely, with no action needed
+          // on your part to resubscribe to events once (if) reconnected
+          sse.close();
+        });
+        // Listen for messages based on their event
+        sse.subscribe('ClientsList', (e) => {
+          console.log(e)
+        });
+
+        sse.subscribe('Tick', (e) => {
+          console.log(e)
+        });
+
+        sse.subscribe('Identification', (e) => {
+          console.log(e)
+        });
+
+        sse.subscribe('RestoreBidAmount', (e) => {
+          console.log(e)
+        });
+
+        sse.subscribe('KickClient', (e) => {
+          console.log(e)
+        });
+
+        sse.subscribe('Close', (e) => {
+          console.log(e)
+        });
+      })
+      .catch(err => {
+        // When this error is caught, it means the initial connection to the
+        // events server failed.  No automatic attempts to reconnect will be made.
+        console.error('Failed to connect to server', err);
+      });
+
+  },
+  beforeDestroy() {
+    // Make sure to close the connection with the events server
+    // when the component is destroyed, or we'll have ghost connections!
+    msgServer.close();
   },
   methods: {
     addNewBid(bid) {
