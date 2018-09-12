@@ -199,7 +199,7 @@ export default {
     window.scrollTo(0, document.body.scrollHeight);
 
     // init event-source
-    this.$sse(`${this.$store.state.apiUrl}/event_source`, { withCredentials: true, format: 'json' })
+    this.$sse(`${this.$store.state.apiUrl}event_source`, { withCredentials: true, format: 'json' })
       .then(sse => {
         // Store SSE object at a higher scope
         msgServer = sse;
