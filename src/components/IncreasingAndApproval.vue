@@ -1,118 +1,117 @@
 <template>
-<div class="increase-approval-container">
-  <div class="increase-bid-container">
-      <div class="choice-bid">
-     <select class="select-bid" v-model="selected"
-     >
-   <option 
-   value=null disabled hidden>
-   {{$ml.get('Select amount')}}
-   </option>
-  <option 
-  v-for="(option, index) in checkSelected.options" :key="index" v-bind:value="option.value"
-  >
-    {{ option.text }}
-  </option>
-</select>
+  <div class="increase-approval-container">
+    <div class="container-bid increase-bid-container">
+      <div class="select-choice-bid-wrapper">
+        <vue-search-select
+          :current-bid="currentBid"
+          @setSelectedValue="setSelectedValue"/>
       </div>
-    <button type="button" 
-    v-scroll-to="'#active-round'"
-    class="button butoon__increase" 
-    :disabled="selected === null"
-
-    @click="addNewBidIncrease"
-    >
-    {{$ml.get('Increase')}}
-    </button>
-  </div>
-
-   <div class="approval-container">
+      <button v-scroll-to="'#active-round'" :disabled="selected === null"  
+              class="button butoon__increase"
+              type="submit" 
+              @click="addNewBidIncrease">
+        {{ $t("Increase") }}
+      </button>
+    </div>
+    <div class="container-bid approval-container">
       <div class="approval-question-container">
-          <h6 class="approval-question">
-              {{$ml.get('Do you agree on the amount')}}
-              </h6>
-          <strong>{{currentBid}}</strong>
+        <h6 class="approval-question">
+          {{ $t('Do you agree on the amount') }}
+        </h6>
+        <strong>{{ currentBid }}</strong>
       </div>
-    <button 
-     v-scroll-to="'#active-round'"
-    type="button" 
-    class="button button__approval" 
-     @click="addNewBidApprove"
-    >
-    {{$ml.get('Agree')}}
-    </button>
+      <button 
+        v-scroll-to="'#active-round'"
+        type="submit" 
+        class="button button__approval" 
+        @click="addNewBidApprove">
+        {{ $t('Agree') }}
+      </button>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
+import validators from '../utils/validators.js'
+import VueSearchSelect from './VueSearchSelect.vue'
 export default {
-        props : {
-        startBid : Number,
-        currentBid:Number,
-        bidsArr: Array
-    },
-
-    data(){
-        return{
-            selected:null
-        }
-    },
-
-  computed: {
-      checkSelected() {
-          return {
-               selected: null,
-               options: [
-                 { value: this.currentBid * 1.05, text: this.currentBid * 1.05 },
-                 { value: this.currentBid * 1.1, text: this.currentBid * 1.1 },
-                 { value: this.currentBid * 1.2, text: this.currentBid * 1.2 },
-               ]
-             }
-      }
+  components: {
+    VueSearchSelect
   },
-    methods: {
-      addNewBidIncrease() {
-        this.$emit('calculateCurrentBid', this.currentBid);
-        this.$emit('addNewBid', this.selected);
-        this.$emit('holdRoundTime');
-        this.selected = null;
-      },
-
-      addNewBidApprove() {
-        this.$emit('calculateCurrentBid', this.currentBid);
-        this.$emit('addNewBid', this.currentBid);
-        this.$emit('holdRoundTime');
-        this.selected = null;
+  props : {
+    startBid : {
+      type: Number,
+      default: null
     },
+    currentBid : {
+      type: Number,
+      default: null
+    },
+    bidsArr : {
+      type: Array,
+      default: null
+    }
+  },
+  data(){
+    return{
+      selected: null
+    }
+  },
+  methods: {
+    addNewBidIncrease() {
+      if(!this.selected) return 
+      this.$emit('calculateCurrentBid', this.currentBid);
+      this.$emit('addNewBid', this.selected);
+      this.$emit('holdRoundTime');
+      this.submitBid(this.selected);
+      this.selected = null;
+    },
+    addNewBidApprove() {
+      this.$emit('calculateCurrentBid', this.currentBid);
+      this.$emit('addNewBid', this.currentBid);
+      this.$emit('holdRoundTime');
+      this.submitBid(this.currentBid);
+      this.selected = null;
+    },
+    setSelectedValue(value){
+      this.selected = value;
+    },
+    submitBid (amount) {
+      let jsonToSend = {
+        'amount': amount
+      }
+      this.$store.dispatch('makeBidOfRound', jsonToSend)
+    }
   },
 };
 </script>
 
-<style>
-.footer-container{
-    height: 200px;
+<style scoped>
+
+.select-choice-bid-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border: 1px solid lightgrey;
 }
 
-.choice-bid{
+.fa{
+    color: lightgrey; 
+    font-size: 30px;
+    background: white;
+}
+
+.select-choice-bid-wrapper{
     display: flex;
     align-items: center;
-    height: 100px;
     width: 85%;
     margin: 0 auto;
+    margin-top: 20px;
 }
 .increase-approval-container{
     display: flex;
     width: 40%;
     cursor: pointer;
-}
-.increase-bid-container{
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between;
-    min-width: 50%;
-    height: 120px;
-    background-color: #ffffff;
 }
 
 .button{
@@ -125,6 +124,7 @@ export default {
 .butoon__increase{
     background-color: #9ab913;
     border-bottom: 3px solid #85a10f;
+    height: 41px;
 }
 
 .butoon__increase:hover{
@@ -140,14 +140,16 @@ export default {
     background-color: hsl(0, 2%, 41%);
 }
 
-.approval-container{
-    margin-left: 10px;
-    background-color: #ffffff;
+.container-bid{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 50%;
+    justify-content:space-between;
+    background-color: #ffffff;
+    min-width: 50%;
     height: 120px;
+}
+.approval-container{
+    margin-left: 10px;
 }
 
 .approval-question-container{
@@ -166,13 +168,25 @@ export default {
 
 .select-bid{
     width: 100%;
-    text-align: center;
-    border: 1px solid lightgrey;
+    text-align: left;
     color: lightgrey;
+    margin-right: -11px;
+    background: white;
 }
-
-.select-bid:hover{
-    border: 2px solid #9ab913;
+.select-choice-bid-wrapper:hover{
+    border: 1px solid #9ab913;
     cursor: pointer;
 }
+
+option{
+    border-bottom: 1px solid #9ab913;
+    border-top: 1px solid #9ab913;
+}
+
+option:hover{
+    background: #9ab913;
+    color: white;
+    border: none;
+}
+
 </style>

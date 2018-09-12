@@ -1,125 +1,93 @@
 <template>
-<div class="app-wrapper">
+  <div class="app-wrapper">
     <app-modal-info-window
-            v-show="showOrHide"
-            :tenderNumber="tenderNumber"
-            :startBid="startBid"
-            :browserId="browserId"
-            :companyName="companyName"
-            :descriptionOfProducts="descriptionOfProducts"
-            >
-              </app-modal-info-window>
+      v-show="showOrHide"
+      :auction-id="auctionId"
+      :start-bid="startBid"
+      :browser-id="browserId"
+      :company-name="companyName"
+      :description-of-products="descriptionOfProducts" />
     <header class="header_container">
-          <app-timer 
-          @checkTimeOut="checkTimeOut"
-          @getRemainedTimeofRound="getRemainedTimeofRound"
-          @getCurrentTime="getCurrentTime"
-          :date="dateOfAuction.date"
-          :timeStatus="statusMessage[state].timeStatus"
-          :state="state"
-          @showOrHideModalWindow="showOrHideModalWindow"
-          >
-            </app-timer>
-      <app-status-info-label 
-      :type="statusMessage[state].type"
-      :textStatus="statusMessage[state].textStatus"
-      :bidsArr="bidsArr"
-      :state="state"
-      :remainedTimeOfRound="remainedTimeOfRound"
-      >
-        </app-status-info-label>
-    </header>
-        <app-status-timer-line 
-        v-if="state == 'active'"
-        :durationOfRound="durationOfRound"
-        :remainedTimeOfRound="remainedTimeOfRound"
+      <app-timer 
+        :date="dateOfAuction.date"
+        :time-status="statusMessage[state].timeStatus"
         :state="state"
-        >
-          </app-status-timer-line>
-            <app-hong-audio-track
-      v-if="state === 'active'"
-      :hongTrack="hongTrack"
-      >
-        </app-hong-audio-track>
-                  <app-hong-sounds-text
-                  v-if="state == 'active' && showHongSoundsText"
-                  >
-      </app-hong-sounds-text>
+        @checkTimeOut="checkTimeOut"
+        @getRemainedTimeofRound="getRemainedTimeofRound"
+        @getCurrentTime="getCurrentTime"
+        @showOrHideModalWindow="showOrHideModalWindow" />
+      <app-status-info-label 
+        :type="statusMessage[state].type"
+        :text-status="statusMessage[state].textStatus"
+        :bids-arr="bidsArr"
+        :state="state"
+        :remained-time-of-round="remainedTimeOfRound" />
+    </header>
+    <app-status-timer-line 
+      v-if="state == 'active' && (remainedTimeOfRound > 0)"
+      :duration-of-round="durationOfRound"
+      :remained-time-of-round="remainedTimeOfRound"
+      :state="state" />
+    <app-hong-audio-track v-if="state === 'active'" :hong-track="hongTrack" />
+    <app-hong-sounds-text v-if="state == 'active' && showHongSoundsText" />
     <main class="container container-main">
-        <div class="container-main__tender-number">
-          <div class="container-main__image-container">
-            <img src="/static/images/numberOfTender_icon.png" alt="number-Of-tender">
-          </div>
-        {{tenderNumber}}
+      <div class="container-main__tender-number">
+        <div class="container-main__image-container">
+          <img src="/static/images/numberOfTender_icon.png" alt="number-Of-tender">
         </div>
-        <div class="container-main__discribe-tender">
-          <div class="container-main__discribe-tender_company-name">
-            {{companyName}}
-          </div>
-          <ul class="container-main__discribe-tender_description-products">
-            <li>
-            {{descriptionOfProducts}}
-            </li>
-          </ul>
+        {{ auctionId }}
+      </div>
+      <div class="container-main__discribe-tender">
+        <div class="container-main__discribe-tender_company-name">
+          {{ companyName }}
         </div>
-        <app-start-bid 
-        :startBid="startBid">
-          </app-start-bid>
-
-          <app-list-initial-offers 
-          :initialBidsArr="initialBidsArr"
-          v-if="state == 'pendingOfAuction' && (remainedTimeOfRound < 300)" >
-          </app-list-initial-offers>
-
-          <app-list-of-rounds-active v-if="state == 'active' || state == 'pendingOfRound'" 
-          :roundArr="roundArr"
-          :round="round"
-          :bidsArr="bidsArr"
-          :startBid="startBid"
-          :currentBid="currentBid"
-          :currentTime="currentTime"
-          :remainedTimeOfRound="remainedTimeOfRound"
-          :durationOfRound='durationOfRound'
-          :state="state"
-          >
-          {{changeStateFromUrl}}
-          </app-list-of-rounds-active>
-
-           <app-list-of-rounds-completed v-if="state == 'completed'" 
-          :roundArr="roundArr"
-          :round="round"
-          :bidsArr="bidsArr"
-          :startBid="startBid"
-          :currentBid="currentBid"
-          :currentTime="currentTime"
-          >
-          </app-list-of-rounds-completed>
+        <ul class="container-main__discribe-tender_description-products">
+          <li>
+            {{ descriptionOfProducts }}
+          </li>
+        </ul>
+      </div>
+      <app-start-bid :start-bid="startBid" />
+      <app-pouch-couch />
+      <app-list-initial-offers v-if="(state === 'pendingOfAuction' || state === 'active') && (remainedTimeOfRound < 300)" :initial-bids-arr="initialBidsArr" />
+      <app-list-of-rounds-active v-if="state == 'active' || state == 'pendingOfRound'" 
+                                 :round-arr="roundArr"
+                                 :round="round"
+                                 :bids-arr="bidsArr"
+                                 :start-bid="startBid"
+                                 :current-bid="stages[1].amount"
+                                 :current-time="currentTime"
+                                 :pause-time="stages[0].start"
+                                 :remained-time-of-round="remainedTimeOfRound"
+                                 :duration-of-round="durationOfRound"
+                                 :state="state" />
+      <app-list-of-rounds-completed v-if="state == 'completed'" 
+                                    :round-arr="roundArr"
+                                    :round="round"
+                                    :bids-arr="bidsArr"
+                                    :start-bid="startBid"
+                                    :current-bid="stages[1].amount"
+                                    :current-time="currentTime" />
     </main>
-    <footer  v-if="state !== 'completed'" class="footer-container">
-          <h4
-        v-if="state == 'pendingOfRound'">
-        {{$ml.get('Waiting for start of round')}}
-        </h4>
-
-        <h4
-        v-else-if="state == 'pendingOfAuction'"
-        >
-        {{$ml.get('Waiting for start of auction')}}
-        </h4>
-
-       <app-increasing-and-approval v-else-if="state == 'active'"
-       @addNewBid="addNewBid"
-       @calculateCurrentBid="calculateCurrentBid"
-       @holdRoundTime="holdRoundTime"
-       :startBid="startBid"
-       :currentBid="currentBid"
-       :bidsArr="bidsArr"
-       >
-         </app-increasing-and-approval>
+    <footer v-if="state !== 'completed'" 
+            :class="'footer-container_' + state" class="footer-container">
+      <h4 v-if="state == 'pendingOfRound'">
+        {{ $t('Waiting for start of round') }}
+      </h4>
+      <h4
+        v-else-if="state == 'pendingOfAuction'">
+        {{ $t('Waiting for start of auction') }}
+      </h4>
+      <app-increasing-and-approval v-else-if="state == 'active'"
+                                   :start-bid="startBid"
+                                   :bids-arr="bidsArr"
+                                   :current-bid="stages[1].amount"
+                                   @addNewBid="addNewBid"
+                                   @calculateCurrentBid="calculateCurrentBid"
+                                   @holdRoundTime="holdRoundTime" />
     </footer>
-</div>
+  </div>
 </template>
-
 
 <script>
 import AppHongSoundsText from '../components/HongSoundsText';
@@ -133,36 +101,65 @@ import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppListOfRoundsActive from '../components/ListOfRoundsActive';
 import AppListOfRoundsCompleted from '../components/ListOfRoundsCompleted';
+import AppPouchCouch from '../components/PouchCouch';
 export default {
+  components :{
+    AppHongSoundsText,
+    AppStartBid,
+    AppTimer,
+    AppStatusTimerLine,
+    AppHongAudioTrack,
+    AppModalInfoWindow,
+    AppListInitialOffers,
+    AppStatusInfoLabel,
+    AppIncreasingAndApproval,
+    AppListOfRoundsActive,
+    AppListOfRoundsCompleted,
+    AppPouchCouch
+  },
   props: {
     id: {
       type: String,
+      default: null
     },
   },
   data(){
     return {
-      state: 'active',
+      state: this.id,
       showOrHide: false,
       showHongSoundsText: false,
       hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
       timeOut: false,
-      currentTime: '',
+      currentTime: null,
+      pauseTime : '',
       browserId: 'b9c09979-7d7e-4ed5-81a7-730274f42e67',
-      tenderNumber: 'UA-EA-2018-07-27-000020-B',
+      auctionId: this.$store.state.infoFromCouch.auctionId,
       companyName: 'AT "УКРГАЗВИДОБУВАННЯ :UA-EA-2018-07-27-000020-B aasdasdasas',
       descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
       remainedTimeOfRound: 180,
       dateOfAuction: {
-        date: Math.trunc(Date.parse('Wed Sep 03 2018 9:24:35 GMT+0200 (EET)') / 1000),
+        date: Math.trunc(Date.parse(this.$store.state.infoFromCouch.stages[0].start) / 1000),
       },
       durationOfRound: 180,
       stoppingTimeOfRound: 10,
-      startBid: 100.65,
+      startBid: this.$store.state.infoFromCouch.initial_value,
       currentBid: 100.85,
-      bidsArr: [1232, 5656, 465345, 4534, 3243 , 234],
-      initialBidsArr: [32, 56, 345, 434, 243 , 34],
+      bidsArr: [],
+      initialBidsArr: [100, 130, 150, 154],
       round: 1,
       roundArr: [],
+      stages: [
+        {
+          start: this.$store.state.infoFromCouch.stages[0].start,
+          type: this.$store.state.infoFromCouch.stages[0].type
+        },
+        {
+          amount: this.$store.state.infoFromCouch.stages[1].amount,
+          start: this.$store.state.infoFromCouch.stages[1].start,
+          time: this.$store.state.infoFromCouch.stages[1].time,
+          type: this.$store.state.infoFromCouch.stages[1].type
+        }
+      ],
       statusMessage: {
         active: {
           type: 'active',
@@ -194,6 +191,9 @@ export default {
       },
     };
   },
+  mounted() {
+    window.scrollTo(0, document.body.scrollHeight);
+  },
   methods: {
     addNewBid(bid) {
       this.currentBid = bid * 1.05;
@@ -209,15 +209,21 @@ export default {
     },
 
     holdRoundTime() {
-      this.dateOfAuction.date = this.currentTime + this.stoppingTimeOfRound;
+      this.dateOfAuction.date = Math.trunc(Date.parse(this.stages[1].start)/1000);
       this.state = 'pendingOfRound';
     },
 
     checkTimeOut(res) {
-      this.timeOut = res;
-      if (res) {
-        this.dateOfAuction.date = this.dateOfAuction.date + this.durationOfRound;
+      if(res){
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+      if (res && this.state === 'pendingOfAuction' || res && this.state === 'pendingOfRound' ) {
         this.state = 'active';
+        this.dateOfAuction.date = this.dateOfAuction.date + this.durationOfRound;
+      }
+
+      else if (res) {
+        this.state = 'completed';
       }
     },
     getRemainedTimeofRound(remainedTime) {
@@ -230,27 +236,6 @@ export default {
       this.showOrHide = !this.showOrHide;
     },
   },
-    computed: {
-    changeStateFromUrl() {
-      this.state = this.id;
-    },
-  },
-  mounted() {
-    window.scrollTo(0, document.body.scrollHeight);
-  },
-  components :{
-    AppHongSoundsText,
-    AppStartBid,
-    AppTimer,
-    AppStatusTimerLine,
-    AppHongAudioTrack,
-    AppModalInfoWindow,
-    AppListInitialOffers,
-    AppStatusInfoLabel,
-    AppIncreasingAndApproval,
-    AppListOfRoundsActive,
-    AppListOfRoundsCompleted
-  }
 };
 </script>
 
@@ -291,9 +276,13 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 95px;
     background-color: #e9e9e9;
     border-top: 3px solid #d9d9d9;
+    height: 95px;
+}
+
+.footer-container_active{
+    height: 200px;
 }
 
 .container-main__tender-number{

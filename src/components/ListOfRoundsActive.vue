@@ -1,98 +1,120 @@
 <template>
- <div class="list-rounds-container">
-<app-list-initial-offers
-:bidsArr="bidsArr"
->
-  </app-list-initial-offers>
-     <div v-for="(bid, index) in bidsArr" :key="index">
-            <h3>
-                {{$ml.get('Round')}}
-                 {{index + 1}}</h3>
-            <div class="round-container">
-                <div class="round-container__time-patricipant">
-
-             <div class="round-container_time">
-                <div class="round-container_time__watch-icon">
-                     <img 
-                    src="/static/images/watchInRound.png" 
-                     alt="watch">
-                </div>
-
-                 <div class="round-container_time__watch">
-                   {{currentTime | moment("hh:mm:ss")}}
-                </div>
-
+  <div class="list-rounds-container">
+    <div v-for="(bid, index) in bidsArr" :key="index">
+      <h3>
+        {{ $t('Round') }}
+        {{ index + 1 }}</h3>
+      <div class="round-container">
+        <div class="round-container__time-patricipant">
+          <div class="round-container_time">
+            <div class="round-container_time__watch-icon">
+              <img src="/static/images/watchInRound.png" alt="watch">
             </div>
-
-            <div class="round-container_participant">
-                {{$ml.get('Bidder')}}
-                 {{index + 1}}
+            <div class="round-container_time__watch">
+              {{ pauseTime | moment("hh:mm:ss") }}
             </div>
-
-                </div>
-                <div class="round-container_bid">
-                   <h4>{{bid}} грн</h4>
-                </div>
-            </div>
-            
-     </div>
-
-          <div id="active-round">
-            <h3>
-                {{$ml.get('Round')}}
-                 {{bidsArr.length + 1}}</h3>
-            <div  class="round-container round-container_active">
-                <div class="round-container__time-patricipant round-container__time-patricipant-active">
-            <div 
-            class="round-container_time round-container_time-active">
-             <div 
-             class="round-container_time-active__watch-icon">
-                <radial-progress-bar
-                        v-if="state !== 'pendingOfRound' && (value > 0 && value < 100)"
-                        min="0" max="100" :value="value" :text="remainedTimeOfRound"
-                       :remainedTimeOfRound='remainedTimeOfRound'
-                       :durationOfRound='durationOfRound'
-                        >
-                </radial-progress-bar>
-                </div>
-                  <div class="round-container_time-active__watch">
-                   {{currentTime | moment("hh:mm:ss")}}
-                </div>
-            </div>
-
-             <div class="round-container_participant">
-            </div>        
-                </div>
-                <div class="round-container_bid round-container_bid_active">
-                   <h4>{{currentBid}} грн</h4>
-                   {{calculateMovingRotate}}
-                </div>
-            </div>
-     </div>
-
+          </div>
+          <div class="round-container_participant">
+            {{ $t('Bidder') }}
+            {{ index + 1 }}
+          </div>
         </div>
+        <div class="round-container_bid">
+          <h4>{{ bid }} 
+            {{ $t('UAH') }}
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div id="active-round">
+      <h3>
+        {{ $t('Round') }}
+        {{ bidsArr.length + 1 }}</h3>
+      <div class="round-container round-container_active">
+        <div class="round-container__time-patricipant round-container__time-patricipant-active">
+          <div 
+            class="round-container_time round-container_time-active">
+            <div 
+              class="round-container_time-active__watch-icon">
+              <radial-progress-bar
+                v-if="state !== 'pendingOfRound' && (value > 0 && value < 100)"
+                :value="value" :text="remainedTimeOfRound"
+                :remained-time-of-round="remainedTimeOfRound"
+                :duration-of-round="durationOfRound"
+                min="0" max="100" />
+            </div>
+            <div class="round-container_time-active__watch">
+              {{ currentTime | moment("hh:mm:ss") }}
+            </div>
+          </div>
+          <div class="round-container_participant" />       
+        </div>
+        <div class="round-container_bid round-container_bid_active">
+          <h4>
+            {{ currentBid }} 
+            {{ $t('UAH') }}
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-
 <script>
- import RadialProgressBar from './RadialProgressBar.vue'
- import AppListInitialOffers from './ListInitialOffers.vue'
+import RadialProgressBar from './RadialProgressBar.vue'
+import AppListInitialOffers from './ListInitialOffers.vue'
 export default {
-    props: ['bid', 'bidsArr', 'startBid', 'currentTime',
-    'currentBid', 'remainedTimeOfRound', 'durationOfRound', 'state'],
-data () {
-    return {
-         value: 0,
-    }
+  components: {
+    RadialProgressBar,
+    AppListInitialOffers
   },
-      computed: {
-    calculateMovingRotate() {
-        this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
+  props: {
+    bid: {
+      type: Number,
+      default: null
+    },
+    bidsArr: {
+      type: Array,
+      default: null
+    },
+    startBid: {
+      type: Number,
+      default: null
+    },
+    currentTime: {
+      type: Number,
+      default: null
+    },
+    currentBid: {
+      type: Number,
+      default: null
+    },
+    remainedTimeOfRound: {
+      type: Number,
+      default: null
+    },
+    durationOfRound: {
+      type: Number,
+      default: null
+    },
+    state: {
+      type: String,
+      default: null
+    },
+    pauseTime: {
+      type: String,
+      default: null
     },
   },
-  components: {
-      RadialProgressBar,
-      AppListInitialOffers
+  data () {
+    return {
+      value: 0,
+    }
+  },
+  watch: {
+    remainedTimeOfRound() {
+      this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
+    },
   },
 };
 </script>
@@ -133,7 +155,7 @@ data () {
     justify-content: center;
     align-items: center;
     align-self: center;
-    width: 30%;
+    min-width: 30%;
     height: 90%;
     background-color: #e9e9e9;
     margin-right: 3px;
@@ -149,6 +171,10 @@ data () {
 .round-container_participant{
     width: 35%;
     text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 21.18px;
 }
 
 </style>

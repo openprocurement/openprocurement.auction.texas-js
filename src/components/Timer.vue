@@ -1,101 +1,94 @@
 
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400|Roboto:100);
 <template>
-<div class="clock-container-wrapper">
+  <div class="clock-container-wrapper">
     <div class="clock-container__burger-icon"
-    @click="showOrHideModalWindow"
-    >
-        <img
-        src="/static/images/burger_icon.png"
-        alt="calendar-icon">
+         @click="showOrHideModalWindow">
+      <img src="/static/images/burger_icon.png" alt="calendar-icon">
     </div>
     <div class="clock-container-wrapper_time">
-    <div class="clock-container__calendar-icon">
+      <div class="clock-container__calendar-icon">
         <img 
-        class="clock-container__calendar-icon_img" 
-        src="/static/images/calendar_icon.png"
-         alt="calendar-icon">
-    </div>
-    <div class="clock-container">
-    <h6 class="clock-container__status-time"
-    >
-    {{$ml.get(timeStatus)}}
-    </h6>
-<div class="clock-container__time">
-        <div class="digit" v-show="days !==0">{{ days }}
-            {{$ml.get('days')}}
-            </div>
-        <div class="digit" v-show="hours !==0">{{ hours }}
-            {{$ml.get('hours')}}
-            </div>
-        <div class="digit" v-show="minutes !==0">{{ minutes }}
-            {{$ml.get('minutes')}}
-            </div>
-        <div class="digit" v-show="seconds !==0">{{ seconds }}
-            {{$ml.get('seconds')}}
-            {{checkTimeOut}}
-            {{getRemainedTimeofRound}}
-            {{getCurrentTime}}
+          class="clock-container__calendar-icon_img" 
+          src="/static/images/calendar_icon.png" alt="calendar-icon">
+      </div>
+      <div class="clock-container">
+        <h6 class="clock-container__status-time">
+          {{ $t(timeStatus) }}
+        </h6>
+        <div class="clock-container__time">
+          <div v-show="days !==0" class="digit" >{{ days }}
+            {{ $t('days') }}
+          </div>
+          <div v-show="hours !==0" class="digit">{{ hours }}
+            {{ $t('hours') }}
+          </div>
+          <div v-show="minutes !==0" class="digit" >{{ minutes }}
+            {{ $t('minutes') }}
+          </div>
+          <div v-show="seconds !==0" class="digit" >{{ seconds }}
+            {{ $t('seconds') }}
+          </div>
         </div>
-</div>
-</div>
+      </div>
     </div>
-
-</div>
-
+  </div>
 </template>
 
 <script>
 export default {
-    props : {
-        date : {
-            coerce: date => date
-        },
-        state:String,
-        timeStatus:String
+  props : {
+    date : {
+      type: Number,
+      default: null
     },
-    data() {
-        return {
-            now: Math.trunc((new Date()).getTime() / 1000)
-        }
+    state: {
+      type: String,
+      default: null
     },
-    mounted() {
-        window.setInterval(() => {
-            this.now = Math.trunc((new Date()).getTime() / 1000);
-        },1000);
-    },
-    computed: {
-        seconds() {
-            return (this.date - this.now) % 60;
-        },
-    minutes() {
-            return Math.trunc((this.date - this.now) / 60) % 60;
-        },
-    hours() {
-            return Math.trunc((this.date- this.now) / 60 / 60) % 24;
-        },
-    days() {
-            return Math.trunc((this.date - this.now) / 60 / 60 / 24);
-        },
-    checkTimeOut() {
-            ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
-            (this.$emit('checkTimeOut', true))
-            :
-            ( this.$emit('checkTimeOut', false))
-        },
-    getRemainedTimeofRound(){
-            this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60))
-        },
-
-    getCurrentTime(){
-            this.$emit('getCurrentTime', this.now)
-        },
-    },
-    methods: {
-    showOrHideModalWindow(){
-            this.$emit('showOrHideModalWindow')
-        },
+    timeStatus: {
+      type: String,
+      default: null
     }
+  },
+  data() {
+    return {
+      now: Math.trunc((new Date()).getTime() / 1000)
+    }
+  },
+  computed: {
+    seconds() {
+      return (this.date - this.now) % 60;
+    },
+    minutes() {
+      return Math.trunc((this.date - this.now) / 60) % 60;
+    },
+    hours() {
+      return Math.trunc((this.date- this.now) / 60 / 60) % 24;
+    },
+    days() {
+      return Math.trunc((this.date - this.now) / 60 / 60 / 24);
+    },
+  },
+  watch: {
+    now(){
+      this.$emit('getCurrentTime', this.now);
+      this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60));
+      ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
+        (this.$emit('checkTimeOut', true))
+        :
+        (null)
+    }
+  },
+  mounted() {
+    window.setInterval(() => {
+      this.now = Math.trunc((new Date()).getTime() / 1000);
+    },1000);
+  },
+  methods: {
+    showOrHideModalWindow(){
+      this.$emit('showOrHideModalWindow')
+    },
+  }
 };
 </script>
 
@@ -132,6 +125,7 @@ export default {
 .clock-container__calendar-icon{
     display: flex;
     align-self: center;
+    margin-top: 17px;
 }
 
 .digit {
