@@ -50,24 +50,17 @@
       <app-start-bid :start-bid="startBid" />
       <app-pouch-couch />
       <app-list-initial-offers v-if="(state === 'pendingOfAuction' || state === 'active') && (remainedTimeOfRound < 300)" :initial-bids-arr="initialBidsArr" />
-      <app-list-of-rounds-active v-if="state == 'active' || state == 'pendingOfRound'" 
-                                 :round-arr="roundArr"
-                                 :round="round"
-                                 :bids-arr="bidsArr"
-                                 :start-bid="startBid"
-                                 :current-bid="stages[1].amount"
-                                 :current-time="currentTime"
-                                 :pause-time="stages[0].start"
-                                 :remained-time-of-round="remainedTimeOfRound"
-                                 :duration-of-round="durationOfRound"
-                                 :state="state" />
-      <app-list-of-rounds-completed v-if="state == 'completed'" 
-                                    :round-arr="roundArr"
-                                    :round="round"
-                                    :bids-arr="bidsArr"
-                                    :start-bid="startBid"
-                                    :current-bid="stages[1].amount"
-                                    :current-time="currentTime" />
+      <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed'" 
+                          :round-arr="roundArr"
+                          :round="round"
+                          :bids-arr="bidsArr"
+                          :start-bid="startBid"
+                          :current-bid="stages[1].amount"
+                          :current-time="currentTime"
+                          :pause-time="stages[0].start"
+                          :remained-time-of-round="remainedTimeOfRound"
+                          :duration-of-round="durationOfRound"
+                          :state="state" />
     </main>
     <footer v-if="state !== 'completed'" 
             :class="'footer-container_' + state" class="footer-container">
@@ -102,8 +95,7 @@ import AppModalInfoWindow from '../components/ModalInfoWindow';
 import AppListInitialOffers from '../components/ListInitialOffers';
 import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
-import AppListOfRoundsActive from '../components/ListOfRoundsActive';
-import AppListOfRoundsCompleted from '../components/ListOfRoundsCompleted';
+import AppListOfRounds from '../components/ListOfRounds';
 import AppPouchCouch from '../components/PouchCouch';
 export default {
   components :{
@@ -116,8 +108,7 @@ export default {
     AppListInitialOffers,
     AppStatusInfoLabel,
     AppIncreasingAndApproval,
-    AppListOfRoundsActive,
-    AppListOfRoundsCompleted,
+    AppListOfRounds,
     AppPouchCouch
   },
   props: {
@@ -147,7 +138,7 @@ export default {
       stoppingTimeOfRound: 10,
       startBid: this.$store.state.infoFromCouch.initial_value,
       currentBid: 100.85,
-      bidsArr: [],
+      bidsArr: [23423, 23213, 12321, 123],
       initialBidsArr: [100, 130, 150, 154],
       round: 1,
       roundArr: [],
