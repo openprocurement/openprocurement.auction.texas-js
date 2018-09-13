@@ -6,6 +6,7 @@ import utils from '../utils/utils.js';
 import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
+import * as config from '../config.json';
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
@@ -14,8 +15,12 @@ const store =  new Vuex.Store({
   strict: debug,
   plugins: [createPersistedState()],
   state: {
-    apiUrl: 'http://127.0.0.1:8000/',
-    auctionURL: 'http://127.0.0.1:8090/',
+    urls:{
+      apiUrl: config.apiUrl,
+      auctionURL: config.auctionURL,
+      pouchURL: config.pouchURL,
+      couchURL: config.couchURL,
+    },
     loginInfo: {
       isLogged: false,
       accessToken: '',
