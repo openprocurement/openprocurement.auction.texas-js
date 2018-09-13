@@ -9,7 +9,7 @@ const fetch = () => {
   db.allDocs({include_docs: true})
     .then(r => r.rows)
     .then(data => {
-        store.commit('setInfoFromCouch', infoPouch);
+      store.commit('setInfoFromCouch', infoPouch);
     })
     .catch(console.error)
 }
