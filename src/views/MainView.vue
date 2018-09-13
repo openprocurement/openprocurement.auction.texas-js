@@ -48,7 +48,6 @@
         </ul>
       </div>
       <app-start-bid :start-bid="startBid" />
-      <app-pouch-couch />
       <app-list-initial-offers v-if="(state === 'pendingOfAuction' || state === 'active') && (remainedTimeOfRound < 300)" :initial-bids-arr="initialBidsArr" />
       <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed'" 
                           :round-arr="roundArr"
@@ -96,7 +95,6 @@ import AppListInitialOffers from '../components/ListInitialOffers';
 import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppListOfRounds from '../components/ListOfRounds';
-import AppPouchCouch from '../components/PouchCouch';
 export default {
   components :{
     AppHongSoundsText,
@@ -108,8 +106,7 @@ export default {
     AppListInitialOffers,
     AppStatusInfoLabel,
     AppIncreasingAndApproval,
-    AppListOfRounds,
-    AppPouchCouch
+    AppListOfRounds
   },
   props: {
     id: {
