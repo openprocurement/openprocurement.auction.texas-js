@@ -209,6 +209,7 @@ export default {
         });
 
         sse.subscribe('Identification', (e) => {
+          this.$store.commit('setIdentificationInfo', e.data)
           console.log(e)
         });
 
