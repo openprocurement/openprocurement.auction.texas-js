@@ -1,0 +1,6 @@
+{
+    "auctionURL" : "http://127.0.0.1:8000/",
+    "apiUrl": "http://127.0.0.1:8000/api",
+    "pouchURL" : "http://localhost:5984/c1/pouch",
+    "couchURL" : "http://localhost:5984/c1"
+}
