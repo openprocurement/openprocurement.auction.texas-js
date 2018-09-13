@@ -7,6 +7,7 @@ import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
 import * as config from '../config.json';
+import { db, remoteDB, fetch } from '../utils/CouchPouch.js'
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
@@ -78,6 +79,19 @@ const store =  new Vuex.Store({
     },
   }
 });
+
+// sync db - couch-pouch
+db.sync(remoteDB, {
+  live: true,
+  retry: true
+}).on('change', change => {
+  store.commit('setInfoFromCouch', change);
+  fetch()
+}).on('error', function (err) {
+  console.log('sync error', err)
+});
+// fetch initial
+fetch() 
 
 window.onbeforeunload = function() {
   return localStorage.setItem('language', store.state.i18n.locale);
