@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
-import utils from '../utils/utils.js';
 import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
@@ -17,66 +16,42 @@ const store =  new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     urls:{
-      apiUrl: config.apiUrl,
       auctionURL: config.auctionURL,
       pouchURL: config.pouchURL,
       couchURL: config.couchURL,
       eventSource: config.eventSource,
     },
-    loginInfo: {
-      isLogged: false,
-      accessToken: '',
+    identification: {
+      bidderID: '',
+      clientID: ''
     },
-    userInfo: {
-      auctions: [],
-      bids: []
-    },
-
     infoFromCouch: {
     }
   },
   mutations: {
-    setUserInfo (state, data) {
-      state.userInfo.auctions = data.auctions
-      state.userInfo.bids = data.bids
-    },
-    login (state, data) {
-      state.loginInfo.isLogged = true
-      state.loginInfo.accessToken = data.access
-      state.loginInfo.refreshToken = data.refresh
-    },
     language(state, data){
       state.i18n.locale = data
     },
     setInfoFromCouch(state, data) {
       state.infoFromCouch = data
     },
-    logout (state) {
-      state.loginInfo.isLogged = false
-      state.loginInfo.accessToken = ''
-      state.loginInfo.refreshToken = '' 
-      state.userInfo.auctions.splice(
-        0,
-        state.userInfo.auctions.length
-      )
-      state.userInfo.bids.splice(
-        0,
-        state.userInfo.bids.length
-      )      
+    setIdentificationInfo (state, data) {
+      state.bidderID = data.bidder_id
+      state.clientID = data.client_id
     }
   },
   actions: {
-    makeBidOfRound (context, jsonToSubmit) {
+    makeBidOfRound (context, bidData) {
+      jsonToSubmit = {...bidData}
+      jsonToSubmit.bidder_id = context.state.bidderID
       axios.post(
-        context.state.apiUrl,
+        context.state.auctionURL + 'texas-auctions/' + '',
         jsonToSubmit,
-        utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
-        .then(response => {
-          context.commit('setInfoFromCouch', response)
-        })
-        .catch(error => {
-          console.log(context.state.apiUrl, jsonToSubmit, utils.getAuthorizeAxiosConfig(context.state.loginInfo.accessToken))
-        })
+      ).then(response => {
+        context.commit('setInfoFromCouch', response)
+      }).catch(error => {
+        console.log(context.state.auctionURL, jsonToSubmit)
+      })
     },
   }
 });
