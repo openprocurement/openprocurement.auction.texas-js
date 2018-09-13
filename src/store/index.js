@@ -21,6 +21,7 @@ const store =  new Vuex.Store({
       auctionURL: config.auctionURL,
       pouchURL: config.pouchURL,
       couchURL: config.couchURL,
+      eventSource: config.eventSource,
     },
     loginInfo: {
       isLogged: false,
