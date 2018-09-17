@@ -36,6 +36,7 @@ const russian = {
   'UAH': 'грн',
   'shortTime': 'HH:mm',
   'Restart sync': 'Перезапуск синхронизации',
+  'Auction has not started and will be rescheduled': 'Аукцион не начался и будет перепланирован',
   'Too low value': 'Слишком низкая ставка',
   'Too high value': 'Слишком высокая ставка',
   'Not valid bidder': ' Вы не являетесь валидный пользователем',

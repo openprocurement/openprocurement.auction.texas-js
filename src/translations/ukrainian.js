@@ -40,6 +40,7 @@ const ukrainian = {
   'Restart sync': 'Перезапуск синхронізації',
   'Too low value': 'Надто низька заявка',
   'Too high value': 'Надто висока заявка',
+  'Auction has not started and will be rescheduled': 'Аукціон не розпочався і буде перепланований',
   'Not valid bidder': 'Ви не є валідний користувачем',
   'Stage not for bidding': 'Даний етап аукціону не передбачає приймання заявок',
   'Bid placed': 'Заявку прийнято',
