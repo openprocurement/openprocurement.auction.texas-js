@@ -15,7 +15,7 @@
         <h6 class="clock-container__status-time">
           {{ $t(timeStatus) }}
         </h6>
-        <div class="clock-container__time">
+        <div v-if="state !== 'completed'" class="clock-container__time">
           <div v-show="days !==0" class="digit" >{{ days }}
             {{ $t('days') }}
           </div>
@@ -28,6 +28,9 @@
           <div v-show="seconds !==0" class="digit" >{{ seconds }}
             {{ $t('seconds') }}
           </div>
+        </div>
+        <div v-if="state === 'completed'">
+          {{ endDate | moment('MMMM Do YYYY, h:mm:ss a') }}
         </div>
       </div>
     </div>
@@ -46,6 +49,10 @@ export default {
       default: null
     },
     timeStatus: {
+      type: String,
+      default: null
+    },
+    endDate: {
       type: String,
       default: null
     }
