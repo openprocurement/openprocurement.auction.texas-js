@@ -1,10 +1,10 @@
 <template>
   <div class="list-rounds-container">
-    <div v-for="(bid, index) in bidsArr" :key="index">
-      <h3>
+    <div v-for="(bid, index) in stages" :key="index">
+      <h3 v-if="bid.time !== '' && bid.time !== null">
         {{ $t('Round') }}
         {{ index + 1 }}</h3>
-      <div v-if="state ==='completed'" class="round-container round-container_completed">
+      <div v-else-if="state ==='completed'" class="round-container round-container_completed">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
             <img src="/static/images/watchInRound.png" alt="watch">
@@ -20,19 +20,19 @@
           </div>
         </div>
         <div class="round-container_bid">
-          <h4>{{ bid }} 
+          <h4>{{ bid.amount }} 
             {{ $t('UAH') }}
           </h4>
         </div>
       </div>
-      <div v-else-if="state ==='active' || state == 'pendingOfRound'" class="round-container round-container_active">
+      <div v-else-if="(state ==='active' || state == 'pendingOfRound') && ((bid.time !== '') && (bid.time !== null))" class="round-container round-container_active">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-active">
             <div class="round-container_time__watch-icon">
               <img src="/static/images/watchInRound.png" alt="watch">
             </div>
             <div class="round-container_time__watch">
-              {{ pauseTime | moment("hh:mm:ss") }}
+              {{ bid.time | moment("hh:mm:ss") }}
             </div>
           </div>
           <div class="round-container_participant_active">
@@ -41,16 +41,13 @@
           </div>
         </div>
         <div class="round-container_bid">
-          <h4>{{ bid }} 
+          <h4>{{ bid.amount }}
             {{ $t('UAH') }}
           </h4>
         </div>
       </div>
     </div>
     <div v-if="state ==='active' || state == 'pendingOfRound'" id="active-round">
-      <h3>
-        {{ $t('Round') }}
-        {{ bidsArr.length + 1 }}</h3>
       <div class="round-container round-container_active">
         <div class="round-container__time-patricipant round-container__time-patricipant-active">
           <div 
@@ -72,7 +69,7 @@
         </div>
         <div class="round-container_bid round-container_bid_active">
           <h4>
-            {{ currentBid }} 
+            {{ stages[current_stage].amount }}
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -99,7 +96,7 @@
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
-          <h4 class="round-container_bid_max__bid-count">{{ currentBid }}
+          <h4 class="round-container_bid_max__bid-count">{{ stages[current_stage - 1].amount }}
             {{ $t('UAH') }}
           </h4>
           <div class="round-container_bid_max-block">
@@ -155,7 +152,15 @@ export default {
       default: null
     },
     pauseTime: {
-      type: String,
+      type: Number,
+      default: null
+    },
+    stages: {
+      type: Array,
+      default: null
+    },
+    current_stage: {
+      type: Number,
       default: null
     },
   },
