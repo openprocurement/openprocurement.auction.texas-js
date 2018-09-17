@@ -7,12 +7,11 @@
       <div class="offer-container">
         <div class="offer-container__participant">
           <div class="offer-container__participant-name">
-            {{ $t('Bidder') }}
-            {{ index + 1 }}
+            {{ bid.label.en }}
           </div>
         </div>
         <div class="offer-container_bid">
-          <h4>{{ bid }} 
+          <h4>{{ bid.amount }} 
             {{ $t('UAH') }}
           </h4>
         </div>
