@@ -52,6 +52,7 @@ const english = {
   'seconds': 'sec',
   'minimum': 'minimum',
   'Internet connection is lost. Attempt to restart after 1 sec': 'Internet connection is lost. Attempt to restart after 1 sec',
+  'Auction has not started and will be rescheduled': 'Auction has not started and will be rescheduled',
   'Synchronization failed': 'Synchronization failed',
   'Possible results': 'Possible results',
   'Increase': 'Increase',
