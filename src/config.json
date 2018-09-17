@@ -1,5 +1,5 @@
 {
-    "auctionURL" : "http://127.0.0.1:8000/",
+    "auctionURL" : "http://localhost:8090/",
     "pouchURL" : "http://localhost:5984/c1/pouch",
     "couchURL" : "http://localhost:5984/c1",
     "eventSource" : "http://127.0.0.1:8000/event_source"
