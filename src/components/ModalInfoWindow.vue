@@ -6,11 +6,14 @@
         <i class="fa fa-info-circle" />
       </div>
       <div class="modal-container__info modal-container__info_description-Products">
+        {{ companyName }}
+      </div>
+      <div class="modal-container__info modal-container__info_description-Products">
         {{ descriptionOfProducts }}
       </div>
       <div class="modal-container__info modal-container__info_step-bid">
         {{ $t('Step reduction of Bid') }}:
-        <strong>{{ startBid }}</strong>
+        <strong>{{ minimalStep }}</strong>
       </div>
       <div class="modal-container__info modal-container__info_start-bid">
         {{ $t('Start value') }}:
@@ -65,6 +68,10 @@ export default {
     },
     descriptionOfProducts: {
       type: String,
+      default: null
+    },
+    minimalStep: {
+      type: Number,
       default: null
     },
   },
