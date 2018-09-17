@@ -1,20 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios'
-import createPersistedState from 'vuex-persistedstate'
 import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
 import * as config from '../config.json';
 import { db, remoteDB, fetch } from '../utils/CouchPouch.js'
+import infoPouch from '@/fakeInfo/infoPouchCouch'
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
 const store =  new Vuex.Store({
   strict: debug,
-  plugins: [createPersistedState()],
   state: {
+    auctionId: '',
     urls:{
       auctionURL: config.auctionURL,
       pouchURL: config.pouchURL,
@@ -29,6 +29,9 @@ const store =  new Vuex.Store({
     }
   },
   mutations: {
+    setAuctionId(state, data){
+      state.auctionId = data
+    },
     language(state, data){
       state.i18n.locale = data
     },
@@ -61,13 +64,14 @@ db.sync(remoteDB, {
   live: true,
   retry: true
 }).on('change', change => {
-  store.commit('setInfoFromCouch', change);
-  fetch()
+  store.commit('setInfoFromCouch', 'infoFromCouch');
+  fetch(store)
 }).on('error', function (err) {
   console.log('sync error', err)
 });
 // fetch initial
-fetch() 
+// fetch(store) 
+
 
 window.onbeforeunload = function() {
   return localStorage.setItem('language', store.state.i18n.locale);
