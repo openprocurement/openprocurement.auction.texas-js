@@ -3,7 +3,7 @@
     <div v-if="state == 'active'" class="status-label-container__text">
       {{ $t(textStatus) }}
       <div class="status-label-container-active__round">
-        {{ bidsArr.length + 1 }}
+        {{ countRounds }}
       </div>
     </div>
     <div v-else class="status-label-container__text">
@@ -40,10 +40,6 @@ export default {
       type: String,
       default: null
     },
-    bidsArr: {
-      type: Array,
-      default: null
-    },
     state: {
       type: String,
       default: null
@@ -52,7 +48,7 @@ export default {
       type: Number,
       default: null
     },
-    durationOfRound: {
+    countRounds: {
       type: Number,
       default: null
     }
