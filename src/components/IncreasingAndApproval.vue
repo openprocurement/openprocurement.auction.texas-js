@@ -47,10 +47,6 @@ export default {
       type: Number,
       default: null
     },
-    bidsArr : {
-      type: Array,
-      default: null
-    }
   },
   data(){
     return{
@@ -60,15 +56,11 @@ export default {
   methods: {
     addNewBidIncrease() {
       if(!this.selected) return 
-      this.$emit('calculateCurrentBid', this.currentBid);
-      this.$emit('addNewBid', this.selected);
       this.$emit('holdRoundTime');
       this.submitBid(this.selected);
       this.selected = null;
     },
     addNewBidApprove() {
-      this.$emit('calculateCurrentBid', this.currentBid);
-      this.$emit('addNewBid', this.currentBid);
       this.$emit('holdRoundTime');
       this.submitBid(this.currentBid);
       this.selected = null;
