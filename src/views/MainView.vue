@@ -21,15 +21,15 @@
       <app-status-info-label 
         :type="statusMessage[state].type"
         :text-status="statusMessage[state].textStatus"
-        :bids-arr="bidsArr"
         :state="state"
+        :count-rounds="countRounds"
         :remained-time-of-round="remainedTimeOfRound" />
     </header>
     <app-status-timer-line 
-      v-if="remainedTimeOfRound > 0"
-      :duration-of-round="durationOfRound"
       :remained-time-of-round="remainedTimeOfRound"
-      :state="state" />
+      :current_stage="current_stage"
+      :stages="stages"
+      :current-time="currentTime" />
     <app-hong-audio-track v-if="state === 'active'" :hong-track="hongTrack" />
     <app-hong-sounds-text v-if="state == 'active' && showHongSoundsText" />
     <main class="container container-main">
@@ -50,19 +50,14 @@
         </ul>
       </div>
       <app-start-bid :start-bid="startBid" />
-      <app-list-initial-offers v-if="(state === 'pendingOfAuction' || state === 'active') && (remainedTimeOfRound < 300)" :initial-bids-arr="initialBidsArr" />
+      <app-list-initial-offers v-if="(state !== 'completed')" :initial-bids-arr="initialBidsArr" />
       <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed'" 
-                          :round-arr="roundArr"
-                          :round="round"
-                          :bids-arr="bidsArr"
                           :start-bid="startBid"
-                          :current-bid="currentBid"
                           :current-time="currentTime"
-                          :pause-time="pauseTime"
                           :remained-time-of-round="remainedTimeOfRound"
-                          :duration-of-round="durationOfRound"
                           :state="state" 
                           :current_stage="current_stage"
+                          :round-arr="roundArr"
                           :stages="stages" />
     </main>
     <footer v-if="state !== 'completed'" 
@@ -71,20 +66,17 @@
         {{ $t('Waiting for start of round') }}
       </h4>
       <h4
-        v-else-if="state == 'pendingOfAution'">
+        v-else-if="state == 'pendingOfAuction'">
         {{ $t('Waiting for start of auction') }}
       </h4>
       <app-increasing-and-approval v-else-if="state == 'active'"
                                    :start-bid="startBid"
-                                   :bids-arr="bidsArr"
                                    :current-bid="currentBid"
-                                   @addNewBid="addNewBid"
-                                   @calculateCurrentBid="calculateCurrentBid"
                                    @holdRoundTime="holdRoundTime" />
     </footer>
   </div>
 </template>
-
+r
 <script>
 // We store the reference to the SSE object out here
 // so we can access it from other methods
@@ -125,6 +117,8 @@ export default {
       stages: [{}],
       current_stage: 0,
       current_type: 'english',
+      countRounds: 0,
+      roundArr: [],
       state: 'active',
       endDate: null,
       showOrHide: false,
@@ -133,21 +127,15 @@ export default {
       hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
       timeOut: false,
       currentTime: null,
-      pauseTime : null,
       browserId: 'b9c09979-7d7e-4ed5-81a7-730274f42e67',
       companyName: 'AT "УКРГАЗВИДОБУВАННЯ :UA-EA-2018-07-27-000020',
       descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
       remainedTimeOfRound: 180,
-      durationOfRound: 180,
-      stoppingTimeOfRound: 10,
       currentBid: null,
-      bidsArr: [23423, 23213, 12321, 123],
       startBid: null,
       minimalStep: null,
       dateOfStartRoundOrAuction: null,
       initialBidsArr: [],
-      round: 1,
-      roundArr: [],
       statusMessage: {
         active: {
           type: 'active',
@@ -197,13 +185,22 @@ export default {
         this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[0].start) / 1000);
       }
       else{
-        this.state = 'active';
-        if(this.stages[this.current_stage].type === 'pause'){
-          this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage].start) / 1000)
-        }
-        else{
+        if(this.stages[this.current_stage].type !== 'pause'){
+          this.state = 'active';
           this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage].planned_end) / 1000);
         }
+        else if(this.stages[this.current_stage].type === 'pause'){
+          this.state = 'pendingOfRound';
+          this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage + 1].start) / 1000)
+        }
+      }
+      this.stages.map((item)=>{
+        if ((Object.keys(item)).length ===5){
+          this.countRounds ++
+          this.roundArr.push(item)
+        }})
+      if(this.current_stage !== -1){
+        this.currentBid = this.stages[this.current_stage].amount;
       }
     },
     current_type(){
@@ -270,34 +267,20 @@ export default {
     msgServer.close();
   },
   methods: {
-    addNewBid(bid) {
-      this.currentBid = bid * 1.05;
-      this.bidsArr.push(bid);
-      this.roundArr.push(this.round);
-      this.round++;
-      this.dateOfStartRoundOrAuction = this.currentTime + this.durationOfRound;
-    },
-
-    calculateCurrentBid(bid) {
-      this.currentBid = bid * 1.05;
-      this.dateOfStartRoundOrAuction = this.currentTime + this.durationOfRound;
-    },
-
     holdRoundTime() {
-      this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage].start)/1000);
       this.state = 'pendingOfRound';
+      this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage + 1].start)/1000);
     },
-
     checkTimeOut(res) {
       if(res){
         window.scrollTo(0, document.body.scrollHeight);
       }
-      if (res && this.state === 'pendingOfAuction' || res && this.state === 'pendingOfRound' ) {
-        this.state = 'active';
-        // this.dateOfStartRoundOrAuction = this.dateOfStartRoundOrAuction + this.durationOfRound;
-        this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage].planned_end)/1000);
+      if (res && this.state === 'pendingOfAuction') {
+        this.state ='pendingOfRound'
       }
-
+      else if(res && this.state === 'pendingOfRound'){
+        this.state = 'active'
+      }
       else if (res) {
         this.state = 'completed';
       }
