@@ -1,10 +1,10 @@
 <template>
   <div class="list-rounds-container">
     <div v-for="(bid, index) in stages" :key="index">
-      <h3 v-if="bid.time !== '' && bid.time !== null">
+      <h3 v-if="bid.time !== '' && bid.time !== null && state =='active'">
         {{ $t('Round') }}
         {{ index + 1 }}</h3>
-      <div v-else-if="state ==='completed'" class="round-container round-container_completed">
+      <div v-else-if="state ==='completed' && bid.hasOwnProperty('amount')" class="round-container round-container_completed">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
             <img src="/static/images/watchInRound.png" alt="watch">
@@ -58,7 +58,6 @@
                 v-if="state !== 'pendingOfRound' && (value > 0 && value < 100)"
                 :value="value" :text="remainedTimeOfRound"
                 :remained-time-of-round="remainedTimeOfRound"
-                :duration-of-round="durationOfRound"
                 min="0" max="100" />
             </div>
             <div class="round-container_time-active__watch">
@@ -113,29 +112,14 @@
 <script>
 import RadialProgressBar from './RadialProgressBar.vue'
 import AppListInitialOffers from './ListInitialOffers.vue'
+import calculatingDurationTime from '../utils/calculatingDurationTime'
 export default {
   components: {
     RadialProgressBar,
     AppListInitialOffers
   },
   props: {
-    bid: {
-      type: Number,
-      default: null
-    },
-    bidsArr: {
-      type: Array,
-      default: null
-    },
     startBid: {
-      type: Number,
-      default: null
-    },
-    currentTime: {
-      type: Number,
-      default: null
-    },
-    currentBid: {
       type: Number,
       default: null
     },
@@ -143,16 +127,8 @@ export default {
       type: Number,
       default: null
     },
-    durationOfRound: {
-      type: Number,
-      default: null
-    },
     state: {
       type: String,
-      default: null
-    },
-    pauseTime: {
-      type: Number,
       default: null
     },
     stages: {
@@ -163,6 +139,18 @@ export default {
       type: Number,
       default: null
     },
+    countRounds: {
+      type: Number,
+      default: null
+    },
+    currentTime: {
+      type: Number,
+      default: null
+    },
+    roundArr: {
+      type: Array,
+      default: null
+    }
   },
   data () {
     return {
@@ -171,7 +159,8 @@ export default {
   },
   watch: {
     remainedTimeOfRound() {
-      this.value = (100 - (this.remainedTimeOfRound / this.durationOfRound * 100)).toFixed(2);
+      let calculate = calculatingDurationTime(this.stages[this.current_stage].start, this.stages[this.current_stage].planned_end );
+      this.value = (100 - (this.remainedTimeOfRound / calculate * 100)).toFixed(2);
     },
   },
 };
