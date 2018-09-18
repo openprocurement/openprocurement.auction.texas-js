@@ -79,7 +79,7 @@ export default {
   watch: {
     now(){
       this.$emit('getCurrentTime', this.now);
-      this.$emit('getRemainedTimeofRound', (this.seconds + this.minutes * 60));
+      this.$emit('getRemainedTimeofRound', (this.days * 24 * 3600 +  this.seconds + this.minutes * 60));
       ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
         (this.$emit('checkTimeOut', true))
         :
