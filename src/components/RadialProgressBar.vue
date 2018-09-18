@@ -11,15 +11,15 @@
 export default {
   props: {
     max: {
-      type: Number,
+      type: String,
       default: null
     },
     min: {
-      type: Number,
+      type: String,
       default: null
     },
     value: {
-      type:  Number,
+      type:  String,
       default: null
     },
     text: {
