@@ -106,9 +106,14 @@ export default {
     AppIncreasingAndApproval,
     AppListOfRounds
   },
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+  },
   data(){
     return {
-      id: '',
       stages: [{}],
       current_stage: 0,
       current_type: 'english',
@@ -205,9 +210,7 @@ export default {
     }
   },
   created() {
-    let splittedPath = window.location.pathname.split( '/' )
-    let id = splittedPath[splittedPath.length - 1]
-    this.$store.commit('setAuctionUUID', id)
+    this.$store.commit('setAuctionUUID', this.id)
     getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
