@@ -108,6 +108,7 @@ export default {
   },
   data(){
     return {
+      id: '',
       stages: [{}],
       current_stage: 0,
       current_type: 'english',
@@ -204,13 +205,17 @@ export default {
     }
   },
   created() {
-    getAuctionRequest(this, this.id)
+    let splittedPath = window.location.pathname.split( '/' )
+    let id = splittedPath[splittedPath.length - 1]
+    this.$store.commit('setAuctionUUID', id)
+    getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
     //scrolling on bottom
     window.scrollTo(0, document.body.scrollHeight);
     // init event-source
-    this.$sse(this.$store.state.urls.eventSource, { withCredentials: true, format: 'json' })
+    let eventSourceURL = `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/${this.$store.state.urls.eventSource}` 
+    this.$sse(eventSourceURL,  { withCredentials: true })
       .then(sse => {
         // Store SSE object at a higher scope
         msgServer = sse;
