@@ -139,16 +139,8 @@ export default {
       type: Number,
       default: null
     },
-    countRounds: {
-      type: Number,
-      default: null
-    },
     currentTime: {
       type: Number,
-      default: null
-    },
-    roundArr: {
-      type: Array,
       default: null
     }
   },
