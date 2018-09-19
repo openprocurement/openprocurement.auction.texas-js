@@ -1,16 +1,18 @@
 <template>
   <div class="list-rounds-container">
-    <div v-for="(bid, index) in stages" :key="index">
-      <h3 v-if="bid.hasOwnProperty('time') && bid.time !=='' ">
+    <div v-for="(stage, index) in previouseStages" :key="index">
+      <h3>
         {{ $t('Round') }}
-        {{ Math.ceil(index/2) }}</h3>
-      <div v-if="state ==='completed' && bid.hasOwnProperty('amount')" class="round-container round-container_completed">
+        {{ index + 1 }}
+      </h3>
+      <div v-if="state ==='completed'" class="round-container round-container_completed">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
             <img src="/static/images/watchInRound.png" alt="watch">
           </div>
           <div class="round-container_participant-completed">
             <div class="round-container_participant__order-number">
+              {{ $store.state.i18n.locale }}
               {{ $t('Bidder') }}
               {{ index + 1 }}
             </div>
@@ -20,37 +22,41 @@
           </div>
         </div>
         <div class="round-container_bid">
-          <h4>{{ bid.amount }} 
+          <h4>{{ stage.amount }} 
             {{ $t('UAH') }}
           </h4>
         </div>
       </div>
-      <div v-else-if="(state ==='active' || state == 'pendingOfRound') && bid.hasOwnProperty('time') && bid.time !==''" class="round-container round-container_active">
+
+      <div v-else-if="(state ==='active' || state == 'pendingOfRound')" class="round-container round-container_active">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-active">
             <div class="round-container_time__watch-icon">
               <img src="/static/images/watchInRound.png" alt="watch">
             </div>
             <div class="round-container_time__watch">
-              {{ bid.time | moment("hh:mm:ss") }}
+              {{ stage.time | moment("hh:mm:ss") }}
             </div>
           </div>
           <div class="round-container_participant_active">
+            
             {{ $t('Bidder') }}
             {{ index + 1 }}
           </div>
         </div>
         <div class="round-container_bid">
-          <h4>{{ bid.amount }}
+          <h4>{{ stage.amount }}
             {{ $t('UAH') }}
           </h4>
         </div>
       </div>
     </div>
-    <div v-if="state ==='active' || state == 'pendingOfRound' && bid.hasOwnProperty('time') && bid.time === ''" id="active-round">
+
+    <div v-if="state ==='active' || state == 'pendingOfRound'" id="active-round">
       <h3>
         {{ $t('Round') }}
-        {{ countRounds }}</h3>
+        {{ currentRoundNumber }}
+      </h3>      
       <div class="round-container round-container_active">
         <div class="round-container__time-patricipant round-container__time-patricipant-active">
           <div class="round-container_time-active">
@@ -70,7 +76,7 @@
         </div>
         <div class="round-container_bid round-container_bid_active">
           <h4>
-            {{ stages[currentStage].amount }}
+            {{ stages[stages.length - 1].amount }}
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -115,6 +121,7 @@
 import RadialProgressBar from './RadialProgressBar.vue'
 import AppListInitialOffers from './ListInitialOffers.vue'
 import calculatingDurationTime from '../utils/calculatingDurationTime'
+
 export default {
   components: {
     RadialProgressBar,
@@ -141,16 +148,8 @@ export default {
       type: [String, Number],
       default: null
     },
-    countRounds: {
-      type: Number,
-      default: null
-    },
     currentTime: {
       type: Number,
-      default: null
-    },
-    roundArr: {
-      type: Array,
       default: null
     }
   },
@@ -159,12 +158,24 @@ export default {
       value: 0,
     }
   },
+  computed: {
+    previouseStages () {
+      let prevStages = []
+      for (let i in this.stages) {
+        if (this.stages[i].bidder_id) prevStages.push(this.stages[i])
+      }
+      return prevStages
+    },
+    currentRoundNumber () {
+      return this.previouseStages.length + 1
+    }
+  },
   watch: {
     remainedTimeOfRound() {
       let calculate = calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end );
       this.value = (100 - (this.remainedTimeOfRound / calculate * 100)).toFixed(2);
     },
-  },
+  }
 };
 </script>
 
