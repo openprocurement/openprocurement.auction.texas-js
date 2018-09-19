@@ -39,29 +39,14 @@ const store =  new Vuex.Store({
       state.infoFromCouch = data
     },
     setIdentificationInfo (state, data) {
-      state.bidderID = data.bidder_id
-      state.clientID = data.client_id
-    }
-  },
-  actions: {
-    makeBidOfRound (context, bidData) {
-      jsonToSubmit = {...bidData}
-      jsonToSubmit.bidder_id = context.state.bidderID
-      axios.post(
-        context.state.auctionURL + 'texas-auctions/' + '',
-        jsonToSubmit,
-      ).then(response => {
-        context.commit('setInfoFromCouch', response)
-      }).catch(error => {
-        console.log(context.state.auctionURL, jsonToSubmit)
-      })
+      state.identification.bidderID = data.bidder_id
+      state.identification.clientID = data.client_id
     },
     setAuctionUUID (state, uuid) {
       state.id = uuid
     }
   }
 });
-
 // sync db - couch-pouch
 db.sync(remoteDB, {
   live: true,

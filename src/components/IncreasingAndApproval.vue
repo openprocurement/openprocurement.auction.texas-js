@@ -32,8 +32,9 @@
 </template>
 
 <script>
-import validators from '../utils/validators.js'
 import VueSearchSelect from './VueSearchSelect.vue'
+import axios from 'axios'
+
 export default {
   components: {
     VueSearchSelect
@@ -56,12 +57,10 @@ export default {
   methods: {
     addNewBidIncrease() {
       if(!this.selected) return 
-      this.$emit('holdRoundTime');
       this.submitBid(this.selected);
       this.selected = null;
     },
     addNewBidApprove() {
-      this.$emit('holdRoundTime');
       this.submitBid(this.currentBid);
       this.selected = null;
     },
@@ -70,10 +69,19 @@ export default {
     },
     submitBid (amount) {
       let jsonToSend = {
-        'amount': amount
+        bid: amount,
+        bidder_id: this.$store.state.identification.bidderID
       }
-      this.$store.dispatch('makeBidOfRound', jsonToSend)
-    }
+      axios.post(
+        `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/postbid`,
+        jsonToSend,
+        {withCredentials: true}
+      ).then(response => {
+        this.$emit('sentBid')
+      }).catch(error => {
+        console.log(error)
+      })    
+    },
   },
 };
 </script>

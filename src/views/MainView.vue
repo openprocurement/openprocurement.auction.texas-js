@@ -72,7 +72,7 @@
       <app-increasing-and-approval v-else-if="state == 'active'"
                                    :start-bid="startBid"
                                    :current-bid="currentBid"
-                                   @holdRoundTime="holdRoundTime" />
+                                   @sentBid="holdRoundTime" />
     </footer>
   </div>
 </template>
@@ -230,7 +230,8 @@ export default {
         });
 
         sse.subscribe('Identification', (e) => {
-          this.$store.commit('setIdentificationInfo', e.data)
+          let data = JSON.parse(e)
+          this.$store.commit('setIdentificationInfo', data)
           console.log(e)
         });
 
@@ -260,8 +261,7 @@ export default {
   },
   methods: {
     holdRoundTime() {
-      this.state = 'pendingOfRound';
-      this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage + 1].start)/1000);
+      getAuctionRequest(this, this.$store.state.id)
     },
     checkTimeOut(res) {
       if(res){
