@@ -1,12 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios'
 import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
 import * as config from '../config.json';
 import { db, remoteDB, fetch } from '../utils/CouchPouch.js'
-import infoPouch from '@/fakeInfo/infoPouchCouch'
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
@@ -14,11 +12,13 @@ const debug = process.env.NODE_ENV !== 'production';
 const store =  new Vuex.Store({
   strict: debug,
   state: {
-    auctionId: '',
+    id: '',
     urls:{
-      auctionURL: config.auctionURL,
+      serverURL: config.serverURL,
+      auctionURL: config.serverURL + config.auctionPrefix,
       pouchURL: config.pouchURL,
       couchURL: config.couchURL,
+      auctionPrefix: config.auctionPrefix,
       eventSource: config.eventSource,
     },
     identification: {
@@ -39,26 +39,14 @@ const store =  new Vuex.Store({
       state.infoFromCouch = data
     },
     setIdentificationInfo (state, data) {
-      state.bidderID = data.bidder_id
-      state.clientID = data.client_id
-    }
-  },
-  actions: {
-    makeBidOfRound (context, bidData) {
-      jsonToSubmit = {...bidData}
-      jsonToSubmit.bidder_id = context.state.bidderID
-      axios.post(
-        context.state.auctionURL + 'texas-auctions/' + '',
-        jsonToSubmit,
-      ).then(response => {
-        context.commit('setInfoFromCouch', response)
-      }).catch(error => {
-        console.log(context.state.auctionURL, jsonToSubmit)
-      })
+      state.identification.bidderID = data.bidder_id
+      state.identification.clientID = data.client_id
     },
+    setAuctionUUID (state, uuid) {
+      state.id = uuid
+    }
   }
 });
-
 // sync db - couch-pouch
 db.sync(remoteDB, {
   live: true,

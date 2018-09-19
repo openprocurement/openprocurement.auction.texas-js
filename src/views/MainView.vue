@@ -72,7 +72,7 @@
       <app-increasing-and-approval v-else-if="state == 'active'"
                                    :start-bid="startBid"
                                    :current-bid="currentBid"
-                                   @holdRoundTime="holdRoundTime" />
+                                   @sentBid="holdRoundTime" />
     </footer>
   </div>
 </template>
@@ -106,14 +106,9 @@ export default {
     AppIncreasingAndApproval,
     AppListOfRounds
   },
-  props: {
-    id: {
-      type: String,
-      default: null
-    },
-  },
   data(){
     return {
+      id: '',
       stages: [{}],
       current_stage: 0,
       current_type: 'english',
@@ -127,9 +122,9 @@ export default {
       hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
       timeOut: false,
       currentTime: null,
-      browserId: 'b9c09979-7d7e-4ed5-81a7-730274f42e67',
-      companyName: 'AT "УКРГАЗВИДОБУВАННЯ :UA-EA-2018-07-27-000020',
-      descriptionOfProducts: 'Відпрацьовані акамуляторні батареї заправлені електролітом - 8.956 тонн',
+      browserId: '',
+      companyName: '',
+      descriptionOfProducts: '',
       remainedTimeOfRound: 180,
       currentBid: null,
       startBid: null,
@@ -173,7 +168,7 @@ export default {
     };
   },
   watch: {
-    current_stage(){
+    current_stage () {
       if(this.current_stage === -100){
         this.state = 'canceled'
       }
@@ -195,7 +190,7 @@ export default {
         }
       }
       this.stages.map((item)=>{
-        if ((Object.keys(item)).length ===5){
+        if ((Object.keys(item)).length === 5){
           this.countRounds ++
           this.roundArr.push(item)
         }})
@@ -210,24 +205,21 @@ export default {
     }
   },
   created() {
-    getAuctionRequest(this, this.id)
+    let splittedPath = window.location.pathname.split( '/' )
+    let id = splittedPath[splittedPath.length - 1]
+    this.$store.commit('setAuctionUUID', id)
+    getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
     //scrolling on bottom
     window.scrollTo(0, document.body.scrollHeight);
     // init event-source
-    this.$sse(this.$store.state.urls.eventSource, { withCredentials: true, format: 'json' })
+    let eventSourceURL = `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/${this.$store.state.urls.eventSource}` 
+    this.$sse(eventSourceURL,  { withCredentials: true })
       .then(sse => {
         // Store SSE object at a higher scope
         msgServer = sse;
         // Catch any errors (ie. lost connections, etc.)
-        sse.onError(e => {
-          console.error('lost connection; giving up!', e);
-          // This is purely for example; EventSource will automatically
-          // attempt to reconnect indefinitely, with no action needed
-          // on your part to resubscribe to events once (if) reconnected
-          sse.close();
-        });
         // Listen for messages based on their event
         sse.subscribe('ClientsList', (e) => {
           console.log(e)
@@ -238,7 +230,8 @@ export default {
         });
 
         sse.subscribe('Identification', (e) => {
-          this.$store.commit('setIdentificationInfo', e.data)
+          let data = JSON.parse(e)
+          this.$store.commit('setIdentificationInfo', data)
           console.log(e)
         });
 
@@ -268,8 +261,7 @@ export default {
   },
   methods: {
     holdRoundTime() {
-      this.state = 'pendingOfRound';
-      this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage + 1].start)/1000);
+      getAuctionRequest(this, this.$store.state.id)
     },
     checkTimeOut(res) {
       if(res){
