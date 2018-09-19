@@ -4,13 +4,11 @@ import MainView from '../views/MainView';
 
 Vue.use(Router);
 export default new Router({
-  mode: 'history',
   routes: [
     {
-      path: '/:id',
-      name: 'auctionState',
+      path: '/',
+      name: 'MainView',
       component: MainView,
-      props: true,
-    }
-  ]
+    },
+  ],
 });
