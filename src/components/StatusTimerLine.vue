@@ -14,7 +14,7 @@ export default {
       type: Number,
       default: null
     },
-    current_stage: {
+    currentStage: {
       type: Number,
       default: null
     },
@@ -34,16 +34,16 @@ export default {
     }
   },
   watch: { 
-    progressStyles() {
+    remainedTimeOfRound() {
       let calculate;
-      if(this.current_stage !== -1){
-        calculate = this.remainedTimeOfRound / calculatingDurationTime(this.stages[this.current_stage].start, this.stages[this.current_stage].planned_end )
+      if(this.currentStage !== -1 && this.stages[this.currentStage].type !== 'pause'){
+        calculate = this.remainedTimeOfRound / calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end )
       }
-      else if (this.current_stage === -1){
+      else if (this.currentStage === -1){
         calculate = this.remainedTimeOfRound / ( this.remainedTimeOfRound + (this.i ++) )
       }
-      else if(this.current_stage !== -1 && stages[this.current_stage].type === 'pause'){
-        calculate = this.remainedTimeOfRound / calculatingDurationTime(this.stages[this.current_stage].start, this.stages[this.current_stage + 1].start )
+      else if(this.currentStage !== -1 && this.stages[this.currentStage].type === 'pause'){
+        calculate = this.remainedTimeOfRound / calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage + 1].start )
       }
       this.progressStyles = `width : ${(100 - (calculate * 100))}%`
     }

@@ -27,6 +27,7 @@
           </h4>
         </div>
       </div>
+
       <div v-else-if="(state ==='active' || state == 'pendingOfRound')" class="round-container round-container_active">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-active">
@@ -58,8 +59,7 @@
       </h3>      
       <div class="round-container round-container_active">
         <div class="round-container__time-patricipant round-container__time-patricipant-active">
-          <div 
-            class="round-container_time-active">
+          <div class="round-container_time-active">
             <div 
               class="round-container_time-active__watch-icon">
               <radial-progress-bar
@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
-          <h4 class="round-container_bid_max__bid-count">{{ stages[current_stage - 1].amount }}
+          <h4 class="round-container_bid_max__bid-count">{{ stages[currentStage - 1].amount }}
             {{ $t('UAH') }}
           </h4>
           <div class="round-container_bid_max-block">
@@ -144,8 +144,8 @@ export default {
       type: Array,
       default: null
     },
-    current_stage: {
-      type: Number,
+    currentStage: {
+      type: [String, Number],
       default: null
     },
     currentTime: {
@@ -172,7 +172,7 @@ export default {
   },
   watch: {
     remainedTimeOfRound() {
-      let calculate = calculatingDurationTime(this.stages[this.current_stage].start, this.stages[this.current_stage].planned_end );
+      let calculate = calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end );
       this.value = (100 - (this.remainedTimeOfRound / calculate * 100)).toFixed(2);
     },
   }
@@ -193,6 +193,7 @@ export default {
 
 .round-container_completed{
     height: 60px;
+    margin-top: 10px;
 }
 
 .round-container_time-active{
