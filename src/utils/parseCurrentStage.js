@@ -28,7 +28,7 @@ const parseCurrentStage = (stages, currentStage, context) =>{
         context.currentBid = stages[currentStage].amount;
       }
 
-         if(current_stage === 0){
+         if(currentStage === 0){
            if(stages[currentStage].type !== 'pause'){
             context.state = 'active';
             context.dateOfStartRoundOrAuction = Math.trunc(Date.parse(stages[currentStage].planned_end) / 1000);
