@@ -1,10 +1,10 @@
 <template>
   <div class="list-rounds-container">
     <div v-for="(bid, index) in stages" :key="index">
-      <h3 v-if="bid.time !== '' && bid.time !== null && state =='active'">
+      <h3 v-if="bid.hasOwnProperty('time') && bid.time !=='' ">
         {{ $t('Round') }}
-        {{ index + 1 }}</h3>
-      <div v-else-if="state ==='completed' && bid.hasOwnProperty('amount')" class="round-container round-container_completed">
+        {{ Math.ceil(index/2) }}</h3>
+      <div v-if="state ==='completed' && bid.hasOwnProperty('amount')" class="round-container round-container_completed">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
             <img src="/static/images/watchInRound.png" alt="watch">
@@ -25,7 +25,7 @@
           </h4>
         </div>
       </div>
-      <div v-else-if="(state ==='active' || state == 'pendingOfRound') && ((bid.time !== '') && (bid.time !== null))" class="round-container round-container_active">
+      <div v-else-if="(state ==='active' || state == 'pendingOfRound') && bid.hasOwnProperty('time') && bid.time !==''" class="round-container round-container_active">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-active">
             <div class="round-container_time__watch-icon">
@@ -47,11 +47,13 @@
         </div>
       </div>
     </div>
-    <div v-if="state ==='active' || state == 'pendingOfRound'" id="active-round">
+    <div v-if="state ==='active' || state == 'pendingOfRound' && bid.hasOwnProperty('time') && bid.time === ''" id="active-round">
+      <h3>
+        {{ $t('Round') }}
+        {{ countRounds }}</h3>
       <div class="round-container round-container_active">
         <div class="round-container__time-patricipant round-container__time-patricipant-active">
-          <div 
-            class="round-container_time-active">
+          <div class="round-container_time-active">
             <div 
               class="round-container_time-active__watch-icon">
               <radial-progress-bar
@@ -68,7 +70,7 @@
         </div>
         <div class="round-container_bid round-container_bid_active">
           <h4>
-            {{ stages[current_stage].amount }}
+            {{ stages[currentStage].amount }}
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -95,7 +97,7 @@
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
-          <h4 class="round-container_bid_max__bid-count">{{ stages[current_stage - 1].amount }}
+          <h4 class="round-container_bid_max__bid-count">{{ stages[currentStage - 1].amount }}
             {{ $t('UAH') }}
           </h4>
           <div class="round-container_bid_max-block">
@@ -135,8 +137,8 @@ export default {
       type: Array,
       default: null
     },
-    current_stage: {
-      type: Number,
+    currentStage: {
+      type: [String, Number],
       default: null
     },
     countRounds: {
@@ -159,7 +161,7 @@ export default {
   },
   watch: {
     remainedTimeOfRound() {
-      let calculate = calculatingDurationTime(this.stages[this.current_stage].start, this.stages[this.current_stage].planned_end );
+      let calculate = calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end );
       this.value = (100 - (this.remainedTimeOfRound / calculate * 100)).toFixed(2);
     },
   },
@@ -180,6 +182,7 @@ export default {
 
 .round-container_completed{
     height: 60px;
+    margin-top: 10px;
 }
 
 .round-container_time-active{
