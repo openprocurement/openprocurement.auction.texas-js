@@ -2,13 +2,13 @@
   <div class="clock-container-wrapper">
     <div class="clock-container__burger-icon"
          @click="showOrHideModalWindow">
-      <img src="/static/images/burger_icon.png" alt="calendar-icon">
+      <img src="/static_texas/images/burger_icon.png" alt="calendar-icon">
     </div>
     <div class="clock-container-wrapper_time">
       <div class="clock-container__calendar-icon">
         <img 
           class="clock-container__calendar-icon_img" 
-          src="/static/images/calendar_icon.png" alt="calendar-icon">
+          src="/static_texas/images/calendar_icon.png" alt="calendar-icon">
       </div>
       <div class="clock-container">
         <h6 class="clock-container__status-time">
