@@ -1,7 +1,7 @@
 import axios from 'axios'
 import parseCurrentStage from './parseCurrentStage'
 const getAuctionRequest =  (context, id) =>{
-  axios.get(`${context.$store.state.urls.serverURL}database/${id}`)
+  axios.get(`${context.$store.state.urls.databaseURL}/${id}`)
     .then(response => {
       context.initialBidsArr = response.data.initial_bids
       context.startBid = response.data.initial_value

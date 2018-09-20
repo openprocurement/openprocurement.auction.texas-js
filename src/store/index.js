@@ -4,7 +4,6 @@ import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
 import * as config from '../config.json';
-import { pouchDB, couchDB } from '../utils/CouchPouch.js'
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
@@ -20,6 +19,7 @@ const store =  new Vuex.Store({
       couchURL: config.couchURL,
       auctionPrefix: config.auctionPrefix,
       eventSource: config.eventSource,
+      databaseURL: `${config.serverURL}${config.databaseName}`
     },
     identification: {
       bidderID: '',
@@ -47,16 +47,6 @@ const store =  new Vuex.Store({
     }
   }
 });
-// sync db - couch-pouch
-// pouchDB.sync(couchDB, {
-//   live: true,
-//   retry: true
-// }).on('change', change => {
-//   // store.commit('setInfoFromCouch', change);
-//   console.log(change)
-// }).on('error', function (err) {
-//   console.log('sync error', err)
-// });
 
 window.onbeforeunload = function() {
   localStorage.setItem('language', store.state.i18n.locale)

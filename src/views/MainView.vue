@@ -94,6 +94,8 @@ import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppListOfRounds from '../components/ListOfRounds';
 import getAuctionRequest from '../utils/getRequest'
 import parseCurrentStage from '../utils/parseCurrentStage'
+import PouchDBSync from '../utils/CouchPouch'
+
 
 export default {
   components :{
@@ -186,6 +188,7 @@ export default {
   created() {
     this.$store.commit('setAuctionUUID', this.id)
     getAuctionRequest(this, this.$store.state.id)
+    PouchDBSync.initialize(this)
   },
   mounted() {
     //scrolling on bottom
