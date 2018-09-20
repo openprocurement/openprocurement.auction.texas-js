@@ -1,4 +1,3 @@
-
 <template>
   <div class="clock-container-wrapper">
     <div class="clock-container__burger-icon"
@@ -30,7 +29,7 @@
           </div>
         </div>
         <div v-if="state === 'completed'">
-          {{ endDate | moment('MMMM Do YYYY, h:mm:ss a') }}
+          {{ end }}
         </div>
       </div>
     </div>
@@ -38,6 +37,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   props : {
     date : {
@@ -59,7 +59,8 @@ export default {
   },
   data() {
     return {
-      now: Math.trunc((new Date()).getTime() / 1000)
+      now: Math.trunc((new Date()).getTime() / 1000),
+      end:null
     }
   },
   computed: {
@@ -78,6 +79,9 @@ export default {
   },
   watch: {
     now(){
+      // change language of moment.js
+      moment.locale(this.$store.state.i18n.locale)
+      this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a');
       this.$emit('getCurrentTime', this.now);
       this.$emit('getRemainedTimeofRound', (this.days * 24 * 3600 +  this.seconds + this.minutes * 60));
       ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
@@ -108,6 +112,7 @@ export default {
 .clock-container{
     display: flex;
     flex-direction: column;
+    margin-left: 10px;
 }
 
 .clock-container-wrapper{
@@ -118,7 +123,6 @@ export default {
 
 .clock-container-wrapper_time{
     display: flex;
-    width: 195px;
     justify-content: space-between;
     align-items: center;
 }

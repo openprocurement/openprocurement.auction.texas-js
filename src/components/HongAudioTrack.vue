@@ -1,6 +1,6 @@
 <template>
-  <audio ref="player">
-    <source :src="hongTrack">
+  <audio ref="player" autoplay>
+    <source :src="src">
     Your browser does not support the audio element.
   </audio>
 </template>
@@ -9,13 +9,23 @@
 
 export default {
   props: {
-    hongTrack:{
+    browserName:{
       type: String,
       default: null
     }
   },
+  data(){
+    return{
+      src: '/static/media/gong-auction-v1-short.mp3'
+    }
+  },
+  watch:{
+    browserName(){
+      this.src = '/static/media/gong-auction-v1-short.ogg'
+    }
+  },
   mounted: function () {
-    this.$watch('hongTrack', function () {
+    this.$watch('src', function () {
       this.$refs.player.load();
     });
   },

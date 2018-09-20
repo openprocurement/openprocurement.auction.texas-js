@@ -3,7 +3,7 @@
     <div v-if="state == 'active'" class="status-label-container__text">
       {{ $t(textStatus) }}
       <div class="status-label-container-active__round">
-        {{ countRounds }}
+        {{ currentRoundNumber }}
       </div>
     </div>
     <div v-else class="status-label-container__text">
@@ -48,7 +48,7 @@ export default {
       type: Number,
       default: null
     },
-    countRounds: {
+    currentRoundNumber: {
       type: Number,
       default: null
     }

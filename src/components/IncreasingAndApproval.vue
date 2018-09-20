@@ -4,6 +4,7 @@
       <div class="select-choice-bid-wrapper">
         <vue-search-select
           :current-bid="currentBid"
+          :minimal-step="minimalStep"
           @setSelectedValue="setSelectedValue"/>
       </div>
       <button v-scroll-to="'#active-round'" :disabled="selected === null"  
@@ -48,6 +49,10 @@ export default {
       type: Number,
       default: null
     },
+    minimalStep: {
+      type: Number,
+      default: null
+    }
   },
   data(){
     return{

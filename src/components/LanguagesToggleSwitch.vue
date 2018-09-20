@@ -1,7 +1,7 @@
 <template>
   <toggle-switch
     :options="myOptions"
-    @change = "$store.commit('language', $event.value)"/> 
+    @change="ChangeLanguage"/> 
 </template>
 
 <script>
@@ -35,8 +35,23 @@ export default {
             {name: 'Українська', color: '#000', backgroundColor: 'lightgrey'},
             {name: 'Русский', color: '#000', backgroundColor: 'lightgrey'}
           ]
-        }
+        },
       }
+    }
+  },
+  methods:{
+    ChangeLanguage(e){
+      let locale;
+      if(e.value === 'Русский'){
+        locale = 'ru'
+      }
+      else if(e.value === 'Українська'){
+        locale = 'uk'
+      }
+      else{
+        locale = 'en'
+      }
+      this.$store.commit('language', locale)
     }
   }
 }

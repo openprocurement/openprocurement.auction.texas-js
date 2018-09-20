@@ -22,15 +22,15 @@
         :type="statusMessage[state].type"
         :text-status="statusMessage[state].textStatus"
         :state="state"
-        :count-rounds="countRounds"
+        :current-round-number="currentRoundNumber"
         :remained-time-of-round="remainedTimeOfRound" />
     </header>
     <app-status-timer-line 
       :remained-time-of-round="remainedTimeOfRound"
-      :current_stage="current_stage"
+      :current-stage="currentStage"
       :stages="stages"
       :current-time="currentTime" />
-    <app-hong-audio-track v-if="state === 'active'" :hong-track="hongTrack" />
+    <app-hong-audio-track v-if="currentStage === 0" :browser-name="browserName" />
     <app-hong-sounds-text v-if="state == 'active' && showHongSoundsText" />
     <main class="container container-main">
       <div class="container-main__tender-number">
@@ -56,9 +56,10 @@
                           :current-time="currentTime"
                           :remained-time-of-round="remainedTimeOfRound"
                           :state="state" 
-                          :current_stage="current_stage"
-                          :round-arr="roundArr"
-                          :stages="stages" />
+                          :current-stage="currentStage"
+                          :initial-bids-arr="initialBidsArr"
+                          :stages="stages" 
+                          @getCurrentRoundNumber="getCurrentRoundNumber" />
     </main>
     <footer v-if="state !== 'completed'" 
             :class="'footer-container_' + state" class="footer-container">
@@ -72,11 +73,11 @@
       <app-increasing-and-approval v-else-if="state == 'active'"
                                    :start-bid="startBid"
                                    :current-bid="currentBid"
+                                   :minimal-step="minimalStep"
                                    @sentBid="holdRoundTime" />
     </footer>
   </div>
 </template>
-r
 <script>
 // We store the reference to the SSE object out here
 // so we can access it from other methods
@@ -92,6 +93,7 @@ import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppListOfRounds from '../components/ListOfRounds';
 import getAuctionRequest from '../utils/getRequest'
+import parseCurrentStage from '../utils/parseCurrentStage'
 
 export default {
   components :{
@@ -115,16 +117,15 @@ export default {
   data(){
     return {
       stages: [{}],
-      current_stage: 0,
-      current_type: 'english',
-      countRounds: 0,
-      roundArr: [],
+      currentRoundNumber: null,
+      currentStage: 0,
+      currentType: 'english',
       state: 'active',
       endDate: null,
       showOrHide: false,
       showHongSoundsText: false,
       auctionId: '',
-      hongTrack: 'https://upload.wikimedia.org/wikipedia/en/4/45/ACDC_-_Back_In_Black-sample.ogg',
+      browserName: '',
       timeOut: false,
       currentTime: null,
       browserId: '',
@@ -173,38 +174,11 @@ export default {
     };
   },
   watch: {
-    current_stage () {
-      if(this.current_stage === -100){
-        this.state = 'canceled'
-      }
-      else if(this.current_stage === -101){
-        this.state = 'redefined'
-      }
-      else if(this.current_stage === -1){
-        this.state = 'pendingOfAuction';
-        this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[0].start) / 1000);
-      }
-      else{
-        if(this.stages[this.current_stage].type !== 'pause'){
-          this.state = 'active';
-          this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage].planned_end) / 1000);
-        }
-        else if(this.stages[this.current_stage].type === 'pause'){
-          this.state = 'pendingOfRound';
-          this.dateOfStartRoundOrAuction = Math.trunc(Date.parse(this.stages[this.current_stage + 1].start) / 1000)
-        }
-      }
-      this.stages.map((item)=>{
-        if ((Object.keys(item)).length === 5){
-          this.countRounds ++
-          this.roundArr.push(item)
-        }})
-      if(this.current_stage !== -1){
-        this.currentBid = this.stages[this.current_stage].amount;
-      }
+    currentStage(){
+      parseCurrentStage(this.stages, this.currentStage, this)
     },
-    current_type(){
-      if(this.current_type === 'announcement'){
+    currentType(){
+      if(this.currentType === 'announcement'){
         this.state = 'completed'
       }
     }
@@ -288,6 +262,9 @@ export default {
     },
     showOrHideModalWindow() {
       this.showOrHide = !this.showOrHide;
+    },
+    getCurrentRoundNumber(currentRoundNumber) {
+      this.currentRoundNumber = currentRoundNumber;
     },
   },
 };
