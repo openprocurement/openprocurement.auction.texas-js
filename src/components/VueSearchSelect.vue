@@ -14,6 +14,10 @@ export default {
     currentBid: {
       type:Number,
       default: null
+    },
+    minimalStep: {
+      type:Number,
+      default: null
     }
   },    
   data () {
@@ -30,7 +34,7 @@ export default {
       let options = [];
       let calculateBid = this.currentBid;
       for (let i = 0; i <= 10; i++){
-        calculateBid  =  (calculateBid * 1.05).toFixed(2);
+        calculateBid  =  (calculateBid + this.minimalStep)
         options.push(
           {value: calculateBid, text: calculateBid},
         )
