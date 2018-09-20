@@ -79,16 +79,8 @@ export default {
   },
   watch: {
     now(){
-      const locale = this.$store.state.i18n.locale;
-      if (  locale === 'Українська' ){
-        moment.locale('uk')
-      }
-      else if ( locale === 'Русский' ){
-        moment.locale('ru')
-      } 
-      else {
-        moment.locale('en')
-      } 
+      // change language of moment.js
+      moment.locale(this.$store.state.i18n.locale)
       this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a');
       this.$emit('getCurrentTime', this.now);
       this.$emit('getRemainedTimeofRound', (this.days * 24 * 3600 +  this.seconds + this.minutes * 60));
