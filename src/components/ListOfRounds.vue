@@ -12,9 +12,7 @@
           </div>
           <div class="round-container_participant-completed">
             <div class="round-container_participant__order-number">
-              {{ $store.state.i18n.locale }}
-              {{ $t('Bidder') }}
-              {{ index + 1 }}
+              {{ stage.label[$store.state.i18n.locale] }}
             </div>
             <div class="round-container_participant-expended">
               MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
@@ -39,9 +37,7 @@
             </div>
           </div>
           <div class="round-container_participant_active">
-            
-            {{ $t('Bidder') }}
-            {{ index + 1 }}
+            {{ stage.label[$store.state.i18n.locale] }}
           </div>
         </div>
         <div class="round-container_bid">
@@ -94,8 +90,7 @@
           </div>
           <div class="round-container_participant_completed">
             <div class="round-container_participant__order-number">
-              {{ $t('Bidder') }}
-              10
+              {{ stages[currentStage - 1].label[$store.state.i18n.locale] }}
             </div>
             <div class="round-container_participant-expended">
               MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
@@ -144,8 +139,12 @@ export default {
       type: Array,
       default: null
     },
+    initialBidsArr: {
+      type: Array,
+      default: null
+    },
     currentStage: {
-      type: [String, Number],
+      type: Number,
       default: null
     },
     currentTime: {
@@ -168,13 +167,16 @@ export default {
     },
     currentRoundNumber () {
       return this.previouseStages.length + 1
-    }
+    },
   },
   watch: {
     remainedTimeOfRound() {
       let calculate = calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end );
       this.value = (100 - (this.remainedTimeOfRound / calculate * 100)).toFixed(2);
     },
+    currentRoundNumber(){
+      this.$emit('getCurrentRoundNumber', this.currentRoundNumber )
+    }
   }
 };
 </script>
