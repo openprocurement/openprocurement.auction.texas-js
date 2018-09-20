@@ -35,7 +35,7 @@
     <main class="container container-main">
       <div class="container-main__tender-number">
         <div class="container-main__image-container">
-          <img src="/static/images/numberOfTender_icon.png" alt="number-Of-tender">
+          <img src="/static_texas/images/numberOfTender_icon.png" alt="number-Of-tender">
         </div>
         {{ auctionId }}
       </div>
@@ -301,8 +301,8 @@ export default {
     }
 
 .container-main{
-    margin-bottom: 250px;
-    margin-top: 120px;
+    margin-bottom: 250px !important;
+    margin-top: 120px !important;
 }
 
 .footer-container{
