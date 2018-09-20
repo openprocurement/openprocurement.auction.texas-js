@@ -22,7 +22,7 @@
         :type="statusMessage[state].type"
         :text-status="statusMessage[state].textStatus"
         :state="state"
-        :count-rounds="countRounds"
+        :current-round-number="currentRoundNumber"
         :remained-time-of-round="remainedTimeOfRound" />
     </header>
     <app-status-timer-line 
@@ -57,9 +57,9 @@
                           :remained-time-of-round="remainedTimeOfRound"
                           :state="state" 
                           :current-stage="currentStage"
-                          :round-arr="roundArr"
-                          :count-rounds="countRounds"
-                          :stages="stages" />
+                          :initial-bids-arr="initialBidsArr"
+                          :stages="stages" 
+                          @getCurrentRoundNumber="getCurrentRoundNumber" />
     </main>
     <footer v-if="state !== 'completed'" 
             :class="'footer-container_' + state" class="footer-container">
@@ -73,6 +73,7 @@
       <app-increasing-and-approval v-else-if="state == 'active'"
                                    :start-bid="startBid"
                                    :current-bid="currentBid"
+                                   :minimal-step="minimalStep"
                                    @sentBid="holdRoundTime" />
     </footer>
   </div>
@@ -111,10 +112,9 @@ export default {
     return {
       id: '',
       stages: [{}],
+      currentRoundNumber: null,
       currentStage: 0,
       currentType: 'english',
-      countRounds: 0,
-      roundArr: [],
       state: 'active',
       endDate: null,
       showOrHide: false,
@@ -259,6 +259,9 @@ export default {
     },
     showOrHideModalWindow() {
       this.showOrHide = !this.showOrHide;
+    },
+    getCurrentRoundNumber(currentRoundNumber) {
+      this.currentRoundNumber = currentRoundNumber;
     },
   },
 };
