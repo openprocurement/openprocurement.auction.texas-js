@@ -7,7 +7,7 @@
       <div class="offer-container">
         <div class="offer-container__participant">
           <div class="offer-container__participant-name">
-            {{ bid.label.en }}
+            {{ bid.label[$store.state.i18n.locale] }}
           </div>
         </div>
         <div class="offer-container_bid">
