@@ -16,12 +16,12 @@ export default {
   },
   data(){
     return{
-      src: '/static/media/gong-auction-v1-short.mp3'
+      src: '/static_texas/media/gong-auction-v1-short.mp3'
     }
   },
   watch:{
     browserName(){
-      this.src = '/static/media/gong-auction-v1-short.ogg'
+      this.src = '/static_texas/media/gong-auction-v1-short.ogg'
     }
   },
   mounted: function () {

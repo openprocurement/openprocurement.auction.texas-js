@@ -8,7 +8,7 @@
       <div v-if="state ==='completed'" class="round-container round-container_completed">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
-            <img src="/static/images/watchInRound.png" alt="watch">
+            <img src="/static_texas/images/watchInRound.png" alt="watch">
           </div>
           <div class="round-container_participant-completed">
             <div class="round-container_participant__order-number">
@@ -30,7 +30,7 @@
         <div class="round-container__time-patricipant">
           <div class="round-container_time-active">
             <div class="round-container_time__watch-icon">
-              <img src="/static/images/watchInRound.png" alt="watch">
+              <img src="/static_texas/images/watchInRound.png" alt="watch">
             </div>
             <div class="round-container_time__watch">
               {{ stage.time | moment("hh:mm:ss") }}
@@ -86,7 +86,7 @@
       <div class="round-container_completed round-container round-container_max">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed round-container_time_max">
-            <img src="/static/images/watchInRoundMax.png" alt="watch">
+            <img src="/static_texas/images/watchInRoundMax.png" alt="watch">
           </div>
           <div class="round-container_participant_completed">
             <div class="round-container_participant__order-number">

@@ -1,8 +1,6 @@
 <template>
   <transition>
-    <div :style="progressStyles" class="progress">
-      <div class="progress-bar" />
-    </div>
+    <div :style="progressStyles" class="style-bar-line" />
   </transition>
 </template>
 
@@ -53,8 +51,7 @@ export default {
 </script>
 
 <style>
-
-.progress{
+.style-bar-line{
     position: fixed;
     left: 0;
     top: 92px;
