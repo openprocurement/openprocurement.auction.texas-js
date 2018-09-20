@@ -19,11 +19,7 @@ const parseCurrentStage = (stages, currentStage, context) =>{
       context.dateOfStartRoundOrAuction = Math.trunc(Date.parse(stages[currentStage + 1].start) / 1000)
     }
   }
-  stages.map((item)=>{
-    if ((Object.keys(item)).length ===5){
-      context.countRounds ++
-      context.roundArr.push(item)
-    }})
+
   if(currentStage !== -1){
     context.currentBid = stages[currentStage].amount;
   }
