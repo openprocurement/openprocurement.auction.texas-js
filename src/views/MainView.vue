@@ -70,7 +70,7 @@
         v-else-if="state == 'pendingOfAuction'">
         {{ $t('Waiting for start of auction') }}
       </h4>
-      <app-increasing-and-approval v-else-if="state == 'active'"
+      <app-increasing-and-approval v-else-if="isShowBidForm"
                                    :start-bid="startBid"
                                    :current-bid="currentBid"
                                    :minimal-step="minimalStep"
@@ -175,6 +175,12 @@ export default {
         },
       },
     };
+  },
+  computed: {
+    isShowBidForm () {
+      if (this.$store.state.identification.bidderID && this.state === 'active') return true
+      return false
+    }
   },
   watch: {
     currentStage(){
