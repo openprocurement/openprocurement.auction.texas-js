@@ -6,10 +6,10 @@ import russian from '../translations/russian.js';
 import * as config from '../config.json';
 
 Vue.use(Vuex);
-const debug = process.env.NODE_ENV !== 'production';
+// const debug = process.env.NODE_ENV !== 'production';
 
 const store =  new Vuex.Store({
-  strict: debug,
+  // strict: debug,
   state: {
     id: '',
     urls:{
@@ -49,7 +49,7 @@ const store =  new Vuex.Store({
 });
 
 window.onbeforeunload = function() {
-  localStorage.setItem('language', store.state.i18n.locale)
+  localStorage.setItem('language', (((store.state.i18n.locale === 'null') || (store.state.i18n.locale === null))? ('en'): (store.state.i18n.locale)))
 };
 const language = localStorage.getItem('language');
 
@@ -59,7 +59,6 @@ Vue.use(vuexI18n.plugin, store);
 Vue.i18n.add('en', english);
 Vue.i18n.add('uk', ukrainian);
 Vue.i18n.add('ru', russian);
-Vue.i18n.fallback("English");
-Vue.i18n.set(language);
+Vue.i18n.set(language || 'en');
 
 export default store

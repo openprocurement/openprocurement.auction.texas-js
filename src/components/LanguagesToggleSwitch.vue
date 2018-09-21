@@ -5,6 +5,14 @@
 </template>
 
 <script>
+const languagesListing = {
+  en : 'English',
+  ru: 'Русский',
+  uk: 'Українська',
+  Русский: 'ru',
+  Українська: 'uk',
+  English: 'en'
+}
 export default {
   data(){
     return{
@@ -28,7 +36,7 @@ export default {
         },
         items: {
           delay: .4,
-          preSelected: localStorage.getItem('language'),
+          preSelected: languagesListing[localStorage.getItem('language')] || languagesListing.en,
           disabled: false,
           labels: [
             {name: 'English', color: '#000', backgroundColor: 'lightgrey'}, 
@@ -41,17 +49,7 @@ export default {
   },
   methods:{
     ChangeLanguage(e){
-      let locale;
-      if(e.value === 'Русский'){
-        locale = 'ru'
-      }
-      else if(e.value === 'Українська'){
-        locale = 'uk'
-      }
-      else{
-        locale = 'en'
-      }
-      this.$store.commit('language', locale)
+      this.$store.commit('language', languagesListing[e.value] )
     }
   }
 }

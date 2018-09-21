@@ -32,7 +32,7 @@
       :current-time="currentTime" />
     <app-hong-audio-track v-if="currentStage === 0" :browser-name="browserName" />
     <app-hong-sounds-text v-if="state == 'active' && showHongSoundsText" />
-    <main class="container container-main">
+    <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
         <div class="container-main__image-container">
           <img src="/static_texas/images/numberOfTender_icon.png" alt="number-Of-tender">
@@ -120,7 +120,7 @@ export default {
     return {
       stages: [{}],
       currentRoundNumber: null,
-      currentStage: 0,
+      currentStage: -1,
       currentType: 'english',
       state: 'active',
       endDate: null,
@@ -301,8 +301,40 @@ export default {
     }
 
 .container-main{
-    margin-bottom: 250px !important;
-    margin-top: 120px !important;
+    margin-bottom: 250px;
+    margin-top: 120px;
+}
+
+.container-wrapper {
+    max-width: 1200px;
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media screen and (max-width: 1400px) {
+  .container-wrapper{
+    max-width: 1200px;
+  }
+}
+
+@media screen and (max-width: 1200) {
+  .container-wrapper {
+    max-width: 1140px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container-wrapper {
+    max-width: 960px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container-wrapper {
+    max-width: 720px;
+  }
 }
 
 .footer-container{
