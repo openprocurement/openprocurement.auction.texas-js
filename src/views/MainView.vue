@@ -92,9 +92,10 @@ import AppListInitialOffers from '../components/ListInitialOffers';
 import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppListOfRounds from '../components/ListOfRounds';
-import getAuctionRequest from '../utils/getRequest'
-import parseCurrentStage from '../utils/parseCurrentStage'
-import PouchDBSync from '../utils/CouchPouch'
+import getAuctionRequest from '../utils/getRequest';
+import parseCurrentStage from '../utils/parseCurrentStage';
+import {getCookieByName} from '@/utils/utils';
+import PouchDBSync from '../utils/CouchPouch';
 
 
 export default {
@@ -178,11 +179,6 @@ export default {
   watch: {
     currentStage(){
       parseCurrentStage(this.stages, this.currentStage, this)
-    },
-    currentType(){
-      if(this.currentType === 'announcement'){
-        this.state = 'completed'
-      }
     }
   },
   created() {
