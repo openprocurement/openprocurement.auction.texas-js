@@ -1,6 +1,5 @@
 {
     "serverURL" : "http://localhost:8090/",
-    "pouchURL" : "http://localhost:5984/c1/pouch",
     "couchURL" : "http://localhost:8090/",
     "auctionPrefix" : "texas-auctions",
     "eventSource": "event_source",
