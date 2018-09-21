@@ -15,7 +15,7 @@
               {{ stage.label[$store.state.i18n.locale] }}
             </div>
             <div class="round-container_participant-expended">
-              MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
+              Opened bidder name
             </div>
           </div>
         </div>
@@ -78,8 +78,7 @@
         </div>
       </div>
     </div>
-
-    <div v-if="state ==='completed'" id="active-round" class="max-round-container">
+    <div v-if="state ==='completed' && lastBiddedRound" id="active-round" class="max-round-container">
       <h6><strong>
         {{ $t('Announcement') }}
       </strong></h6>
@@ -90,15 +89,15 @@
           </div>
           <div class="round-container_participant_completed">
             <div class="round-container_participant__order-number">
-              {{ stages[currentStage - 1].label[$store.state.i18n.locale] }}
+              {{ lastBiddedRound.label[$store.state.i18n.locale] }}
             </div>
             <div class="round-container_participant-expended">
-              MU-Moloka_komuuuuuuuuuuuuuuuuuuuuu
+              Opened bidder name
             </div>
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
-          <h4 class="round-container_bid_max__bid-count">{{ stages[currentStage - 1].amount }}
+          <h4 class="round-container_bid_max__bid-count">{{ lastBiddedRound.amount }}
             {{ $t('UAH') }}
           </h4>
           <div class="round-container_bid_max-block">
@@ -168,6 +167,17 @@ export default {
     currentRoundNumber () {
       return this.previouseStages.length + 1
     },
+    lastBiddedRound () {
+      if (this.state === 'completed') {
+        let reversedStages = this.stages.slice().reverse()
+        for (let i in reversedStages) {
+          if (reversedStages[i].type === 'english' && reversedStages[i].bidder_id) {
+            return reversedStages[i]
+          }
+        }
+      }
+      return null
+    }
   },
   watch: {
     remainedTimeOfRound() {
