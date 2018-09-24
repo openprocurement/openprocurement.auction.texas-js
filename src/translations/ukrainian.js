@@ -10,6 +10,7 @@ const ukrainian = {
   'Select amount': 'Select amount',
   'Waiting for start of auction': 'Очікується початок аукціону',
   'Waiting for start of round': 'Очікується початок раунду',
+  'Waiting for synchronization of data': 'Очікується синхронізація даних',
   'English': 'Англійська',
   'Russian': 'Російська',
   'Ukrainian': 'Українська',

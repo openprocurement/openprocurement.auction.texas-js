@@ -2,6 +2,7 @@ const english = {
   'at': 'at',
   'Waiting for start of auction': 'Waiting for start of auction',
   'Waiting for start of round': 'Waiting for start of round',
+  'Waiting for synchronization of data': 'Waiting for synchronization of data',
   'Agree': 'Agree',
   'Announcement': 'Announcement',
   'Bid': 'Bid',

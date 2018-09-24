@@ -14,6 +14,7 @@
         :time-status="statusMessage[state].timeStatus"
         :state="state"
         :end-date="endDate"
+        :pending-sync-data="pendingSyncData"
         @checkTimeOut="checkTimeOut"
         @getRemainedTimeofRound="getRemainedTimeofRound"
         @getCurrentTime="getCurrentTime"
@@ -40,10 +41,10 @@
         {{ auctionId }}
       </div>
       <div class="container-main__discribe-tender">
-        <div class="container-main__discribe-tender_company-name">
+        <div class="container-main__discribe-tender_desc container-main__discribe-tender_company-name">
           {{ companyName }}
         </div>
-        <ul class="container-main__discribe-tender_description-products">
+        <ul class="container-main__discribe-tender_desc container-main__discribe-tender_description-products">
           <li>
             {{ descriptionOfProducts }}
           </li>
@@ -63,11 +64,11 @@
     </main>
     <footer v-if="state !== 'completed'" 
             :class="'footer-container_' + state" class="footer-container">
-      <h4 v-if="state == 'pendingOfRound'">
+      <h4 v-if="state == 'pendingOfRound'" class = "footer-container__text">
         {{ $t('Waiting for start of round') }}
       </h4>
       <h4
-        v-else-if="state == 'pendingOfAuction'">
+        v-else-if="state == 'pendingOfAuction'" class = "footer-container__text">
         {{ $t('Waiting for start of auction') }}
       </h4>
       <app-increasing-and-approval v-else-if="isShowBidForm"
@@ -122,6 +123,7 @@ export default {
       stages: [{}],
       currentRoundNumber: null,
       currentStage: -1,
+      pendingSyncData: false,
       currentType: 'english',
       state: 'active',
       endDate: null,
@@ -172,6 +174,11 @@ export default {
           type: 'redefined',
           textStatus: 'Waiting',
           timeStatus: 'Auction has not started and will be rescheduled',
+        },
+        pendingSyncData: {
+          type: 'pending-sync-data',
+          textStatus: 'Waiting',
+          timeStatus: 'Waiting for synchronization of data',
         },
       },
     };
@@ -246,18 +253,11 @@ export default {
       getAuctionRequest(this, this.$store.state.id)
     },
     checkTimeOut(res) {
-      if(res){
-        window.scrollTo(0, document.body.scrollHeight);
+      if (res) {
+        this.pendingSyncData = true;
+        this.state = 'pendingSyncData'
       }
-      if (res && this.state === 'pendingOfAuction') {
-        this.state ='pendingOfRound'
-      }
-      else if(res && this.state === 'pendingOfRound'){
-        this.state = 'active'
-      }
-      else if (res) {
-        this.state = 'completed';
-      }
+      this.pendingSyncData = false;
     },
     getRemainedTimeofRound(remainedTime) {
       this.remainedTimeOfRound = remainedTime;
@@ -276,6 +276,7 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Lato|Montserrat+Alternates|Oswald|Roboto');
 
   .app-wrapper{
     background: white;
@@ -331,6 +332,9 @@ export default {
   .container-wrapper {
     max-width: 960px;
   }
+  .modal-container-wrapper {
+    width: 270px !important;
+}
 }
 
 @media screen and (max-width: 768px) {
@@ -349,6 +353,14 @@ export default {
     height: 95px;
 }
 
+.footer-container__text {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25.5px;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+}
+
 .footer-container_active{
     height: 200px;
 }
@@ -356,15 +368,27 @@ export default {
 .container-main__tender-number{
     display: flex;
     color: #000000;
-    font-family: Roboto;
+    font-family: 'Roboto', sans-serif;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 26px;
     margin-bottom: 10px;
 }
 
 .container-main__image-container{
     margin-right: 15px;
+}
+
+.container-main__discribe-tender_desc {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 23px;
+}
+
+.container-main__discribe-tender_company-name {
+    text-transform: uppercase;
+  
 }
 
 </style>
