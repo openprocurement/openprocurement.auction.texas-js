@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="offer-container_bid">
-          <h4>{{ bid.amount }} 
+          <h4 class="round-container_bid__amount">{{ bid.amount }} 
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -53,6 +53,9 @@ export default {
     display: flex;
     align-items: center;
     margin-left: 45px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
 }
 
 .offer-container__participant-name{
@@ -70,12 +73,19 @@ export default {
     height: 90%;
     background-color: #e9e9e9;
     margin-right: 3px;
-    font-family: Oswald;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+}
+
+.round-container_bid__amount {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
 }
 
 .list-offers-container__start-offers-label{
     color: #000000;
-    font-family: Roboto;
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 900;
     line-height: 16px;

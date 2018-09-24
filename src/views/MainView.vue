@@ -276,7 +276,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lato|Montserrat+Alternates|Oswald|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Lato|Montserrat|Oswald|Roboto');
 
   .app-wrapper{
     background: white;
@@ -380,7 +380,7 @@ export default {
 }
 
 .container-main__discribe-tender_desc {
-    font-family: 'Montserrat Alternates', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 23px;

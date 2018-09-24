@@ -19,7 +19,7 @@
         <h6 class="approval-question">
           {{ $t('Do you agree on the amount') }}
         </h6>
-        <strong>{{ currentBid }}</strong>
+        <h3 class="approval-mount">{{ currentBid }}</h3>
       </div>
       <button 
         v-scroll-to="'#active-round'"
@@ -122,7 +122,9 @@ export default {
 .button{
     height: 60px;
     color:#ffffff;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
 }
 
@@ -169,6 +171,15 @@ export default {
 
 .approval-question{
     font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.approval-mount {
+    font-size: 24px;
+    font-weight: 400;
+    font-family: 'Oswald', sans-serif;
 }
 
 .select-bid{

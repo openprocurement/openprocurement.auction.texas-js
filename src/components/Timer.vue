@@ -14,7 +14,7 @@
         <h6 class="clock-container__status-time">
           {{ $t(timeStatus) }}
         </h6>
-        <div v-if="state !== 'completed'" class="clock-container__time">
+        <div v-if="(state !== 'completed') && (pendingSyncData === false)" class="clock-container__time">
           <div v-show="days !==0" class="digit" >{{ days }}
             {{ $t('days') }}
           </div>
@@ -54,6 +54,10 @@ export default {
     },
     endDate: {
       type: String,
+      default: null
+    },
+    pendingSyncData: {
+      type: Boolean,
       default: null
     }
   },
@@ -107,6 +111,7 @@ export default {
 .clock-container__time{
     display: flex;
     justify-content: space-between;
+    margin-top: 5px;
 }
 
 .clock-container{
@@ -140,9 +145,16 @@ export default {
 }
 
 .digit {
-    font-family: Roboto;
-    font-size: 13px;
-    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
     line-height: 16px;
+}
+
+.clock-container__status-time {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 16px;
 }
 </style>
