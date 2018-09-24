@@ -1,14 +1,14 @@
 <template>
-  <basic-select :options="valueForOptionSelect"
+  <multi-select :options="valueForOptionSelect"
                 :selected-option="item"
                 placeholder="Select Item"
                 @select="onSelect" />
 </template>
 <script>
-import { BasicSelect } from 'vue-search-select'
+import { MultiSelect } from 'vue-search-select'
 export default {
   components: {
-    BasicSelect
+    MultiSelect
   },
   props : {
     currentBid: {
@@ -33,10 +33,11 @@ export default {
     valueForOptionSelect() {
       let options = [];
       let calculateBid = this.currentBid;
+      let minimalIncreaseBid = Math.floor(calculateBid / this.minimalStep) * this.minimalStep;
       for (let i = 0; i <= 10; i++){
-        calculateBid  =  (calculateBid + this.minimalStep)
+        minimalIncreaseBid  =  (minimalIncreaseBid + this.minimalStep)
         options.push(
-          {value: calculateBid, text: calculateBid},
+          {value: minimalIncreaseBid, text: minimalIncreaseBid},
         )
       }
       return options
