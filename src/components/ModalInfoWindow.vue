@@ -78,9 +78,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .modal-container-wrapper{
-    min-width: 30%;
+    width: 30%;
     height: 91vh;
     margin-right: 30px;
     background-color: #ffffff;
@@ -101,10 +101,12 @@ export default {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .modal-container__info{
     display: flex;
+    flex-direction: column;
     font-size: 14px;
     width: 95%;
     flex-wrap: wrap;
@@ -127,6 +129,7 @@ export default {
 
 .modal-container__tender-number{
     display: flex;
+    flex-direction: initial;
     justify-content: space-between;
 }
 

@@ -69,20 +69,18 @@ export default {
 .status-label-container{
     color: #ffffff;
     width: 198px;
-    height: 40px;
     margin-right: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: 500;
 }
 
 .status-label-container__text{
     display: flex;
     align-items: center;
     margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
 }
 
 .status-label-container__sign{
@@ -135,11 +133,10 @@ export default {
 }
 
 .status-label-container-active__round{
-    font-family: Oswald;
+    font-family: 'Oswald', sans-serif;
     font-size: 24px;
     font-weight: 500;
-    line-height: 18.35px;
     margin-left: 5px;
-
+    margin-bottom: 5px;
 }
 </style>

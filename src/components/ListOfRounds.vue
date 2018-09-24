@@ -1,12 +1,12 @@
 <template>
   <div class="list-rounds-container">
     <div v-for="(stage, index) in previouseStages" :key="index">
-      <h3>
+      <h3 class="round-label">
         {{ $t('Round') }}
         {{ index + 1 }}
       </h3>
       <div v-if="state ==='completed'" class="round-container round-container_completed">
-        <div class="round-container__time-patricipant">
+        <div class="round-container__time-patricipant round-container__time-patricipant_completed">
           <div class="round-container_time-completed">
             <img src="/static_texas/images/watchInRound.png" alt="watch">
           </div>
@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="round-container_bid">
-          <h4>{{ stage.amount }} 
+          <h4 class="round-container_bid__amount">{{ stage.amount }} 
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="round-container_bid">
-          <h4>{{ stage.amount }}
+          <h4 class="round-container_bid__amount">{{ stage.amount }}
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -49,7 +49,7 @@
     </div>
 
     <div v-if="state ==='active' || state == 'pendingOfRound'" id="active-round">
-      <h3>
+      <h3 class="round-label">
         {{ $t('Round') }}
         {{ currentRoundNumber }}
       </h3>      
@@ -64,14 +64,14 @@
                 :remained-time-of-round="remainedTimeOfRound"
                 min="0" max="100" />
             </div>
-            <div class="round-container_time-active__watch">
+            <div class="round-container_time__watch  round-container_time-active__watch">
               {{ currentTime | moment("hh:mm:ss") }}
             </div>
           </div>
           <div class="round-container_participant_active" />       
         </div>
         <div class="round-container_bid round-container_bid_active">
-          <h4>
+          <h4 class="round-container_bid__amount">
             {{ stages[stages.length - 1].amount }}
             {{ $t('UAH') }}
           </h4>
@@ -79,11 +79,11 @@
       </div>
     </div>
     <div v-if="state ==='completed' && lastBiddedRound" id="active-round" class="max-round-container">
-      <h6><strong>
+      <h6 class = "announcement"><strong>
         {{ $t('Announcement') }}
       </strong></h6>
       <div class="round-container_completed round-container round-container_max">
-        <div class="round-container__time-patricipant">
+        <div class="round-container__time-patricipant round-container__time-patricipant_completed">
           <div class="round-container_time-completed round-container_time_max">
             <img src="/static_texas/images/watchInRoundMax.png" alt="watch">
           </div>
@@ -97,7 +97,7 @@
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
-          <h4 class="round-container_bid_max__bid-count">{{ lastBiddedRound.amount }}
+          <h4 class="round-container_bid__amount round-container_bid_max__bid-count">{{ lastBiddedRound.amount }}
             {{ $t('UAH') }}
           </h4>
           <div class="round-container_bid_max-block">
@@ -198,6 +198,7 @@ export default {
     justify-content: space-between;
     width: 100%;
     border: 1px solid #a1a1a1;
+    margin-bottom: 25px;
 }
 .round-container_active{
     height: 50px;
@@ -226,6 +227,9 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .round-container__time-patricipant-active{
@@ -233,6 +237,18 @@ export default {
     background-color: #e7f5ac;
     margin: auto;
     margin-left: 1px;
+}
+
+.round-container__time-patricipant_completed {
+    justify-content: initial;
+}
+
+.round-container_time__watch {
+    font-size: 18px;
+    font-weight: 300;
+    font-family: 'Oswald', sans-serif;
+    display: flex;
+    align-items: center
 }
 
 .round-container_bid{
@@ -244,7 +260,12 @@ export default {
     height: 90%;
     background-color: #e9e9e9;
     margin-right: 3px;
-    font-family: Oswald;
+}
+
+.round-container_bid__amount {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
 }
 
 .round-container_bid_active{
@@ -287,6 +308,16 @@ export default {
 
 .round-container_participant__order-number{
     display: flex;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.round-container_participant-expended {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .round-container_bid_max{
@@ -311,7 +342,21 @@ export default {
 .round-container_bid_max-block-count{
     transform: rotate(-90deg);
     color: #000000;
-    font-family: Montserrat;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.round-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    margin-bottom: 10px;
+}
+
+.announcement {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
 }
 
 </style>
