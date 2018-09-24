@@ -32,6 +32,7 @@
       :current-time="currentTime" />
     <app-hong-audio-track v-if="currentStage === 0" :browser-name="browserName" />
     <app-hong-sounds-text v-if="state == 'active' && showHongSoundsText" />
+    <app-notification/>
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
         <div class="container-main__image-container">
@@ -91,6 +92,7 @@ import AppModalInfoWindow from '../components/ModalInfoWindow';
 import AppListInitialOffers from '../components/ListInitialOffers';
 import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
+import AppNotification from '../components/Notification';
 import AppListOfRounds from '../components/ListOfRounds';
 import getAuctionRequest from '../utils/getRequest';
 import parseCurrentStage from '../utils/parseCurrentStage';
@@ -109,7 +111,8 @@ export default {
     AppListInitialOffers,
     AppStatusInfoLabel,
     AppIncreasingAndApproval,
-    AppListOfRounds
+    AppListOfRounds,
+    AppNotification
   },
   props: {
     id: {
@@ -193,6 +196,13 @@ export default {
     PouchDBSync.initialize(this)
   },
   mounted() {
+    if (!this.$store.state.identification.bidderID) {
+      this.$notify({
+        group: 'auth',
+        text: this.$t('You are an observer and cannot bid.'),
+        duration: -1
+      })
+    }
     //scrolling on bottom
     window.scrollTo(0, document.body.scrollHeight);
     // init event-source
