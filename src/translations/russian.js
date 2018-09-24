@@ -4,6 +4,7 @@ const russian = {
   'Announcement': 'Объявление результатов',
   'Waiting for start of auction': 'Ожидается начало аукциона',
   'Waiting for start of round': 'Ожидается начало раунда',
+  'Waiting for synchronization of data': 'Ожидается синхронизация данных',
   'Bid': 'Ставка',
   'Bidder': ' Участник',
   'Bidders': ' Учасники',
