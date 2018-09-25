@@ -1,8 +1,8 @@
 <template>
   <multi-select :options="valueForOptionSelect"
                 :selected-option="item"
-                placeholder="Select Item"
-                @select="onSelect" />
+                :placeholder="item.text"
+                @select="onSelect($event)" />
 </template>
 <script>
 import { MultiSelect } from 'vue-search-select'
@@ -18,20 +18,19 @@ export default {
     minimalStep: {
       type:Number,
       default: null
-    }
+    },
   },    
   data () {
     return {
-      searchText: '', // If value is falsy, reset searchText & searchItem
       item: {
-        value: '',
-        text: ''
+        value: 'Select Item',
+        text: 'Select Item'
       }
     }
   },
   computed: {
     valueForOptionSelect() {
-      let options = [];
+      let options = [{value: 'Select Item', text: 'Select Item'}];
       let calculateBid = this.currentBid;
       let minimalIncreaseBid = Math.floor(calculateBid / this.minimalStep) * this.minimalStep;
       for (let i = 0; i <= 10; i++){
@@ -41,20 +40,12 @@ export default {
         )
       }
       return options
-    }
+    },
   },
   methods: {
     onSelect (item) {
-      this.item = item
-      this.$emit('setSelectedValue', item.value);
-    },
-    reset () {
-      this.item = {}
-    },
-    selectOption () {
-      this.item = this.options[0]
-    },
-    setSelectedValue () {
+      this.item.value = item[0].value
+      this.item.text = String(item[0].text)
       this.$emit('setSelectedValue', this.item.value);
     },
   },

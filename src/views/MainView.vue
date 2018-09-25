@@ -14,7 +14,6 @@
         :time-status="statusMessage[state].timeStatus"
         :state="state"
         :end-date="endDate"
-        :pending-sync-data="pendingSyncData"
         @checkTimeOut="checkTimeOut"
         @getRemainedTimeofRound="getRemainedTimeofRound"
         @getCurrentTime="getCurrentTime"
@@ -126,7 +125,6 @@ export default {
       stages: [{}],
       currentRoundNumber: null,
       currentStage: -1,
-      pendingSyncData: false,
       currentType: 'english',
       state: 'active',
       endDate: null,
@@ -134,7 +132,6 @@ export default {
       showHongSoundsText: false,
       auctionId: '',
       browserName: '',
-      timeOut: false,
       currentTime: null,
       browserId: '',
       companyName: '',
@@ -262,12 +259,8 @@ export default {
     holdRoundTime() {
       getAuctionRequest(this, this.$store.state.id)
     },
-    checkTimeOut(res) {
-      if (res) {
-        this.pendingSyncData = true;
-        this.state = 'pendingSyncData'
-      }
-      this.pendingSyncData = false;
+    checkTimeOut() {
+      this.state = 'pendingSyncData'
     },
     getRemainedTimeofRound(remainedTime) {
       this.remainedTimeOfRound = remainedTime;

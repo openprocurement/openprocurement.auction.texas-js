@@ -14,7 +14,7 @@
         <h6 class="clock-container__status-time">
           {{ $t(timeStatus) }}
         </h6>
-        <div v-if="(state !== 'completed') && (pendingSyncData === false)" class="clock-container__time">
+        <div v-if="(state !== 'completed') && state !== 'pendingSyncData'" class="clock-container__time">
           <div v-show="days !==0" class="digit" >{{ days }}
             {{ $t('days') }}
           </div>
@@ -56,10 +56,6 @@ export default {
       type: String,
       default: null
     },
-    pendingSyncData: {
-      type: Boolean,
-      default: null
-    }
   },
   data() {
     return {
@@ -88,10 +84,8 @@ export default {
       this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a');
       this.$emit('getCurrentTime', this.now);
       this.$emit('getRemainedTimeofRound', (this.days * 24 * 3600 +  this.seconds + this.minutes * 60));
-      ((this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0))?
-        (this.$emit('checkTimeOut', true))
-        :
-        (null)
+      if (this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0)
+        this.$emit('checkTimeOut')
     }
   },
   mounted() {
