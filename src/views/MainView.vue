@@ -80,9 +80,6 @@
   </div>
 </template>
 <script>
-// We store the reference to the SSE object out here
-// so we can access it from other methods
-let msgServer;
 import AppHongSoundsText from '../components/HongSoundsText';
 import AppStartBid from '../components/StartBid';
 import AppTimer from '../components/Timer';
@@ -98,6 +95,7 @@ import getAuctionRequest from '../utils/getRequest';
 import parseCurrentStage from '../utils/parseCurrentStage';
 import {getCookieByName} from '@/utils/utils';
 import PouchDBSync from '../utils/CouchPouch';
+import EventSource from '../utils/eventSource';
 
 
 export default {
@@ -200,60 +198,17 @@ export default {
     PouchDBSync.initialize(this)
   },
   mounted() {
-    if (!this.$store.state.identification.bidderID) {
-      this.$notify({
-        group: 'auth',
-        text: this.$t('You are an observer and cannot bid.'),
-        duration: -1
-      })
-    }
     //scrolling on bottom
     window.scrollTo(0, document.body.scrollHeight);
     // init event-source
-    let eventSourceURL = `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/${this.$store.state.urls.eventSource}` 
-    this.$sse(eventSourceURL,  { withCredentials: true })
-      .then(sse => {
-        // Store SSE object at a higher scope
-        msgServer = sse;
-        // Catch any errors (ie. lost connections, etc.)
-        // Listen for messages based on their event
-        sse.subscribe('ClientsList', (e) => {
-          console.log(e)
-        });
-
-        sse.subscribe('Tick', (e) => {
-          console.log(e)
-        });
-
-        sse.subscribe('Identification', (e) => {
-          let data = JSON.parse(e)
-          this.$store.commit('setIdentificationInfo', data)
-          console.log(e)
-        });
-
-        sse.subscribe('RestoreBidAmount', (e) => {
-          console.log(e)
-        });
-
-        sse.subscribe('KickClient', (e) => {
-          console.log(e)
-        });
-
-        sse.subscribe('Close', (e) => {
-          console.log(e)
-        });
-      })
-      .catch(err => {
-        // When this error is caught, it means the initial connection to the
-        // events server failed.  No automatic attempts to reconnect will be made.
-        console.error('Failed to connect to server', err);
-      });
-
+    if (EventSource.ableToSubscribe()) {
+      EventSource.initialize(this)
+    }
   },
   beforeDestroy() {
     // Make sure to close the connection with the events server
     // when the component is destroyed, or we'll have ghost connections!
-    msgServer.close();
+    EventSource.evtSrc.close();
   },
   methods: {
     holdRoundTime() {

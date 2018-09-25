@@ -25,7 +25,8 @@ const store =  new Vuex.Store({
       clientID: ''
     },
     infoFromCouch: {
-    }
+    },
+    clients: {}
   },
   mutations: {
     setAuctionId(state, data){
@@ -43,7 +44,10 @@ const store =  new Vuex.Store({
     },
     setAuctionUUID (state, uuid) {
       state.id = uuid
-    }
+    },
+    setClientsInfo (state, data) {
+      state.clients = data;
+    },
   }
 });
 
