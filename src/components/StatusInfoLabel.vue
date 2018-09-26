@@ -14,7 +14,7 @@
         v-if="state === 'pendingOfAuction'" />
       <img 
         v-if="state === 'canceled' || state === 'completed' || state === 'active'"
-        :src="'/static_texas/images/sign_' + type + '.png'" 
+        :src="'/static_texas/images/sign_' + type + '.svg'" 
         :alt="type">
       <div v-if="state == 'pendingOfRound'">
         {{ remainedMinutesToStartRound }} хв
