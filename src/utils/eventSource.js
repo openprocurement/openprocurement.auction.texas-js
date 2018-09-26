@@ -1,8 +1,8 @@
-import kickClient from "./kickClient";
 import {getCookieByName, deleteCookie} from "../utils/utils"
 
 export default {
   evtSrc: null,
+  isObserverNotifyCalled: false,
   ableToSubscribe () {
     return Boolean(getCookieByName('auctions_loggedin'));
   },
@@ -20,10 +20,9 @@ export default {
               component.$notify({
                 group: 'kickClient',
                 text: component.$t('In the room came a new user') + ' (IP:' + data[clientId].ip + ') ' + component.$t('prohibit connection'),
-                duration: 5000
+                duration: 5000,
+                title: clientId // TODO: try to find better solution to put client id to notification
               });
-              // TODO: Use notification bar with button instead for optionally client kicking by kickClient function
-              kickClient(component.$store.state, clientId)
             }
           }
         }
@@ -51,11 +50,14 @@ export default {
 
     this.evtSrc.addEventListener('Close', e => {
       console.log('Close', e.data);
-      component.$notify({
-        group: 'auth',
-        text: component.$t('You are an observer and cannot bid.'),
-        duration: -1
-      });
+      if (!this.isObserverNotifyCalled) {
+        component.$notify({
+            group: 'auth',
+            text: component.$t('You are an observer and cannot bid.'),
+            duration: -1
+          })
+        this.isObserverNotifyCalled = true
+      }
     });
 
     this.evtSrc.onerror = e => {
