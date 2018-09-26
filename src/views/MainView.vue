@@ -36,7 +36,7 @@
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
         <div class="container-main__image-container">
-          <img src="/static_texas/images/numberOfTender_icon.png" alt="number-Of-tender">
+          <img src="/static_texas/images/number-of-tender_icon.svg" alt="number-Of-tender">
         </div>
         {{ auctionId }}
       </div>
@@ -51,7 +51,7 @@
         </ul>
       </div>
       <app-start-bid :start-bid="startBid" />
-      <app-list-initial-offers v-if="(state !== 'completed')" :initial-bids-arr="initialBidsArr" />
+      <app-list-initial-offers :initial-bids-arr="initialBidsArr" />
       <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed'" 
                           :start-bid="startBid"
                           :current-time="currentTime"
@@ -190,6 +190,17 @@ export default {
   watch: {
     currentStage(){
       parseCurrentStage(this.stages, this.currentStage, this)
+      if (true){
+        dataLayer.push({
+          "tenderId": 222,
+          "lotId": 55
+        });
+      } 
+      else {
+        dataLayer.push({
+          "tenderId": 788
+        });
+      }
     }
   },
   created() {
