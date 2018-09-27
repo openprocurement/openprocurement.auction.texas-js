@@ -14,6 +14,7 @@
         :time-status="statusMessage[state].timeStatus"
         :state="state"
         :end-date="endDate"
+        :synced-time="lastSync"
         @checkTimeOut="checkTimeOut"
         @getRemainedTimeofRound="getRemainedTimeofRound"
         @getCurrentTime="getCurrentTime"
@@ -200,9 +201,9 @@ export default {
     }
   },
   created() {
+    this.pouchDB = PouchDBSync.initialize(this)
     this.$store.commit('setAuctionUUID', this.id)
     getAuctionRequest(this, this.$store.state.id)
-    PouchDBSync.initialize(this)
   },
   mounted() {
     //scrolling on bottom

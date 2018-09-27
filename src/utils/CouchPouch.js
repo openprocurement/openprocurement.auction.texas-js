@@ -1,20 +1,26 @@
 import PouchDB from 'pouchdb'
-import getAuctionRequest from '@/utils/getRequest'
+import {fillAuctionData} from '@/utils/getRequest'
 
 
 export default {
-  db: null,
   initialize (component) {
-    this.db = new PouchDB(`${component.$store.state.urls.databaseURL}`)
-    this.db.changes({
+    return new PouchDB(`${component.$store.state.urls.databaseURL}`)
+  },
+  startSync (component) {
+    console.log('Start sync with CouchDB')
+    component.pouchDB.changes({
       live: true,
-      retry: true
+      retry: true,
+      include_docs: true
     }).on('change', change => {
       if (component.id === change.id) {
-        getAuctionRequest(component, component.id)
+        fillAuctionData(component, change.doc)
+        component.syncWithServerTime()
       }
     }).on('error', function (err) {
       console.log('sync error', err)
     });
+    // eslint-disable-next-line
+    component.isListeningOnChanges = true
   }
 }
