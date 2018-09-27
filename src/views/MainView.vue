@@ -25,11 +25,11 @@
         :current-round-number="currentRoundNumber"
         :remained-time-of-round="remainedTimeOfRound" />
     </header>
-    <app-status-timer-line 
-      :remained-time-of-round="remainedTimeOfRound"
-      :current-stage="currentStage"
-      :stages="stages"
-      :current-time="currentTime" />
+    <app-status-timer-line v-if="state!=='completed'"
+                           :remained-time-of-round="remainedTimeOfRound"
+                           :current-stage="currentStage"
+                           :stages="stages"
+                           :current-time="currentTime" />
     <app-hong-audio-track v-if="currentStage === 0" :browser-name="browserName" />
     <app-hong-sounds-text v-if="state == 'active' && showHongSoundsText" />
     <app-notification/>
@@ -62,7 +62,7 @@
                           :stages="stages" 
                           @getCurrentRoundNumber="getCurrentRoundNumber" />
     </main>
-    <footer v-if="state !== 'completed'" 
+    <footer v-if="state !== 'completed' && !queryWait" 
             :class="'footer-container_' + state" class="footer-container">
       <h4 v-if="state == 'pendingOfRound'" class = "footer-container__text">
         {{ $t('Waiting for start of round') }}
@@ -77,6 +77,8 @@
                                    :minimal-step="minimalStep"
                                    @sentBid="holdRoundTime" />
     </footer>
+    <app-footer-login v-if="queryWait"
+                      :allowed-login="allowedLogin"/>
   </div>
 </template>
 <script>
@@ -91,6 +93,7 @@ import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppNotification from '../components/Notification';
 import AppListOfRounds from '../components/ListOfRounds';
+import AppFooterLogin from '../components/FooterLogin';
 import getAuctionRequest from '../utils/getRequest';
 import parseCurrentStage from '../utils/parseCurrentStage';
 import {getCookieByName} from '@/utils/utils';
@@ -110,6 +113,7 @@ export default {
     AppStatusInfoLabel,
     AppIncreasingAndApproval,
     AppListOfRounds,
+    AppFooterLogin,
     AppNotification
   },
   props: {
@@ -121,6 +125,8 @@ export default {
   data(){
     return {
       stages: [{}],
+      allowedLogin: true,
+      queryWait: false,
       currentRoundNumber: null,
       currentStage: -1,
       currentType: 'english',
