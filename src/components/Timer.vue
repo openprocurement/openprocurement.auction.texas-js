@@ -31,14 +31,24 @@
         <div v-if="state === 'completed'">
           {{ end }}
         </div>
+
+        <vue-headful v-if="state === 'completed'"
+                     :title="($t(calculateTitle.timeStatus) + ' ' + $t(calculateTitle.time))" />
+        <vue-headful v-else
+                     :title="calculateTitle.days + $t('days') + ' '+calculateTitle.hours+':' + 
+                     + calculateTitle.minutes + ':' + calculateTitle.seconds + ' ' +$t(calculateTitle.timeStatus)" />
       </div>
     </div>
   </div>
 </template>
-
+  
 <script>
 import moment from 'moment'
+import vueHeadful from 'vue-headful';
 export default {
+  components: {
+    vueHeadful
+  },
   props : {
     date : {
       type: Number,
@@ -76,6 +86,16 @@ export default {
     days() {
       return Math.trunc((this.date - this.now) / 60 / 60 / 24);
     },
+    calculateTitle() {
+      return {
+        time: this.end,
+        days: this.days,
+        hours: this.hours,
+        minutes: this.minutes,
+        seconds: this.seconds,
+        timeStatus: this.timeStatus
+      }
+    }
   },
   watch: {
     now(){

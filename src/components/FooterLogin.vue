@@ -3,7 +3,7 @@
     <button v-if="allowedLogin"
             class="butoon_login positionLogin"
             type="submit" 
-            @click="ActionLogin">
+            @click="actionLogin">
       {{ $t("Login") }}
     </button>
     <div v-else class="close-login-container positionLogin">
@@ -26,7 +26,7 @@ export default {
     }
   },
   methods: {
-    ActionLogin() {
+    actionLogin() {
       console.log('click')
     }
   }
