@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '../router'
 import parseCurrentStage from './parseCurrentStage'
 const getAuctionRequest =  (context, id) =>{
   axios.get(`${context.$store.state.urls.databaseURL}/${id}`)
@@ -13,9 +14,12 @@ const getAuctionRequest =  (context, id) =>{
       context.descriptionOfProducts = response.data.description
       context.minimalStep = response.data.minimalStep.amount
       context.auctionId = response.data.auctionID;
+      // if (response.data.auction_type !== 'texas'){
+      //   router.push({name: 'errorAuctiontType'})
+      // }
       parseCurrentStage(response.data.stages, response.data.current_stage, context)
     }).catch(error => {
-      console.log(`${context.$store.state.urls.serverURL}database/${id}`)
+      router.push({name: 'errorId'})
     })
 }
 
