@@ -65,7 +65,7 @@
                 min="0" max="100" />
             </div>
             <div class="round-container_time__watch  round-container_time-active__watch">
-              {{ currentTime | moment("hh:mm:ss") }}
+              {{ stages[stages.length - 1].planned_end | moment("hh:mm:ss") }}
             </div>
           </div>
           <div class="round-container_participant_active" />       
