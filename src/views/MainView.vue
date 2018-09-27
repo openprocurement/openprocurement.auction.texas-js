@@ -91,11 +91,12 @@ import AppStatusInfoLabel from '../components/StatusInfoLabel';
 import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppNotification from '../components/Notification';
 import AppListOfRounds from '../components/ListOfRounds';
-import getAuctionRequest from '../utils/getRequest';
+import {getAuctionRequest} from '../utils/getRequest';
 import parseCurrentStage from '../utils/parseCurrentStage';
 import {getCookieByName} from '@/utils/utils';
 import PouchDBSync from '../utils/CouchPouch';
 import EventSource from '../utils/eventSource';
+import axios from 'axios'
 
 
 export default {
@@ -121,16 +122,21 @@ export default {
   data(){
     return {
       stages: [{}],
+      pouchDB: null,
+      isListeningOnChanges: false,
       currentRoundNumber: null,
       currentStage: -1,
       currentType: 'english',
-      state: 'active',
+      state: null,
       endDate: null,
       showOrHide: false,
       showHongSoundsText: false,
       auctionId: '',
       browserName: '',
       currentTime: null,
+      lastSync: null,
+      showLoginForm: false,
+      loginAllowed: false,
       browserId: '',
       companyName: '',
       descriptionOfProducts: '',
@@ -138,8 +144,9 @@ export default {
       currentBid: null,
       startBid: null,
       minimalStep: null,
-      dateOfStartRoundOrAuction: null,
+      dateOfStartRoundOrAuction: null, // TODO: rename to proper var. Example endTimerDate
       initialBidsArr: [],
+      terminatedStates: ['completed', 'canceled', 'redefined'],
       statusMessage: {
         active: {
           type: 'active',
@@ -211,6 +218,38 @@ export default {
     EventSource.evtSrc.close();
   },
   methods: {
+    syncWithServerTime () {
+      axios.get(`${this.$store.state.urls.serverURL}get_current_server_time`, {
+        'params': {
+          '_nonce': Math.random().toString()
+        }
+      }).then((data) => {
+        this.lastSync = new Date(new Date(data.data))
+        let countdownSeconds = (new Date(this.stages[0].start) - this.lastSync) / 1000
+        if (this.currentStage === -1) {
+          if (countdownSeconds < 900) {
+            if (!this.isListeningOnChanges) PouchDBSync.startSync(this)
+          } else {
+            setTimeout(PouchDBSync.startSync, (countdownSeconds - 900)  * 1000, this)
+          }
+        }
+        if (this.currentStage >= -1 && this.$route.query.wait) {
+          this.showLoginForm = true
+          if (countdownSeconds < 900) {
+            this.loginAllowed = true
+          } else {
+            this.loginAllowed = false
+            setTimeout(() => {this.loginAllowed = true}, (countdownSeconds - 900) * 1000)
+          }
+          // TODO: logic to remove query params
+        }
+        if (!this.isListeningOnChanges && this.currentStage >= 0 && this.terminatedStates.indexOf(this.state) === -1)
+          PouchDBSync.startSync(this)
+      }).catch((e) => {
+        // log error
+        console.log('get_current_server_time error')
+      })
+    },
     holdRoundTime() {
       getAuctionRequest(this, this.$store.state.id)
     },
