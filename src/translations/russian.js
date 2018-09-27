@@ -69,6 +69,7 @@ const russian = {
   'prohibit connection': 'запретить подключение',
   'Step reduction of Bid': 'Шаг уменьшения торгов',
   'Start value': 'Стартовая сумма',
+  'Please use the correct link': 'Пожалуйста, используйте правильную ссылку',
   'Your bid appears too low': 'Вы ввели очень маленькую сумму, вы уверены?',
   'Return to Tender': 'Вернуться к Закупке',
   'Your latest bid': 'Ваша последняя заявка',

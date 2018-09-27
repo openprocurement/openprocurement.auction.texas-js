@@ -75,6 +75,7 @@ const ukrainian = {
   'Return to Tender': 'Повернутися до Закупівлі',
   'Your latest bid': 'Ваша остання заявка',
   'Tender cancelled': 'Закупівлю скасовано',
+  'Please use the correct link': 'Будь ласка , використайте  правильне посилання',
   'Bid canceled': 'Заявку відмінено',
   'Login is currently closed.': 'Вхід на даний момент закритий.',
   'Please try again later.': 'Спробуйте пізніше.',
