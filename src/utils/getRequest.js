@@ -14,9 +14,9 @@ const getAuctionRequest =  (context, id) =>{
       context.descriptionOfProducts = response.data.description
       context.minimalStep = response.data.minimalStep.amount
       context.auctionId = response.data.auctionID;
-      // if (response.data.auction_type !== 'texas'){
-      //   router.push({name: 'errorAuctiontType'})
-      // }
+      // if (response.data.auction_type !== 'texas') {
+      //   router.push({name: 'errorAuctiontType'})}
+      //TODO:make after adding correct auction_type
       parseCurrentStage(response.data.stages, response.data.current_stage, context)
     }).catch(error => {
       router.push({name: 'errorId'})
