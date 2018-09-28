@@ -14,7 +14,7 @@
         <h6 class="clock-container__status-time">
           {{ $t(timeStatus) }}
         </h6>
-        <div v-if="(state !== 'completed') && state !== 'pendingSyncData'" class="clock-container__time">
+        <div v-if="($store.state.terminatedStates.indexOf(state) === -1) && state !== 'pendingSyncData'" class="clock-container__time">
           <div v-show="days !==0" class="digit" >{{ days }}
             {{ $t('days') }}
           </div>
@@ -32,7 +32,7 @@
           {{ end }}
         </div>
 
-        <vue-headful v-if="state === 'completed'"
+        <vue-headful v-if="$store.state.terminatedStates.indexOf(state) !== -1"
                      :title="($t(calculateTitle.timeStatus) + ' ' + $t(calculateTitle.time))" />
         <vue-headful v-else
                      :title="calculateTitle.days + $t('days') + ' '+calculateTitle.hours+':' + 
@@ -126,7 +126,7 @@ export default {
       moment.locale(this.$store.state.i18n.locale)
       this.$emit('getCurrentTime', this.timeRemaining);
       this.$emit('getRemainedTimeofRound', (this.days * 24 * 3600 +  this.seconds + this.minutes * 60));
-      if (this.timeRemaining < 0 && ['completed', 'redefined', 'cancelled'].indexOf(this.state) === -1)
+      if (this.timeRemaining < 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1)
         this.$emit('checkTimeOut')
     }
   },

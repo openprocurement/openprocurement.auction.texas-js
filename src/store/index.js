@@ -11,6 +11,7 @@ const debug = process.env.NODE_ENV !== 'production';
 const store =  new Vuex.Store({
   strict: debug,
   state: {
+    terminatedStates: ['completed', 'canceled', 'redefined'],
     id: '',
     urls:{
       serverURL: debug ? config.serverURL : location.protocol + '//' + location.host + "/",
