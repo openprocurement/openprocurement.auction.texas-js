@@ -6,16 +6,16 @@
         {{ index + 1 }}
       </h3>
       <div v-if="state ==='completed'" class="round-container round-container_completed">
-        <div class="round-container__time-patricipant round-container__time-patricipant_completed">
+        <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
             <img src="/static_texas/images/watch-in-round.svg" alt="watch">
           </div>
           <div class="round-container_participant-completed">
-            <div class="round-container_participant__order-number">
+            <div class="round-container_participant-expended">
               {{ stage.label[$store.state.i18n.locale] }}
             </div>
-            <div class="round-container_participant-expended">
-              Opened bidder name
+            <div class="round-container_time__watch">
+              {{ stage.time | moment("hh:mm:ss") }}
             </div>
           </div>
         </div>
@@ -78,22 +78,43 @@
         </div>
       </div>
     </div>
+    <div v-if="state ==='completed'">
+      <h3 class="round-label">
+        {{ $t('Round') }}
+        {{ currentRoundNumber }}
+      </h3>     
+      <div class="round-container round-container_completed">
+        <div class="round-container__time-patricipant round-container__time-patricipant-not-set">
+          <div class="round-container_time-completed round-container_time-completed_not-set">
+            <img src="/static_texas/images/watch-in-round-not-set.svg" alt="watch">
+          </div>
+          <div class="round-container_time__watch">
+            {{ stages[currentStage - 1].planned_end | moment("hh:mm:ss") }}
+          </div>
+        </div>
+        <div class="round-container_bid round-container_bid_not-set">
+          <div class="line" />
+        </div>
+      </div>
+    </div>
+
     <div v-if="state ==='completed' && lastBiddedRound" id="active-round" class="max-round-container">
       <h6 class = "announcement"><strong>
         {{ $t('Announcement') }}
       </strong></h6>
       <div class="round-container_completed round-container round-container_max">
-        <div class="round-container__time-patricipant round-container__time-patricipant_completed">
-          <div class="round-container_time-completed round-container_time_max">
-            <img src="/static_texas/images/watch-in-round-max.png" alt="watch">
+        <div class="round-container__time-patricipant">
+          <div class="round-container_time-completed">
+            <img src="/static_texas/images/watch-in-round.svg" alt="watch">
           </div>
-          <div class="round-container_participant_completed">
-            <div class="round-container_participant__order-number">
-              {{ lastBiddedRound.label[$store.state.i18n.locale] }}
-            </div>
-            <div class="round-container_participant-expended">
-              Opened bidder name
-            </div>
+          <div class="round-container_participant-expended round-container_participant-expended_max">
+            <h3 class="word-winner">
+              {{ $t('winner') }}
+            </h3>
+            {{ lastBiddedRound.label[$store.state.i18n.locale] }}
+          </div>
+          <div class="round-container_time__watch">
+            {{ lastBiddedRound.time | moment("hh:mm:ss") }}
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
@@ -216,6 +237,14 @@ export default {
     justify-content: space-between;
 }
 
+.round-container_participant-completed {
+    width: 89%;
+    display: flex;
+    justify-content: space-between;
+    height: 90%;
+    align-items: center;
+}
+
 .round-container_time-completed{
     width: 10%;
     display:flex;
@@ -239,10 +268,9 @@ export default {
     margin-left: 1px;
 }
 
-.round-container__time-patricipant_completed {
-    justify-content: initial;
+.round-container__time-patricipant-not-set {
+   justify-content: initial;
 }
-
 .round-container_time__watch {
     font-size: 18px;
     font-weight: 300;
@@ -250,6 +278,7 @@ export default {
     display: flex;
     align-items: center
 }
+
 
 .round-container_bid{
     display: flex;
@@ -260,6 +289,19 @@ export default {
     height: 90%;
     background-color: #e9e9e9;
     margin-right: 3px;
+}
+
+.round-container_bid_not-set {
+    position: relative;
+    background-color: initial;
+}
+
+.line {
+    width: 112px;
+    height: 47px;
+    border-bottom: 1px solid black;
+    position: absolute;
+    bottom: 40%; 
 }
 
 .round-container_bid__amount {
@@ -289,21 +331,9 @@ export default {
 }
 
 .round-container_max{
-    border: 1px solid #a0be22;
+    background-color: #e7f5ac;
     margin-top: 15px;
-}
-
-.round-container_time_max{
-    color: lightgreen;
-}
-
-.round-container_participant_completed{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    height: 100%;
-    width: 70%;
+    padding-left: 5px;
 }
 
 .round-container_participant__order-number{
@@ -318,6 +348,18 @@ export default {
     font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
+    width: 90%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    word-break: break-all;
+    margin-right: 10px;
+}
+
+.round-container_participant-expended_max {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .round-container_bid_max{
@@ -357,6 +399,10 @@ export default {
     font-size: 16px;
     font-weight: 500;
     font-family: 'Roboto', sans-serif;
+}
+
+.word-winner {
+  text-transform: uppercase;
 }
 
 </style>

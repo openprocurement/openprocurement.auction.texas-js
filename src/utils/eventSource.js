@@ -58,7 +58,10 @@ export default {
         deleteCookie('auctions_loggedin');
         window.location.replace(`${component.$store.state.urls.auctionURL}/${component.$store.state.id}/logout`)
       })
+<<<<<<< HEAD
 
+=======
+>>>>>>> f158150... Fix announcement results mockup and opened bidders
       this.evtSrc.addEventListener('Close', e => {
         console.log('Close', e.data);
         if (!this.isObserverNotifyCalled) {
@@ -69,8 +72,12 @@ export default {
           })
           this.isObserverNotifyCalled = true
         }
+<<<<<<< HEAD
       })
 
+=======
+      });
+>>>>>>> f158150... Fix announcement results mockup and opened bidders
       this.evtSrc.onerror = e => {
         console.log('Handle event source error', e);
         this.evtSrc.close()

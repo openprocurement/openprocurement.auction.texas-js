@@ -71,6 +71,7 @@ const ukrainian = {
   'prohibit connection': 'заборонити підключення',
   'Step reduction of Bid': 'Крок зменшення торгів',
   'Start value': 'Стартова сума',
+  'winner': 'переможець',
   'Your bid appears too low': 'Ви ввели дуже малу суму, ви впевнені?',
   'Return to Tender': 'Повернутися до Закупівлі',
   'Your latest bid': 'Ваша остання заявка',

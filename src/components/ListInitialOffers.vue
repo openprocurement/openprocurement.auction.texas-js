@@ -56,6 +56,8 @@ export default {
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     font-weight: 800;
+    text-transform: uppercase;
+    word-break: break-all;
 }
 
 .offer-container__participant-name{
