@@ -66,25 +66,35 @@ export default {
       type: String,
       default: null
     },
+    syncedTime: {
+      type: Date,
+      default: null
+    }
   },
   data() {
+    let end = null
+    if (this.endDate) {
+      end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a')
+    }
     return {
-      now: Math.trunc((new Date()).getTime() / 1000),
-      end:null
+      timeRemaining: null,
+      end: end,
+      startInterval: false,
+      currentTime: null
     }
   },
   computed: {
     seconds() {
-      return (this.date - this.now) % 60;
+      return this.timeRemaining % 60
     },
     minutes() {
-      return Math.trunc((this.date - this.now) / 60) % 60;
+      return Math.trunc(this.timeRemaining / 60) % 60
     },
     hours() {
-      return Math.trunc((this.date- this.now) / 60 / 60) % 24;
+      return Math.trunc(this.timeRemaining / 60 / 60) % 24
     },
     days() {
-      return Math.trunc((this.date - this.now) / 60 / 60 / 24);
+      return Math.trunc(this.timeRemaining / 60 / 60 / 24)
     },
     calculateTitle() {
       return {
@@ -98,20 +108,27 @@ export default {
     }
   },
   watch: {
-    now(){
+    syncedTime () {
+      if (this.syncedTime) {
+        let mathSyncedTime = Math.trunc(this.syncedTime.getTime() / 1000)
+        this.timeRemaining = this.date - mathSyncedTime
+
+        if (!this.startInterval && this.timeRemaining > 0) {
+          window.setInterval(() => {
+            this.timeRemaining = this.timeRemaining - 1
+          },1000)
+        }
+        this.startInterval = true
+      }
+    },
+    timeRemaining () {
       // change language of moment.js
       moment.locale(this.$store.state.i18n.locale)
-      this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a');
-      this.$emit('getCurrentTime', this.now);
+      this.$emit('getCurrentTime', this.timeRemaining);
       this.$emit('getRemainedTimeofRound', (this.days * 24 * 3600 +  this.seconds + this.minutes * 60));
-      if (this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0)
+      if (this.timeRemaining < 0 && ['completed', 'redefined', 'cancelled'].indexOf(this.state) === -1)
         this.$emit('checkTimeOut')
     }
-  },
-  mounted() {
-    window.setInterval(() => {
-      this.now = Math.trunc((new Date()).getTime() / 1000);
-    },1000);
   },
   methods: {
     showOrHideModalWindow(){
