@@ -79,6 +79,7 @@ const english = {
   'Login is currently closed.': 'Login is currently closed.',
   'Please try again later.': 'Please try again later.',
   'Cancel Bid': 'Cancel Bid',
+  'winner': 'winner', 
   'Please use the correct link': 'Please use the correct link',
   'Ability to submit bids has been lost. Wait until page reloads, and retry.': 'Ability to submit bids has been lost. Wait until page reloads, and retry.',
   'Ability to submit bids has been lost. Wait until page reloads.': 'Ability to submit bids has been lost. Wait until page reloads',

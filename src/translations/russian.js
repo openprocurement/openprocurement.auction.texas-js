@@ -53,6 +53,7 @@ const russian = {
   'minutes': 'мин',
   'seconds': 'сек',
   'minimum': 'минимум',
+  'winner': 'победитель',
   'Internet connection is lost. Attempt to restart after 1 sec': 'Cоединения с интернетом потеряно. попытка перезагрузки через 1 сек',
   'Synchronization failed': 'Ошибка синхронизации',
   'Possible results': 'Возможные результаты',
