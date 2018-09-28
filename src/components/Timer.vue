@@ -2,13 +2,13 @@
   <div class="clock-container-wrapper">
     <div class="clock-container__burger-icon"
          @click="showOrHideModalWindow">
-      <img src="/static_texas/images/burger_icon.png" alt="calendar-icon">
+      <img src="/static_texas/images/burger_icon.svg" alt="calendar-icon">
     </div>
     <div class="clock-container-wrapper_time">
       <div class="clock-container__calendar-icon">
         <img 
           class="clock-container__calendar-icon_img" 
-          src="/static_texas/images/calendar_icon.png" alt="calendar-icon">
+          src="/static_texas/images/calendar_icon.svg" alt="calendar-icon">
       </div>
       <div class="clock-container">
         <h6 class="clock-container__status-time">
@@ -31,14 +31,24 @@
         <div v-if="state === 'completed'">
           {{ end }}
         </div>
+
+        <vue-headful v-if="state === 'completed'"
+                     :title="($t(calculateTitle.timeStatus) + ' ' + $t(calculateTitle.time))" />
+        <vue-headful v-else
+                     :title="calculateTitle.days + $t('days') + ' '+calculateTitle.hours+':' + 
+                     + calculateTitle.minutes + ':' + calculateTitle.seconds + ' ' +$t(calculateTitle.timeStatus)" />
       </div>
     </div>
   </div>
 </template>
-
+  
 <script>
 import moment from 'moment'
+import vueHeadful from 'vue-headful';
 export default {
+  components: {
+    vueHeadful
+  },
   props : {
     date : {
       type: Number,
@@ -86,6 +96,16 @@ export default {
     days() {
       return Math.trunc(this.timeRemaining / 60 / 60 / 24)
     },
+    calculateTitle() {
+      return {
+        time: this.end,
+        days: this.days,
+        hours: this.hours,
+        minutes: this.minutes,
+        seconds: this.seconds,
+        timeStatus: this.timeStatus
+      }
+    }
   },
   watch: {
     syncedTime () {
@@ -133,7 +153,7 @@ export default {
 
 .clock-container-wrapper{
     display: flex;
-    width: 340px;
+    width: 400px;
     justify-content: space-around;
 }
 
@@ -152,7 +172,6 @@ export default {
 .clock-container__calendar-icon{
     display: flex;
     align-self: center;
-    margin-top: 17px;
 }
 
 .digit {

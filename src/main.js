@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import './plugins/plugins';
 
+let dataLayer = dataLayer || [];
 Vue.config.productionTip = false;
 new Vue({
   router,

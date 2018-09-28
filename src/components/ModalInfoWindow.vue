@@ -3,7 +3,7 @@
     <div class="modal-container">
       <div class="modal-container__info modal-container__tender-number">
         {{ auctionId }}
-        <i class="fa fa-info-circle" />
+        <img class="modal-container__tender-number__info-icon" src="/static_texas/images/info-icon.svg" alt="info_icon">
       </div>
       <div class="modal-container__info modal-container__info_description-Products">
         {{ companyName }}
@@ -38,7 +38,11 @@
       </div>
     </div>
     <div class="modal-container__info modal-container__powered-by">
-      powered by:
+      <img class="modal-container__powered-by__image" src="/static_texas/images/powered_by_open-procurement.svg" alt="powered_by_open-procurement.svg">
+      <div class="modal-container__powered-by__container">
+        Powered by
+        <a class="modal-container__powered-by__container_link" href="https://openprocurement.io/en">OpenProcurement</a>
+      </div>
     </div>
   </div>
 </template>
@@ -79,6 +83,7 @@ export default {
 </script>
 
 <style>
+
 .modal-container-wrapper{
     width: 30%;
     height: 91vh;
@@ -92,7 +97,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    box-shadow: -1px -20px 0px 5700px rgba(36, 30, 30, 0.5);
+    box-shadow: 200px -1px 0px 4000px rgba(36, 30, 30, 0.5);
 }
 
 .modal-container{
@@ -119,7 +124,39 @@ export default {
 
 .modal-container__powered-by{
     display: flex;
-    align-self: flex-end;
+    position: relative;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.modal-container__powered-by__image {
+    width: 100%;
+    filter: grayscale(80%);
+}
+
+.modal-container__powered-by__image:hover {
+    filter: none;
+}
+
+.modal-container__powered-by__container {
+    color: #ffffff;
+    position: absolute;
+    bottom: 14%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 10px;
+}
+
+.modal-container__powered-by__container_link {
+    color: #ffffff;
+    margin-left: 7px;
+    border: none;
+}
+
+.modal-container__powered-by__container_link:hover {
+    color: yellow;
+    border: none;
 }
 
 .modal-container__choose-languages{
@@ -133,9 +170,13 @@ export default {
     justify-content: space-between;
 }
 
-.fa-info-circle{
-    color: grey;
-    font-size: 27px;
+.modal-container__tender-number {
+    align-items: center;
+}
+
+.modal-container__tender-number__info-icon {
+  width: 25px;
+  height: 25px;
 }
 
 </style>

@@ -26,18 +26,18 @@
         :current-round-number="currentRoundNumber"
         :remained-time-of-round="remainedTimeOfRound" />
     </header>
-    <app-status-timer-line 
-      :remained-time-of-round="remainedTimeOfRound"
-      :current-stage="currentStage"
-      :stages="stages"
-      :current-time="currentTime" />
+    <app-status-timer-line v-if="state!=='completed'"
+                           :remained-time-of-round="remainedTimeOfRound"
+                           :current-stage="currentStage"
+                           :stages="stages"
+                           :current-time="currentTime" />
     <app-hong-audio-track v-if="currentStage === 0" :browser-name="browserName" />
     <app-hong-sounds-text v-if="state == 'active' && showHongSoundsText" />
     <app-notification/>
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
         <div class="container-main__image-container">
-          <img src="/static_texas/images/numberOfTender_icon.png" alt="number-Of-tender">
+          <img src="/static_texas/images/number-of-tender_icon.svg" alt="number-Of-tender">
         </div>
         {{ auctionId }}
       </div>
@@ -52,7 +52,7 @@
         </ul>
       </div>
       <app-start-bid :start-bid="startBid" />
-      <app-list-initial-offers v-if="(state !== 'completed')" :initial-bids-arr="initialBidsArr" />
+      <app-list-initial-offers :initial-bids-arr="initialBidsArr" />
       <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed'" 
                           :start-bid="startBid"
                           :current-time="currentTime"
@@ -63,7 +63,7 @@
                           :stages="stages" 
                           @getCurrentRoundNumber="getCurrentRoundNumber" />
     </main>
-    <footer v-if="state !== 'completed'" 
+    <footer v-if="state !== 'completed' && !showLoginForm" 
             :class="'footer-container_' + state" class="footer-container">
       <h4 v-if="state == 'pendingOfRound'" class = "footer-container__text">
         {{ $t('Waiting for start of round') }}
@@ -78,6 +78,8 @@
                                    :minimal-step="minimalStep"
                                    @sentBid="holdRoundTime" />
     </footer>
+    <app-footer-login v-if="showLoginForm"
+                      :allowed-login="loginAllowed"/>
   </div>
 </template>
 <script>
@@ -93,6 +95,7 @@ import AppIncreasingAndApproval from '../components/IncreasingAndApproval';
 import AppNotification from '../components/Notification';
 import AppListOfRounds from '../components/ListOfRounds';
 import {getAuctionRequest} from '../utils/getRequest';
+import AppFooterLogin from '../components/FooterLogin';
 import parseCurrentStage from '../utils/parseCurrentStage';
 import {getCookieByName} from '@/utils/utils';
 import PouchDBSync from '../utils/CouchPouch';
@@ -112,6 +115,7 @@ export default {
     AppStatusInfoLabel,
     AppIncreasingAndApproval,
     AppListOfRounds,
+    AppFooterLogin,
     AppNotification
   },
   props: {
@@ -198,6 +202,17 @@ export default {
   watch: {
     currentStage(){
       parseCurrentStage(this.stages, this.currentStage, this)
+      if (true){
+        dataLayer.push({
+          "tenderId": 222,
+          "lotId": 55
+        });
+      } 
+      else {
+        dataLayer.push({
+          "tenderId": 788
+        });
+      }
     }
   },
   created() {

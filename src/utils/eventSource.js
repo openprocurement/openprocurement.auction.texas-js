@@ -10,7 +10,7 @@ export default {
   initialize (component) {
 
     var operation = retry.operation({
-      retries: 4,
+      retries: 3,
       factor: 3,
       minTimeout: 1 * 1000,
       maxTimeout: 60 * 1000,
@@ -69,7 +69,6 @@ export default {
           })
           this.isObserverNotifyCalled = true
         }
-        this.evtSrc.close()
       })
 
       this.evtSrc.onerror = e => {
