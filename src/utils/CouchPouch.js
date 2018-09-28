@@ -34,6 +34,9 @@ export default {
         if (component.id === change.id) {
           fillAuctionData(component, change.doc)
           component.syncWithServerTime()
+          if (component.$store.state.terminatedStates.indexOf(component.state) !== -1) {
+            this.changesObj.cancel()
+          }
         }
       }).on('error', (err) => {
         this.changesObj.cancel()
