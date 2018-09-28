@@ -73,6 +73,7 @@ export default {
       this.selected = value;
     },
     submitBid (amount) {
+      this.checkAuthorization()
       let jsonToSend = {
         bid: amount,
         bidder_id: this.$store.state.identification.bidderID
@@ -87,6 +88,23 @@ export default {
         console.log(error)
       })    
     },
+    checkAuthorization () {
+      axios.post(
+        `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/check_authorization`,
+        {withCredentials: true}
+      ).then((data) => {
+        console.log('Authorization checked')
+      }).catch((err) => {
+        console.log('Error while check_authorization')
+        if (err.status == 401) {
+          // notify that we need to reload page
+          console.log('Ability to submit bids has been lost. Wait until page reloads.')
+          setTimeout(() => {
+            window.location.replace(`${this.$store.state.urls.auctionURL}/${this.$store.state.id}/relogin`);
+          }, 3000);
+        }
+      })
+    }
   },
 };
 </script>
