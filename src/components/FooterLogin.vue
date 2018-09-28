@@ -27,7 +27,8 @@ export default {
   },
   methods: {
     actionLogin() {
-      console.log('click')
+      let loginURL = `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/login?bidder_id=${this.$route.query.bidder_id}&hash=${this.$route.query.hash}`
+      location.replace(loginURL)
     }
   }
 }
