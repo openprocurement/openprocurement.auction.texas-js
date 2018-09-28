@@ -108,6 +108,9 @@ export default {
     }
   },
   watch: {
+    endDate () {
+      this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a')
+    },
     syncedTime () {
       if (this.syncedTime) {
         let mathSyncedTime = Math.trunc(this.syncedTime.getTime() / 1000)

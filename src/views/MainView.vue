@@ -225,6 +225,12 @@ export default {
     // init event-source
     if (EventSource.ableToSubscribe()) {
       EventSource.initialize(this)
+    } else {
+      component.$notify({
+        group: 'auth',
+        text: component.$t('You are an observer and cannot bid.'),
+        duration: -1
+      })
     }
   },
   beforeDestroy() {
