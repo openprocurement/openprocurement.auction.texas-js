@@ -1,9 +1,11 @@
 const parseCurrentStage = (stages, currentStage, context) =>{
   if (currentStage === -100) {
     context.state = 'canceled'
+    return
   }
   else if (currentStage === -101) {
     context.state = 'redefined'
+    return
   }
   else if (currentStage === -1) {
     context.state = 'pendingOfAuction';
