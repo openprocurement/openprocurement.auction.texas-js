@@ -132,7 +132,7 @@ export default {
       currentRoundNumber: null,
       currentStage: -1,
       currentType: 'english',
-      state: null,
+      state: 'pendingSyncData',
       endDate: null,
       showOrHide: false,
       showHongSoundsText: false,
@@ -226,9 +226,9 @@ export default {
     if (EventSource.ableToSubscribe()) {
       EventSource.initialize(this)
     } else {
-      component.$notify({
+      this.$notify({
         group: 'auth',
-        text: component.$t('You are an observer and cannot bid.'),
+        text: this.$t('You are an observer and cannot bid.'),
         duration: -1
       })
     }
