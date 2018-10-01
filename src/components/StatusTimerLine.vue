@@ -58,6 +58,7 @@ export default {
     height: 4px;
     background-color: #9ab913;
     transition: width .6s ease;
+    z-index: 3;
 }
 
 </style>
