@@ -9,12 +9,14 @@ export default {
   },
   startSync (component) {
     var operation = retry.operation({
-      retries: 4,
+      forever: true,
+      retries: 3,
       factor: 3,
       minTimeout: 1 * 1000,
       maxTimeout: 60 * 1000,
-      randomize: true,
     })
+    // TODO: Notify user that connection lost and connection retry is started with button to reload page
+    // and remove that notification if connection was successfully set up
     operation.attempt((currentAttempt) => {
       console.log('Start sync with CouchDB with attempts number ' + currentAttempt.toString())
       this.changesObj = component.pouchDB.changes({
@@ -27,10 +29,7 @@ export default {
         since: 0,
         doc_ids: [component.id]
       }).on('change', change => {
-        if (currentAttempt !== 1) {
-          console.log('Graceful restart on attemts number ' + currentAttempt.toString())
-          operation.reset()
-        }
+        console.log('Graceful start on attemts number ' + currentAttempt.toString())
         if (component.id === change.id) {
           fillAuctionData(component, change.doc)
           component.syncWithServerTime()
