@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <div v-if="state ==='completed'">
+    <div v-if="state ==='completed' && lastRoundWithoutBidder">
       <h3 class="round-label">
         {{ $t('Round') }}
         {{ currentRoundNumber }}
@@ -89,7 +89,7 @@
             <img src="/static_texas/images/watch-in-round-not-set.svg" alt="watch">
           </div>
           <div class="round-container_time__watch">
-            {{ stages[currentStage - 1].planned_end | moment("hh:mm:ss") }}
+            {{ lastRoundWithoutBidder.planned_end | moment("hh:mm:ss") }}
           </div>
         </div>
         <div class="round-container_bid round-container_bid_not-set">
@@ -193,6 +193,17 @@ export default {
         let reversedStages = this.stages.slice().reverse()
         for (let i in reversedStages) {
           if (reversedStages[i].type === 'english' && reversedStages[i].bidder_id) {
+            return reversedStages[i]
+          }
+        }
+      }
+      return null
+    },
+    lastRoundWithoutBidder () {
+      if (this.state === 'completed') {
+        let reversedStages = this.stages.slice().reverse()
+        for (let i in reversedStages) {
+          if (reversedStages[i].type === 'english' && !reversedStages[i].bidder_id) {
             return reversedStages[i]
           }
         }
