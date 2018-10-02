@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper">
-    <app-return-button />
+    <app-return-button v-if="$store.state.identification.returnURL"/>
     <app-modal-info-window
       v-show="showOrHide"
       :auction-id="auctionId"

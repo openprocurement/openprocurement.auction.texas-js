@@ -43,6 +43,7 @@ const store =  new Vuex.Store({
     setIdentificationInfo (state, data) {
       state.identification.bidderID = data.bidder_id
       state.identification.clientID = data.client_id
+      state.identification.returnURL = data.return_url
     },
     setAuctionUUID (state, uuid) {
       state.id = uuid
