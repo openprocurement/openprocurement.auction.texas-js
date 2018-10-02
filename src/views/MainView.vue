@@ -40,7 +40,7 @@
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
         <div class="container-main__image-container">
-          <img src="/static_texas/images/number-of-tender_icon.svg" alt="number-Of-tender">
+          <svg class="number-of-tender_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.83 22.12"><path d="M25,10.57a.66.66,0,0,0-.64-.68H20a.66.66,0,0,1-.64-.68V4.62a.66.66,0,0,0-.64-.68H14.1a1,1,0,0,0-1,1V8.52l0,0,3.74,4a1.73,1.73,0,0,1,.47,1.2h0V20.6h6.69a1,1,0,0,0,1-1v-9Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M21.2,4a.32.32,0,0,0-.55.24v4A.33.33,0,0,0,21,8.6h3.74A.34.34,0,0,0,24.94,8Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M5.17,26.06h10a1,1,0,0,0,1-1V16.13a.66.66,0,0,0-.64-.68H11.07a.66.66,0,0,1-.64-.68V10.08a.66.66,0,0,0-.64-.68H5.17a1,1,0,0,0-1,.82V24.83a1.64,1.64,0,0,0,.09.54.93.93,0,0,0,.88.68Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M12,14.06h3.74a.33.33,0,0,0,.32-.34.35.35,0,0,0-.09-.24l-2.87-3-.87-.92A.3.3,0,0,0,12,9.4a.33.33,0,0,0-.32.34v4a.33.33,0,0,0,.32.34Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/></svg>
         </div>
         {{ auctionId }}
       </div>
@@ -308,6 +308,10 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css?family=Lato|Montserrat|Oswald|Roboto');
 
+  .number-of-tender_icon {
+    width: 20px;
+    height: 20px;
+  }
   .app-wrapper{
     background: white;
   }
@@ -371,6 +375,14 @@ export default {
 @media screen and (max-width: 768px) {
   .container-wrapper {
     max-width: 720px;
+  }
+}
+
+@media screen and (max-width: 478px) {
+  .container-wrapper {
+    width: 100%;
+    padding-right: 10px;
+    padding-left: 10px;
   }
 }
 

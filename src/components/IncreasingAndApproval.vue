@@ -223,4 +223,17 @@ option:hover{
     border: none;
 }
 
+@media screen and (max-width: 768px) {
+  .increase-approval-container{
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 478px) {
+   .increase-approval-container{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+  }
+}
 </style>

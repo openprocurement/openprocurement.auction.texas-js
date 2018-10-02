@@ -8,7 +8,7 @@
       <div v-if="state ==='completed'" class="round-container round-container_completed">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
-            <img src="/static_texas/images/watch-in-round.svg" alt="watch">
+            <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
           </div>
           <div class="round-container_participant-completed">
             <div class="round-container_participant-expended">
@@ -30,7 +30,7 @@
         <div class="round-container__time-patricipant">
           <div class="round-container_time-active">
             <div class="round-container_time__watch-icon">
-              <img src="/static_texas/images/watch-in-round.svg" alt="watch">
+              <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
             </div>
             <div class="round-container_time__watch">
               {{ stage.time | moment("hh:mm:ss") }}
@@ -83,10 +83,10 @@
         {{ $t('Round') }}
         {{ currentRoundNumber }}
       </h3>     
-      <div class="round-container round-container_completed">
+      <div class="round-container round-container_completed round-container_completed-not-set">
         <div class="round-container__time-patricipant round-container__time-patricipant-not-set">
           <div class="round-container_time-completed round-container_time-completed_not-set">
-            <img src="/static_texas/images/watch-in-round-not-set.svg" alt="watch">
+            <svg class="watch-in-round watch-in-round-not-set" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>cross</title><path d="M15.13,18.93" transform="translate(-1.05 -1.13)"/><path d="M14,18.91" transform="translate(-1.05 -1.13)"/><path d="M15.08,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15.08,1.13Zm0,25.69A11.66,11.66,0,1,1,26.74,15.16,11.65,11.65,0,0,1,15.08,26.82Z" transform="translate(-1.05 -1.13)"/><path d="M21.73,9.84,20.4,8.51l-5.32,5.32L9.76,8.51,8.43,9.84l5.32,5.32L8.43,20.48l1.33,1.33,5.32-5.32,5.32,5.32,1.33-1.33-5.32-5.32Zm0,0" transform="translate(-1.05 -1.13)" stroke="#000" stroke-miterlimit="10"/></svg>
           </div>
           <div class="round-container_time__watch">
             {{ lastRoundWithoutBidder.planned_end | moment("hh:mm:ss") }}
@@ -105,7 +105,7 @@
       <div class="round-container_completed round-container round-container_max">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
-            <img src="/static_texas/images/watch-in-round.svg" alt="watch">
+            <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
           </div>
           <div class="round-container_participant-expended round-container_participant-expended_max">
             <h3 class="word-winner">
@@ -257,7 +257,6 @@ export default {
 }
 
 .round-container_time-completed{
-    width: 10%;
     display:flex;
     justify-content: center;
 }
@@ -306,6 +305,17 @@ export default {
     position: relative;
     background-color: initial;
 }
+
+.watch-in-round{
+    width: 27px;
+    height: 27px;
+}
+
+.watch-in-round-not-set {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
 
 .line {
     width: 112px;
@@ -414,6 +424,56 @@ export default {
 
 .word-winner {
   text-transform: uppercase;
+}
+
+@media screen and (max-width: 478px) {
+  .round-container{
+    flex-direction: column;
+ }
+
+ .round-container_bid {
+    width: 100%;
+    margin: 0 1px 0 1px;
+    height: 50%;
+ }
+ .round-container__time-patricipant {
+    width: 100%;
+ }
+ .round-container_completed-not-set {
+   flex-direction: row;
+ }
+
+ .round-container__time-patricipant-not-set {
+   justify-content: space-around;
+ }
+
+ .round-container_max {
+   height: 110px;
+   margin-top: 0;
+   padding-left: 0;
+ }
+ .round-container_bid_max{
+   flex-direction: column;
+ }
+
+ .round-container_bid_max-block-count {
+   transform: rotate(360deg);
+ }
+
+ .round-container_bid_max-block {
+   height: 20px;
+   width: 100%; 
+ }
+
+ .round-container__time-patricipant-active {
+   height: 90px;
+   margin-left: 0;
+   justify-content: center;
+ }
+
+ .round-container_active {
+   height: 90px
+ }
 }
 
 </style>
