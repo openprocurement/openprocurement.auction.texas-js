@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-container-wrapper">
+  <div class="modal-container-wrapper" @click.stop="showOrHideModalWindow">
     <div class="modal-container">
       <div class="modal-container__info modal-container__tender-number">
         {{ auctionId }}
@@ -79,6 +79,11 @@ export default {
       default: null
     },
   },
+  methods: {
+    showOrHideModalWindow() {
+      this.$emit('showOrHideModalWindow', true)
+    },
+  }
 }
 </script>
 

@@ -23,7 +23,8 @@ const store =  new Vuex.Store({
     },
     identification: {
       bidderID: '',
-      clientID: ''
+      clientID: '',
+      returnURL: ''
     },
     infoFromCouch: {
     },
