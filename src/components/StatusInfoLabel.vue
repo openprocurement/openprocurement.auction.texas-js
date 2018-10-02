@@ -53,14 +53,15 @@ export default {
       default: null
     }
   },
-
   computed: {
     remainedMinutesToStartRound() {
       return Math.ceil(this.remainedTimeOfRound / 60)
     },
   },
-  updated() {
-    window.scrollTo(0, document.body.scrollHeight);
+  watch: {
+    state() {
+      window.scrollTo(0, document.body.scrollHeight);
+    },
   },
 };
 </script>
