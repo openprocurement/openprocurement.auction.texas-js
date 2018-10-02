@@ -93,7 +93,11 @@ const russian = {
   'to General': 'к Общей',
   'The proposal you have submitted coincides with a proposal of the other participant. His proposal will be considered first, since it has been submitted earlier.': 'Поданное вами предложение совпадает с предложением другого участника. Его предложение будет рассматриваться первым, поскольку оно подано раньше.',
   'Waiting for the disclosure of the participants\' names': 'Ожидаем раскрытия имен участников',
-  'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Невозможно сделать ставку. Проверьте, что в браузере открыто не более 2-х аукционов.'
+  'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Невозможно сделать ставку. Проверьте, что в браузере открыто не более 2-х аукционов.',
+  'Please wait for the auction start.': 'Пожалуйста, дождитесь начала аукциона.',
+  'Internet connection is lost. Trying to reconnect.': 'Cоединения с интернетом потеряно. Попытка восстановления соединения.',
+  'Ability to submit bids has been lost. Wait until page reloads.': 'Потеряна возможность делать заявки. Подождите перезагрузки страницы.',
+  'Successfully reconnected.': 'Соединение успешно восстановлено.'
 }
 
 export default russian

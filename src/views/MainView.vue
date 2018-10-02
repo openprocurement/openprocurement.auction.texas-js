@@ -280,6 +280,14 @@ export default {
     },
     checkTimeOut() {
       this.state = 'pendingSyncData'
+      if (this.currentStage === -1) {
+        this.$notify({
+          group: 'utils',
+          text: this.$t('Please wait for the auction start.'),
+          duration: 120000, // TODO: make logic to remove single notification
+          type: 'warning'
+        })
+      }
     },
     getRemainedTimeofRound(remainedTime) {
       this.remainedTimeOfRound = remainedTime;

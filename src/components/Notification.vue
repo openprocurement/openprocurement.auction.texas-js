@@ -22,6 +22,9 @@
         <div v-else-if="props.item.type === 'error'" :style="{color: '#721c24', backgroundColor: '#f8d7da', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage}">
           {{ $t(props.item.text) }}
         </div>
+        <div v-else-if="props.item.type === 'success'" :style="{color: '#155724', backgroundColor: '#d4edda', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage}">
+          {{ $t(props.item.text) }}
+        </div>
       </template>
     </notifications>
   </div>
