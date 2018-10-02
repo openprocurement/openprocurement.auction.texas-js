@@ -94,5 +94,21 @@ export default {
     margin-bottom: 20px;
 }
 
+@media screen and (max-width: 478px) {
+   .offer-container {
+     flex-direction: column;
+     justify-content: initial;
+   }
+   .offer-container__participant {
+     width: 100%;
+     margin-left: 0;
+     justify-content: center;
+   }
+   .offer-container_bid {
+     width: 100%;
+     height: 50%;
+   }
+}
+
 </style>
 
