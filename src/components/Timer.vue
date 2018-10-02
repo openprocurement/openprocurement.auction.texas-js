@@ -15,7 +15,7 @@
         <h6 class="clock-container__status-time">
           {{ $t(timeStatus) }}
         </h6>
-        <div v-if="($store.state.terminatedStates.indexOf(state) === -1) && state !== 'pendingSyncData'" class="clock-container__time">
+        <div v-if="($store.state.terminatedStates.indexOf(state) === -1) && state !== 'pendingSyncData' && timeRemaining >= 0" class="clock-container__time">
           <div v-show="days !==0" class="digit" >{{ days }}
             {{ $t('days') }}
           </div>
@@ -132,8 +132,10 @@ export default {
       moment.locale(this.$store.state.i18n.locale)
       this.$emit('getCurrentTime', this.timeRemaining);
       this.$emit('getRemainedTimeofRound', (this.days * 24 * 3600 +  this.seconds + this.minutes * 60));
-      if (this.timeRemaining < 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1)
+      if (this.timeRemaining < 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1 && !this.isCheckTimeOutCalled) {
+        this.isCheckTimeOutCalled = true
         this.$emit('checkTimeOut')
+      }
     }
   },
   methods: {

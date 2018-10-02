@@ -98,6 +98,12 @@ export default {
         console.log('Error while check_authorization')
         if (err.status == 401) {
           // notify that we need to reload page
+          this.$notify({
+            group: 'utils',
+            text: this.$t('Ability to submit bids has been lost. Wait until page reloads.'),
+            duration: 10000,
+            type: 'error'
+          })
           console.log('Ability to submit bids has been lost. Wait until page reloads.')
           setTimeout(() => {
             window.location.replace(`${this.$store.state.urls.auctionURL}/${this.$store.state.id}/relogin`);

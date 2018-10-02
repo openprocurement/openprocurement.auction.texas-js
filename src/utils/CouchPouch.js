@@ -4,6 +4,7 @@ var retry = require('retry')
 
 export default {
   changesObj: null,
+  isRetried: false,
   initialize (component) {
     return new PouchDB(`${component.$store.state.urls.databaseURL}`)
   },
@@ -30,6 +31,19 @@ export default {
         doc_ids: [component.id]
       }).on('change', change => {
         console.log('Graceful start on attemts number ' + currentAttempt.toString())
+        if (this.isRetried) {
+          component.$notify({
+            clean: true,
+            group: 'utils'
+          })
+          component.$notify({
+            group: 'utils',
+            text: component.$t('Successfully reconnected.'),
+            duration: 2000,
+            type: 'success'
+          })
+          this.isRetried = false
+        }
         if (component.id === change.id) {
           fillAuctionData(component, change.doc)
           component.syncWithServerTime()
@@ -38,6 +52,15 @@ export default {
           }
         }
       }).on('error', (err) => {
+        if (!this.isRetried) {
+          component.$notify({
+            group: 'utils',
+            text: component.$t('Internet connection is lost. Trying to reconnect.'),
+            duration: -1,
+            type: 'warning'
+          })
+          this.isRetried = true
+        }
         this.changesObj.cancel()
         if (operation.retry(err)) {
           console.log('Retring long pool connection')

@@ -93,6 +93,10 @@ const english = {
   'to General': 'to General',
   'The proposal you have submitted coincides with a proposal of the other participant. His proposal will be considered first, since it has been submitted earlier.': 'The proposal you have submitted coincides with a proposal of the other participant. His proposal will be considered first, since it has been submitted earlier.',
   'Waiting for the disclosure of the participants\' names': 'Waiting for the disclosure of the participants\' names',
-  'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.'
+  'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.',
+  'Please wait for the auction start.': 'Please wait for the auction start.',
+  'Internet connection is lost. Trying to reconnect.': 'Internet connection is lost. Trying to reconnect.',
+  'Ability to submit bids has been lost. Wait until page reloads.': 'Ability to submit bids has been lost. Wait until page reloads.',
+  'Successfully reconnected.': 'Successfully reconnected.'
 }
 export default english

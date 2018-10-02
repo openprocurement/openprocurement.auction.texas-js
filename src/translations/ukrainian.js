@@ -93,7 +93,11 @@ const ukrainian = {
   'to General': 'до Загальної',
   'The proposal you have submitted coincides with a proposal of the other participant. His proposal will be considered first, since it has been submitted earlier.': 'Подана вами пропозиція співпадає з пропозицією іншого учасника. Його пропозиція розглядатиметься першою, оскільки вона подана раніше.',
   'Waiting for the disclosure of the participants\' names': 'Очікуємо на розкриття імен учасників',
-  'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Не вдається зробити ставку. Перевірте, що в переглядачі відкрито не більше 2-ох аукціонів.'
+  'Unable to place a bid. Check that no more than 2 auctions are simultaneously opened in your browser.': 'Не вдається зробити ставку. Перевірте, що в переглядачі відкрито не більше 2-ох аукціонів.',
+  'Please wait for the auction start.': 'Будь ласка, дочекайтесь початку аукціону.',
+  'Internet connection is lost. Trying to reconnect.': 'З\'єднання з інтернетом втрачено. Спроба відновлення зв\'язку',
+  'Ability to submit bids has been lost. Wait until page reloads.': 'Втрачено можливість подавати заявки. Дочекайтесь перевантаження сторінки.',
+  'Successfully reconnected.': 'З\'єднання успішно відновлено.'
 }
 
 export default ukrainian
