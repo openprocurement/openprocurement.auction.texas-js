@@ -1,6 +1,7 @@
 <template>
   <div class="clock-container-wrapper">
-    <div class="clock-container__burger-icon"
+    <div v-on-clickaway="away" 
+         class="clock-container__burger-icon"
          @click="showOrHideModalWindow">
       <img src="/static_texas/images/burger_icon.svg" alt="calendar-icon">
     </div>
@@ -45,10 +46,12 @@
 <script>
 import moment from 'moment'
 import vueHeadful from 'vue-headful';
+import { mixin as clickaway } from 'vue-clickaway';
 export default {
   components: {
     vueHeadful
   },
+  mixins: [ clickaway ],
   props : {
     date : {
       type: Number,
@@ -134,9 +137,12 @@ export default {
     }
   },
   methods: {
+    away() {
+      this.$emit('hideModalWindow')
+    },
     showOrHideModalWindow(){
       this.$emit('showOrHideModalWindow')
-    },
+    }
   }
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div class="app-wrapper">
+    <app-return-button />
     <app-modal-info-window
       v-show="showOrHide"
       :auction-id="auctionId"
@@ -7,7 +8,8 @@
       :browser-id="browserId"
       :company-name="companyName"
       :minimal-step="minimalStep"
-      :description-of-products="descriptionOfProducts" />
+      :description-of-products="descriptionOfProducts"
+      @showOrHideModalWindow="showOrHideModalWindow" />
     <header class="header_container">
       <app-timer 
         :date="dateOfStartRoundOrAuction"
@@ -18,7 +20,8 @@
         @checkTimeOut="checkTimeOut"
         @getRemainedTimeofRound="getRemainedTimeofRound"
         @getCurrentTime="getCurrentTime"
-        @showOrHideModalWindow="showOrHideModalWindow" />
+        @showOrHideModalWindow="showOrHideModalWindow"
+        @hideModalWindow="hideModalWindow" />
       <app-status-info-label 
         :type="statusMessage[state].type"
         :text-status="statusMessage[state].textStatus"
@@ -96,6 +99,7 @@ import AppNotification from '../components/Notification';
 import AppListOfRounds from '../components/ListOfRounds';
 import {getAuctionRequest} from '../utils/getRequest';
 import AppFooterLogin from '../components/FooterLogin';
+import AppReturnButton from '../components/ReturnButton'
 import parseCurrentStage from '../utils/parseCurrentStage';
 import {getCookieByName} from '@/utils/utils';
 import PouchDBSync from '../utils/CouchPouch';
@@ -116,7 +120,8 @@ export default {
     AppIncreasingAndApproval,
     AppListOfRounds,
     AppFooterLogin,
-    AppNotification
+    AppNotification,
+    AppReturnButton
   },
   props: {
     id: {
@@ -282,8 +287,16 @@ export default {
     getCurrentTime(currentTime) {
       this.currentTime = currentTime;
     },
-    showOrHideModalWindow() {
-      this.showOrHide = !this.showOrHide;
+    hideModalWindow() {
+      this.showOrHide = false
+    },
+    showOrHideModalWindow(trigger) {
+      if(trigger){
+        this.showOrHide = true;
+      }
+      else {
+        this.showOrHide = !this.showOrHide;
+      }
     },
     getCurrentRoundNumber(currentRoundNumber) {
       this.currentRoundNumber = currentRoundNumber;
