@@ -12,7 +12,7 @@
       @showOrHideModalWindow="showOrHideModalWindow" />
     <header class="header_container">
       <app-timer 
-        :date="dateOfStartRoundOrAuction"
+        :date="endTimerDate"
         :time-status="statusMessage[state].timeStatus"
         :state="state"
         :end-date="endDate"
@@ -154,7 +154,7 @@ export default {
       currentBid: null,
       startBid: null,
       minimalStep: null,
-      dateOfStartRoundOrAuction: null, // TODO: rename to proper var. Example endTimerDate
+      endTimerDate: null,
       initialBidsArr: [],
       statusMessage: {
         active: {

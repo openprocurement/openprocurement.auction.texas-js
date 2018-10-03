@@ -9,16 +9,16 @@ const parseCurrentStage = (stages, currentStage, context) =>{
   }
   else if (currentStage === -1) {
     context.state = 'pendingOfAuction';
-    context.dateOfStartRoundOrAuction = Math.trunc(Date.parse(stages[0].start) / 1000);
+    context.endTimerDate = Math.trunc(Date.parse(stages[0].start) / 1000);
   }
   else{
     if (stages[currentStage].type === 'english') {
       context.state = 'active';
-      context.dateOfStartRoundOrAuction = Math.trunc(Date.parse(stages[currentStage].planned_end) / 1000);
+      context.endTimerDate = Math.trunc(Date.parse(stages[currentStage].planned_end) / 1000);
     }
     else if (stages[currentStage].type === 'pause') {
       context.state = 'pendingOfRound';
-      context.dateOfStartRoundOrAuction = Math.trunc(Date.parse(stages[currentStage + 1].start) / 1000)
+      context.endTimerDate = Math.trunc(Date.parse(stages[currentStage + 1].start) / 1000)
     }
     else if (stages[currentStage].type === 'announcement') {
       context.state = 'completed';
@@ -32,11 +32,11 @@ const parseCurrentStage = (stages, currentStage, context) =>{
   if (currentStage === 0) {
     if (stages[currentStage].type !== 'pause') {
       context.state = 'active';
-      context.dateOfStartRoundOrAuction = Math.trunc(Date.parse(stages[currentStage].planned_end) / 1000);
+      context.endTimerDate = Math.trunc(Date.parse(stages[currentStage].planned_end) / 1000);
     }
     else if (stages[currentStage].type === 'pause') {
       context.state = 'pendingOfRound';
-      context.dateOfStartRoundOrAuction = Math.trunc(Date.parse(stages[currentStage + 1].start) / 1000)
+      context.endTimerDate = Math.trunc(Date.parse(stages[currentStage + 1].start) / 1000)
     }
   }
 }

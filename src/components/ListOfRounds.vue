@@ -186,6 +186,7 @@ export default {
       return prevStages
     },
     currentRoundNumber () {
+      this.$emit('getCurrentRoundNumber', (this.previouseStages.length + 1) )
       return this.previouseStages.length + 1
     },
     lastBiddedRound () {
@@ -215,9 +216,6 @@ export default {
     remainedTimeOfRound() {
       let calculate = calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end );
       this.value = (100 - (this.remainedTimeOfRound / calculate * 100)).toFixed(2);
-    },
-    currentRoundNumber(){
-      this.$emit('getCurrentRoundNumber', this.currentRoundNumber )
     }
   }
 };
