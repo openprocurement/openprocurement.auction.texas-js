@@ -29,7 +29,7 @@
         :current-round-number="currentRoundNumber"
         :remained-time-of-round="remainedTimeOfRound" />
     </header>
-    <app-status-timer-line v-if="state!=='completed'"
+    <app-status-timer-line v-if="$store.state.terminatedStates.indexOf(state) === -1 && state !== 'pendingSyncData'"
                            :remained-time-of-round="remainedTimeOfRound"
                            :current-stage="currentStage"
                            :stages="stages"
