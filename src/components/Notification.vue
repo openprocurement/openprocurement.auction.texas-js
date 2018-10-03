@@ -16,13 +16,13 @@
 
     <notifications group="utils" class="custom-notifications">
       <template slot="body" slot-scope="props">
-        <div v-if="props.item.type === 'warning'" :style="{color: '#856404', backgroundColor: '#fff3cd', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage}">
+        <div v-if="props.item.type === 'warning'" :style="{display: display, alignItems: alignItems, fontSize: fontSize, paddingLeft: paddingLeft, color: '#856404', height: bgHeight, backgroundColor: '#fff3cd', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage}">
           {{ $t(props.item.text) }}
         </div>
-        <div v-else-if="props.item.type === 'error'" :style="{color: '#721c24', backgroundColor: '#f8d7da', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage}">
+        <div v-else-if="props.item.type === 'error'" :style="{display: display, alignItems: alignItems, fontSize: fontSize, paddingLeft: paddingLeft, color: '#721c24', height: bgHeight, backgroundColor: '#f8d7da', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage}">
           {{ $t(props.item.text) }}
         </div>
-        <div v-else-if="props.item.type === 'success'" :style="{color: '#155724', backgroundColor: '#d4edda', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage}">
+        <div v-else-if="props.item.type === 'success'" :style="{display: display, alignItems: alignItems, fontSize: fontSize, paddingLeft: paddingLeft, color: '#155724', height: bgHeight, backgroundColor: '#d4edda', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage}">
           {{ $t(props.item.text) }}
         </div>
       </template>
@@ -39,6 +39,10 @@ export default {
       bgHeight: '30px',
       margin: '0',
       borderLeft: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: '12px',
+      paddingLeft: '50px'
     }
   },
   methods: {
@@ -68,6 +72,10 @@ export default {
   width: 100%;
 }
 
+.notification-wrapper {
+  height: 30px;
+}
+
 .kick-button {
   margin-left: 15px;
   width: 100px;
@@ -76,10 +84,13 @@ export default {
 }
 
 .vue-notification {
+  display: flex !important;
+  align-items: center !important;
   background: none !important ;
   color: inherit !important;
   border-left: 1px solid black !important;
   margin: 0 40px 5px !important;
+  height: 30px !important;
 }
 
 .notification-wrapper:hover {
