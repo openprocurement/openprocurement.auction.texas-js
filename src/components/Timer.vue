@@ -114,6 +114,9 @@ export default {
     },
     syncedTime () {
       if (this.syncedTime) {
+
+        this.isCheckTimeOutCalled = false
+
         let mathSyncedTime = Math.trunc(this.syncedTime.getTime() / 1000)
         this.timeRemaining = this.date - mathSyncedTime
 
