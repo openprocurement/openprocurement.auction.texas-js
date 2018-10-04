@@ -307,13 +307,14 @@ export default {
 .watch-in-round{
     width: 27px;
     height: 27px;
+    margin-right: 12px;
+    margin-left: 3px;
 }
 
 .watch-in-round-not-set {
     margin-right: 20px;
     margin-left: 20px;
 }
-
 
 .line {
     width: 112px;
@@ -340,7 +341,7 @@ export default {
     width: 35%;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 800;
     line-height: 21.18px;
 }
@@ -364,7 +365,7 @@ export default {
 
 .round-container_participant-expended {
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
     width: 90%;
@@ -424,6 +425,12 @@ export default {
   text-transform: uppercase;
 }
 
+@media screen and (max-width: 768px) {
+  .watch-in-round{
+    margin-right: 14px;
+ }
+}
+
 @media screen and (max-width: 478px) {
   .round-container{
     flex-direction: column;
@@ -436,6 +443,7 @@ export default {
  }
  .round-container__time-patricipant {
     width: 100%;
+    margin: auto;
  }
  .round-container_completed-not-set {
    flex-direction: row;

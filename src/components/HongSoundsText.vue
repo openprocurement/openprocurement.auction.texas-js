@@ -2,7 +2,7 @@
 <template>
   <div :class="'hong-container_'" class="hong-container">
     <div class="hong-container__text">
-      ЛУНАЄ ГОНГ!
+      {{ $t('Sounds Gong!') }}
     </div>
   </div>
 </template>
@@ -33,6 +33,7 @@ export default{
     line-height: 16px;
     color: #000000;
     letter-spacing: 1.6px;
+    text-transform: uppercase;
 }
 
 .hong-container_hide{

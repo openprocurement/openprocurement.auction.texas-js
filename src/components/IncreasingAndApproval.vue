@@ -139,8 +139,9 @@ export default {
 }
 .increase-approval-container{
     display: flex;
-    width: 40%;
+    width: 35%;
     cursor: pointer;
+    margin-bottom: 45px;
 }
 
 .button{
@@ -213,25 +214,33 @@ export default {
     margin-right: -11px;
     background: white;
 }
-.select-choice-bid-wrapper:hover{
-    border: 1px solid #9ab913;
-    cursor: pointer;
-}
 
 option{
     border-bottom: 1px solid #9ab913;
     border-top: 1px solid #9ab913;
 }
 
-option:hover{
-    background: #9ab913;
-    color: white;
-    border: none;
+@media screen and (max-width: 1400px) {
+  .increase-approval-container{
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 1200) {
+  .increase-approval-container{
+    width: 55%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+ .increase-approval-container{
+    width: 65%;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .increase-approval-container{
-    width: 65%;
+    width: 85%;
   }
 }
 

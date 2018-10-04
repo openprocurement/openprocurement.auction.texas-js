@@ -45,7 +45,19 @@ export default {
       paddingLeft: '50px'
     }
   },
+
+  mounted() {
+    window.addEventListener('resize', this.onResize)},
+
   methods: {
+    onResize(){
+      if(window.innerWidth <= 478){
+        this.bgHeight = '50px'
+      }
+      else {
+        this.bgHeight = '30px'
+      }
+    },
     kickNewClient(clientId) {
       kickClient(this.$store.state, clientId)
     }
@@ -74,6 +86,7 @@ export default {
 
 .notification-wrapper {
   height: 30px;
+  min-width: 324px !important;
 }
 
 .kick-button {
@@ -96,6 +109,14 @@ export default {
 .notification-wrapper:hover {
   opacity: 0.8;
   transition: 1s ease;
+}
+
+@media screen and (max-width: 478px) {
+  .notification-wrapper{
+    display: flex !important;
+    min-height: 50px !important;
+    align-items: center !important;
+  }
 }
 
 </style>
