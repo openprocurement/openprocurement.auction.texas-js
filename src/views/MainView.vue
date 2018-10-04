@@ -35,7 +35,7 @@
                            :stages="stages"
                            :current-time="currentTime" />
     <app-hong-audio-track v-if="currentStage === 0" :browser-name="browserName" />
-    <app-hong-sounds-text v-if="state == 'active' && showHongSoundsText" />
+    <app-hong-sounds-text v-if="currentStage === 0" />
     <app-notification/>
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
@@ -140,7 +140,6 @@ export default {
       state: 'pendingSyncData',
       endDate: null,
       showOrHide: false,
-      showHongSoundsText: false,
       auctionId: '',
       browserName: '',
       currentTime: null,
@@ -225,6 +224,8 @@ export default {
     getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
+    //GTM
+    this.$gtm.trackView('MyScreenName', 'currentpath'); 
     //scrolling on bottom
     window.scrollTo(0, document.body.scrollHeight);
     // init event-source
@@ -322,6 +323,7 @@ export default {
   }
   .app-wrapper{
     background: white;
+    min-width: 324px;
   }
 
   footer{
@@ -337,6 +339,7 @@ export default {
     left: 0;
     top: 0;
     width: 100%;
+    min-width: 324px;
     height: 95px;
     background-color: #ffffff;
     box-shadow: 0 4px 9px 1px rgba(29, 29, 29, 0.09);
@@ -399,6 +402,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
+    min-width: 324px;
     background-color: #e9e9e9;
     border-top: 3px solid #d9d9d9;
     height: 95px;
@@ -413,7 +417,7 @@ export default {
 }
 
 .footer-container_active{
-    height: 200px;
+    height: 220px;
 }
 
 .container-main__tender-number{

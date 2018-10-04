@@ -9,6 +9,7 @@ const english = {
   'Bidder': 'Bidder',
   'Bidders': ' Bidders',
   'Bidding': 'Bidding',
+  'Sounds Gong!': 'Sounds Gong!',
   'Do you agree on the amount': 'Do you agree on the amount',
   'Select amount': 'Select amount',
   'English': 'English',

@@ -9,6 +9,7 @@ const russian = {
   'Bidder': ' Участник',
   'Bidders': ' Учасники',
   'Bidding': 'Торги',
+  'Sounds Gong!': 'Звучит Гонг!',
   'Do you agree on the amount': 'Согласны на сумму',
   'Select amount': 'Выберите сумму',
   'English': 'Английский',

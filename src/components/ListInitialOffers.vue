@@ -61,7 +61,7 @@ export default {
 }
 
 .offer-container__participant-name{
-    font-size: 19px;
+    font-size: 13px;
     font-weight: 600;
     display: flex;
 }
@@ -103,6 +103,7 @@ export default {
      width: 100%;
      margin-left: 0;
      justify-content: center;
+     height: 50%;
    }
    .offer-container_bid {
      width: 100%;

@@ -4,7 +4,6 @@
       <div class="modal-container__info modal-container__tender-number">
         {{ auctionId }}
         <svg class="modal-container__tender-number__info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.33 25.33"><path d="M20.67,7.37A12.67,12.67,0,1,0,33.33,20,12.68,12.68,0,0,0,20.67,7.37Zm0,23.77A11.11,11.11,0,1,1,31.77,20,11.12,11.12,0,0,1,20.67,31.15Zm0,0" transform="translate(-8 -7.37)"/><path d="M21.68,15a1.3,1.3,0,1,1-1.3-1.3,1.3,1.3,0,0,1,1.3,1.3Zm0,0" transform="translate(-8 -7.37)"/><path d="M20.53,18.42a.78.78,0,0,0-.78.78v6.63a.78.78,0,0,0,1.56,0V19.2a.78.78,0,0,0-.78-.78Zm0,0" transform="translate(-8 -7.37)"/></svg>
-        <!-- <img class="modal-container__tender-number__info-icon" src="/static_texas/images/info-icon.svg" alt="info_icon"> -->
       </div>
       <div class="modal-container__info modal-container__info_description-Products">
         {{ companyName }}
