@@ -27,8 +27,8 @@ now = new Date(Date.UTC(
 )
 now = now.toISOString().split('T')[0].split('-').join('.') // String representation of version
 
-let index = path.resolve(__dirname, '../dist_' + now + '/texas.html')
-let assetsRoot = path.resolve(__dirname, '../dist_' + now)
+let index = path.resolve(__dirname, '../openprocurement.auction.texas-js_' + now + '/texas.html')
+let assetsRoot = path.resolve(__dirname, '../openprocurement.auction.texas-js_' + now)
 let assetsSubDirectory = 'static_texas'
   
 

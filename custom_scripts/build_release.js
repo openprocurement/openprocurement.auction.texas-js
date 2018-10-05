@@ -22,7 +22,7 @@ now = new Date(Date.UTC(
 now = now.toISOString().split('T')[0].split('-').join('.') // String representation of version
 
 // Update config/index.js file to change place where to put static files for release
-let assetsRoot = path.resolve(__dirname, '../dist_' + now)
+let assetsRoot = path.resolve(__dirname, '../openprocurement.auction.texas-js_' + now)
 let assetsSubDirectory = 'static_texas'
 
 
