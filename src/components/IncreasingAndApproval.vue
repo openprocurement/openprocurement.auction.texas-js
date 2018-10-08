@@ -2,6 +2,9 @@
   <div class="increase-approval-container">
     <div class="container-bid increase-bid-container">
       <div class="select-choice-bid-wrapper">
+        <h6 class="approval-question announce-price-offer">
+          {{ $t('Announce price offer') }}
+        </h6>
         <vue-search-select
           :current-bid="currentBid"
           :minimal-step="minimalStep"
@@ -11,13 +14,13 @@
               class="button butoon__increase"
               type="submit" 
               @click="addNewBidIncrease">
-        {{ $t("Increase") }}
+        {{ $t("Announce") }}
       </button>
     </div>
     <div class="container-bid approval-container">
       <div class="approval-question-container">
         <h6 class="approval-question">
-          {{ $t('Do you agree on the amount') }}
+          {{ $t('Accept price offer') }}
         </h6>
         <h3 class="approval-mount">{{ currentBid }}</h3>
       </div>
@@ -26,7 +29,7 @@
         type="submit" 
         class="button button__approval" 
         @click="addNewBidApprove">
-        {{ $t('Agree') }}
+        {{ $t('Accept') }}
       </button>
     </div>
   </div>
@@ -41,7 +44,7 @@ export default {
     VueSearchSelect
   },
   props : {
-    startBid : {
+    startPrice : {
       type: Number,
       default: null
     },
@@ -132,10 +135,11 @@ export default {
 
 .select-choice-bid-wrapper{
     display: flex;
+    flex-direction: column;
     align-items: center;
     width: 85%;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .increase-approval-container{
     display: flex;
@@ -178,7 +182,7 @@ export default {
     justify-content:space-between;
     background-color: #ffffff;
     min-width: 50%;
-    height: 120px;
+    height: 150px;
 }
 .approval-container{
     margin-left: 10px;
@@ -199,6 +203,10 @@ export default {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 400;
+}
+
+.announce-price-offer {
+    margin-bottom: 10px;
 }
 
 .approval-mount {

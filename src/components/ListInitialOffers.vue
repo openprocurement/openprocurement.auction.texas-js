@@ -1,9 +1,9 @@
 <template>
   <div class="list-offers-container">
     <h5 class="list-offers-container__start-offers-label">
-      {{ $t('Initial bids') }}
+      {{ $t('Price offers') }}
     </h5>
-    <div v-for="(bid, index) in initialBidsArr" :key="index">
+    <div v-for="(bid, index) in priceOffers" :key="index">
       <div class="offer-container">
         <div class="offer-container__participant">
           <div class="offer-container__participant-name">
@@ -24,7 +24,7 @@
 import RadialProgressBar from './RadialProgressBar.vue'
 export default {
   props: {
-    initialBidsArr: {
+    priceOffers: {
       type: Array,
       default: null
     }

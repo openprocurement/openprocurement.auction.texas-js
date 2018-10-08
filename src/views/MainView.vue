@@ -4,7 +4,7 @@
     <app-modal-info-window
       v-show="showOrHide"
       :auction-id="auctionId"
-      :start-bid="startBid"
+      :start-price="startPrice"
       :browser-id="browserId"
       :company-name="companyName"
       :minimal-step="minimalStep"
@@ -54,15 +54,15 @@
           </li>
         </ul>
       </div>
-      <app-start-bid :start-bid="startBid" />
-      <app-list-initial-offers :initial-bids-arr="initialBidsArr" />
+      <app-start-bid :start-price="startPrice" />
+      <app-list-initial-offers :price-offers="priceOffers" />
       <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed'" 
-                          :start-bid="startBid"
+                          :start-price="startPrice"
                           :current-time="currentTime"
                           :remained-time-of-round="remainedTimeOfRound"
                           :state="state" 
                           :current-stage="currentStage"
-                          :initial-bids-arr="initialBidsArr"
+                          :price-offers="priceOffers"
                           :stages="stages" 
                           @getCurrentRoundNumber="getCurrentRoundNumber" />
     </main>
@@ -76,7 +76,7 @@
         {{ $t('Waiting for start of auction') }}
       </h4>
       <app-increasing-and-approval v-else-if="isShowBidForm"
-                                   :start-bid="startBid"
+                                   :start-price="startPrice"
                                    :current-bid="currentBid"
                                    :minimal-step="minimalStep"
                                    @sentBid="holdRoundTime" />
@@ -151,10 +151,10 @@ export default {
       descriptionOfProducts: '',
       remainedTimeOfRound: 180,
       currentBid: null,
-      startBid: null,
+      startPrice: null,
       minimalStep: null,
       endTimerDate: null,
-      initialBidsArr: [],
+      priceOffers: [],
       statusMessage: {
         active: {
           type: 'active',
@@ -175,7 +175,7 @@ export default {
         completed: {
           type: 'completed',
           textStatus: 'Completed',
-          timeStatus: 'Аuction was completed',
+          timeStatus: 'auction is completed by the licitator',
         },
 
         canceled: {
