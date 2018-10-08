@@ -143,7 +143,7 @@ export default {
     AppListInitialOffers
   },
   props: {
-    startBid: {
+    startPrice: {
       type: Number,
       default: null
     },
@@ -159,7 +159,7 @@ export default {
       type: Array,
       default: null
     },
-    initialBidsArr: {
+    priceOffers: {
       type: Array,
       default: null
     },

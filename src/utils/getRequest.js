@@ -3,8 +3,8 @@ import router from '../router'
 import parseCurrentStage from './parseCurrentStage'
 
 const fillAuctionData = (context, data) => {
-  context.initialBidsArr = data.initial_bids
-  context.startBid = data.initial_value
+  context.priceOffers = data.initial_bids
+  context.startPrice = data.initial_value
   context.currentStage = data.current_stage
   context.currentType = data.stages[data.stages.length - 1].type
   context.endDate = data.endDate

@@ -16,8 +16,8 @@
         <strong>{{ minimalStep }}</strong>
       </div>
       <div class="modal-container__info modal-container__info_start-bid">
-        {{ $t('Start value') }}:
-        {{ startBid }}
+        {{ $t('Start price') }}:
+        {{ startPrice }}
       </div>
       <div class="modal-container__info modal-container__info_browser-id">
         <hr>
@@ -58,7 +58,7 @@ export default {
       type: String,
       default: null
     },
-    startBid: {
+    startPrice: {
       type: Number,
       default: null
     },

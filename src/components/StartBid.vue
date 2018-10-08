@@ -1,10 +1,10 @@
 <template>
   <div class="start-pricing-container">
     <h5 class="start-pricing-container__label">
-      {{ $t('Start value') }}
+      {{ $t('Start price') }}
     </h5>
     <div class="start-pricing-container__block">
-      <h4 class="start-pricing-container__block__amount">{{ startBid }} 
+      <h4 class="start-pricing-container__block__amount">{{ startPrice }} 
         {{ $t('UAH') }}
       </h4>
     </div>
@@ -14,7 +14,7 @@
 <script>
 export default {
   props: {
-    startBid: {
+    startPrice: {
       type: Number,
       default: null 
     }
