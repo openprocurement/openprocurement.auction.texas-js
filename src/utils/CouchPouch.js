@@ -28,7 +28,8 @@ export default {
         continuous: true,
         include_docs: true,
         since: 0,
-        doc_ids: [component.id]
+        doc_ids: [component.id],
+        query_params: {doc_ids: '["' + component.id + '"]'}
       }).on('change', change => {
         console.log('Graceful start on attemts number ' + currentAttempt.toString())
         if (this.isRetried) {
