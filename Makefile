@@ -8,4 +8,4 @@ build_release:
 	echo "Build release static"
 	npm run build-release
 	echo "Pack static to tar.gz"
-	tar -zcvf ${RELEASE_FOLDER}.tar.gz ${RELEASE_FOLDER}
+	cd ${RELEASE_FOLDER} && tar -zcvf ../${RELEASE_FOLDER}.tar.gz . && cd ..
