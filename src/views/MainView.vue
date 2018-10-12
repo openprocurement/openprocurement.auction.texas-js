@@ -251,7 +251,7 @@ export default {
           '_nonce': Math.random().toString()
         }
       }).then((data) => {
-        this.lastSync = new Date(new Date(data.data))
+        this.lastSync = new Date(data.headers.date)
         let countdownSeconds = (new Date(this.stages[0].start) - this.lastSync) / 1000
         if (this.currentStage === -1) {
           if (countdownSeconds < 900) {
