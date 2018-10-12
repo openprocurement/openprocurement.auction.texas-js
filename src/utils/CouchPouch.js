@@ -29,9 +29,7 @@ export default {
         include_docs: true,
         since: 0,
         doc_ids: [component.id],
-        query_params: {doc_ids: '["' + component.id + '"]'}
       }).on('change', change => {
-        console.log('Graceful start on attemts number ' + currentAttempt.toString())
         if (this.isRetried) {
           component.$notify({
             clean: true,
@@ -43,6 +41,7 @@ export default {
             duration: 2000,
             type: 'success'
           })
+          console.log('Successfully reconnected.')
           this.isRetried = false
         }
         if (component.id === change.id) {
