@@ -140,6 +140,9 @@ export default {
         this.isCheckTimeOutCalled = true
         this.$emit('checkTimeOut')
       }
+      if (this.timeRemaining >= 0 && this.state === 'pendingSyncData') {
+        this.$emit('stateUpdate')
+      }
     }
   },
   methods: {
