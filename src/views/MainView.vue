@@ -17,6 +17,7 @@
         :state="state"
         :end-date="endDate"
         :synced-time="lastSync"
+        @stateUpdate="stateUpdate"
         @checkTimeOut="checkTimeOut"
         @getRemainedTimeofRound="getRemainedTimeofRound"
         @getCurrentTime="getCurrentTime"
@@ -203,7 +204,7 @@ export default {
     }
   },
   watch: {
-    currentStage(){
+    currentStage () {
       parseCurrentStage(this.stages, this.currentStage, this)
       if (true){
         dataLayer.push({
@@ -298,6 +299,13 @@ export default {
     },
     hideModalWindow() {
       this.showOrHide = false
+    },
+    stateUpdate () {
+      parseCurrentStage(this.stages, this.currentStage, this)
+      this.$notify({
+        clean: true,
+        group: 'utils'
+      })
     },
     showOrHideModalWindow(trigger) {
       if(trigger){
