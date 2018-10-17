@@ -13,6 +13,7 @@
     <header class="header_container">
       <app-timer 
         :date="endTimerDate"
+        :current-type="currentType"
         :time-status="statusMessage[state].timeStatus"
         :state="state"
         :end-date="endDate"
@@ -24,6 +25,7 @@
         @showOrHideModalWindow="showOrHideModalWindow"
         @hideModalWindow="hideModalWindow" />
       <app-status-info-label 
+        :current-type="currentType"
         :type="statusMessage[state].type"
         :text-status="statusMessage[state].textStatus"
         :state="state"
@@ -67,7 +69,7 @@
                           :stages="stages" 
                           @getCurrentRoundNumber="getCurrentRoundNumber" />
     </main>
-    <footer v-if="state !== 'completed' && !showLoginForm" 
+    <footer v-if="state !== 'completed' && !showLoginForm && $store.state.identification.bidderID !== ''" 
             :class="'footer-container_' + state" class="footer-container">
       <h4 v-if="state == 'pendingOfRound'" class = "footer-container__text">
         {{ $t('Waiting for start of round') }}
@@ -82,6 +84,7 @@
                                    :minimal-step="minimalStep"
                                    @sentBid="holdRoundTime" />
     </footer>
+    <footer v-else />
     <app-footer-login v-if="showLoginForm"
                       :allowed-login="loginAllowed"/>
   </div>
@@ -163,7 +166,7 @@ export default {
           timeStatus: 'until the round ends',
         },
         pendingOfAuction: {
-          type: 'pending-of-auction',
+          type: 'pending',
           textStatus: 'Waiting',
           timeStatus: 'until the auction starts',
         },
@@ -190,10 +193,10 @@ export default {
           timeStatus: 'Auction has not started and will be rescheduled',
         },
         pendingSyncData: {
-          type: 'pending-sync-data',
+          type: 'pending',
           textStatus: 'Waiting',
           timeStatus: 'Waiting for synchronization of data',
-        },
+        }
       },
     };
   },
@@ -324,6 +327,10 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Lato|Montserrat|Oswald|Roboto');
+
+ .footer-container_hide {
+   display: none;
+ }
 
   .number-of-tender_icon {
     width: 20px;

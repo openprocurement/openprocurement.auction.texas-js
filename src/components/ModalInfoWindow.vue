@@ -101,8 +101,8 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
     box-shadow: 200px -1px 0px 4000px rgba(36, 30, 30, 0.5);
+    overflow-y: auto;
 }
 
 .modal-container{
