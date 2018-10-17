@@ -44,19 +44,19 @@ export default {
 
 <style>
 .progress-ring {
-  width: 32px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
 }
 
 .progress-ring_circle {
  stroke: #929293;
- stroke-width: 9;
+ stroke-width: 6;
  fill: none;
 }
 
 .progress-ring_ring {
   stroke: #EF851B;
-  stroke-width: 14;
+  stroke-width: 9;
   fill: none;
 }
 
