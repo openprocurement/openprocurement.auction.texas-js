@@ -5,7 +5,7 @@
         {{ $t('Round') }}
         {{ index + 1 }}
       </h3>
-      <div v-if="state ==='completed'" class="round-container round-container_completed">
+      <div v-if="state === 'completed' || state === 'preAnnouncement'" class="round-container round-container_completed">
         <div class="round-container__time-patricipant">
           <div class="round-container_time-completed">
             <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
@@ -86,7 +86,7 @@
         </div>
       </div>
     </div>
-    <div v-if="state ==='completed' && lastRoundWithoutBidder">
+    <div v-if="( state ==='completed' || state == 'preAnnouncement') && lastRoundWithoutBidder">
       <h3 class="round-label">
         {{ $t('Round') }}
         {{ currentRoundNumber }}
@@ -106,7 +106,7 @@
       </div>
     </div>
 
-    <div v-if="state ==='completed' && lastBiddedRound" id="active-round" class="max-round-container">
+    <div v-if="( state ==='completed' || state == 'preAnnouncement') && lastBiddedRound" id="active-round" class="max-round-container">
       <h6 class = "announcement"><strong>
         {{ $t('Announcement') }}
       </strong></h6>
@@ -202,7 +202,7 @@ export default {
       return this.previouseStages.length + 1
     },
     lastBiddedRound () {
-      if (this.state === 'completed') {
+      if (this.state === 'completed' || this.state === 'preAnnouncement') {
         let reversedStages = this.stages.slice().reverse()
         for (let i in reversedStages) {
           if (reversedStages[i].type === 'english' && reversedStages[i].bidder_id) {
@@ -213,7 +213,7 @@ export default {
       return null
     },
     lastRoundWithoutBidder () {
-      if (this.state === 'completed') {
+      if (this.state === 'completed' || this.state === 'preAnnouncement') {
         let reversedStages = this.stages.slice().reverse()
         for (let i in reversedStages) {
           if (reversedStages[i].type === 'english' && !reversedStages[i].bidder_id) {
