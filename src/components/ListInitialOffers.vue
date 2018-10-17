@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import RadialProgressBar from './RadialProgressBar.vue'
 export default {
   props: {
     priceOffers: {
