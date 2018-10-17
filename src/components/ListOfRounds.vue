@@ -11,7 +11,11 @@
             <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
           </div>
           <div class="round-container_participant-completed">
-            <div class="round-container_participant-expended">
+            <div v-if="$store.state.identification.bidderID === stage.bidder_id" class="round-container_participant-expended">
+              {{ stage.label[$store.state.i18n.locale] }}
+              ({{ $t('You') }})
+            </div>
+            <div v-else class="round-container_participant-expended">
               {{ stage.label[$store.state.i18n.locale] }}
             </div>
             <div class="round-container_time__watch">
@@ -20,9 +24,9 @@
           </div>
         </div>
         <div class="round-container_bid">
-          <h4 class="round-container_bid__amount">{{ stage.amount }} 
+          <div class="round-container_bid__amount">{{ stage.amount }} 
             {{ $t('UAH') }}
-          </h4>
+          </div>
         </div>
       </div>
 
@@ -36,7 +40,11 @@
               {{ stage.time | moment("hh:mm:ss") }}
             </div>
           </div>
-          <div class="round-container_participant_active">
+          <div v-if="$store.state.identification.bidderID === stage.bidder_id" class="round-container_participant_active">
+            {{ stage.label[$store.state.i18n.locale] }}
+            ({{ $t('You') }})
+          </div>
+          <div v-else class="round-container_participant_active">
             {{ stage.label[$store.state.i18n.locale] }}
           </div>
         </div>
@@ -60,7 +68,7 @@
               class="round-container_time-active__watch-icon">
               <radial-progress-bar
                 v-if="state !== 'pendingOfRound' && (value > 0 && value < 100)"
-                :value="value" :text="remainedTimeOfRound"
+                :value="value"
                 :remained-time-of-round="remainedTimeOfRound"
                 min="0" max="100" />
             </div>
@@ -108,7 +116,11 @@
             <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
           </div>
           <div class="round-container_participant-expended round-container_participant-expended_max">
-            <h3 class="word-winner">
+            <h3 v-if="$store.state.identification.bidderID === lastBiddedRound.bidder_id" class="word-winner">
+              {{ $t('winner') }}
+              ({{ $t('You') }})
+            </h3>
+            <h3 v-else class="word-winner">
               {{ $t('winner') }}
             </h3>
             {{ lastBiddedRound.label[$store.state.i18n.locale] }}
@@ -222,6 +234,12 @@ export default {
 </script>
 
 <style scoped>
+
+.round-container_time-active__watch-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .round-container{
     display: flex;
