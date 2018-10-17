@@ -3,7 +3,6 @@
     <circle class="progress-ring_circle" r="46"/>
     <path :d="path" class="progress-ring_ring" />
     <circle :cx="endX" :cy="endY" r="4" class="progress-ring_end" />
-    <text class="progress-ring_text" alignment-baseline="middle" text-anchor="middle">{{ text }}</text>
   </svg>
 </template>
 
@@ -21,11 +20,7 @@ export default {
     value: {
       type:  String,
       default: null
-    },
-    text: {
-      type:  Number,
-      default: null
-    },
+    }
   },
   computed: {
     theta() {
@@ -49,28 +44,24 @@ export default {
 
 <style>
 .progress-ring {
-  width: 45px;
-  height: 50px;
+  width: 32px;
+  height: 44px;
 }
 
 .progress-ring_circle {
- stroke: red;
- stroke-width: 11;
+ stroke: #929293;
+ stroke-width: 9;
  fill: none;
 }
 
 .progress-ring_ring {
-  stroke: #007fff;
-  stroke-width: 10;
-  fill: context-fill;
+  stroke: #EF851B;
+  stroke-width: 14;
+  fill: none;
 }
 
 .progress-ring_end {
-  fill: #007fff;
-}
-
-.progress-ring_text{
-  font-size: 28px;
+  fill: #EF851B;
 }
 
 </style>

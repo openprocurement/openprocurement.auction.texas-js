@@ -258,5 +258,9 @@ option{
     display: flex;
     justify-content: center;
   }
+
+  .select-choice-bid-wrapper {
+    width: 97%;
+  }
 }
 </style>
