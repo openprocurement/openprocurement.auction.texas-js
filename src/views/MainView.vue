@@ -59,7 +59,7 @@
       </div>
       <app-start-bid :start-price="startPrice" />
       <app-list-initial-offers :price-offers="priceOffers" />
-      <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed'" 
+      <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed' || state == 'preAnnouncement'" 
                           :start-price="startPrice"
                           :current-time="currentTime"
                           :remained-time-of-round="remainedTimeOfRound"
@@ -196,6 +196,11 @@ export default {
           type: 'pending',
           textStatus: 'Waiting',
           timeStatus: 'Waiting for synchronization of data',
+        },
+        preAnnouncement:  {
+          type: 'pending',
+          textStatus: 'Waiting',
+          timeStatus: "Waiting for the disclosure of the participants\' names"
         }
       },
     };

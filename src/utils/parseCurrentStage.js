@@ -23,6 +23,9 @@ const parseCurrentStage = (stages, currentStage, context) =>{
     else if (stages[currentStage].type === 'announcement') {
       context.state = 'completed';
     }
+    else if (stages[currentStage].type === 'pre-announcement') {
+      context.state = 'preAnnouncement';
+    }
   }
 
   if (currentStage !== -1) {
