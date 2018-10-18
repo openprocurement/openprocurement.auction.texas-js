@@ -3,6 +3,7 @@
     <app-return-button v-if="$store.state.identification.returnURL"/>
     <app-modal-info-window
       v-show="showOrHide"
+      :tender-titles="tenderTitles"
       :auction-id="auctionId"
       :start-price="startPrice"
       :browser-id="browserId"
@@ -49,11 +50,11 @@
       </div>
       <div class="container-main__discribe-tender">
         <div class="container-main__discribe-tender_desc container-main__discribe-tender_company-name">
-          {{ companyName }}
+          {{ companyName }} : {{ tenderTitles[`tenderTitle_${$store.state.i18n.locale}`] || tenderTitles['tenderTitle_uk'] }}
         </div>
         <ul class="container-main__discribe-tender_desc container-main__discribe-tender_description-products">
           <li>
-            {{ descriptionOfProducts }}
+            {{ descriptionOfProducts[`description_${$store.state.i18n.locale}`] || descriptionOfProducts['description_uk'] }}
           </li>
         </ul>
       </div>
@@ -152,7 +153,8 @@ export default {
       loginAllowed: false,
       browserId: '',
       companyName: '',
-      descriptionOfProducts: '',
+      descriptionOfProducts: {},
+      tenderTitles: {},
       remainedTimeOfRound: 180,
       currentBid: null,
       startPrice: null,

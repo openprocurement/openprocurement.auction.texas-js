@@ -10,7 +10,6 @@ const ukrainian = {
   'Select amount': 'Виберіть суму',
   'Accept price offer': 'Прийняти пропозицію ціни',
   'Announce price offer': 'Оголосити пропозицію ціни',
-  'Select amount': 'Select amount',
   'Waiting for start of auction': 'Очікується початок аукціону',
   'Waiting for start of round': 'Очікується початок раунду',
   'Waiting for synchronization of data': 'Очікується синхронізація даних',
