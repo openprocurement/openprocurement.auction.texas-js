@@ -136,8 +136,6 @@ export default {
       }
     },
     timeRemaining () {
-      // change language of moment.js
-      moment.locale(this.$store.state.i18n.locale)
       this.$emit('getCurrentTime', this.timeRemaining);
       this.$emit('getRemainedTimeofRound', (this.days * 24 * 3600 +  this.seconds + this.minutes * 60));
       if (this.timeRemaining < 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1 && !this.isCheckTimeOutCalled) {
@@ -148,6 +146,10 @@ export default {
         this.$emit('stateUpdate')
       }
     }
+  },
+  updated(){
+    moment.locale(this.$store.state.i18n.locale)
+    this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a')
   },
   methods: {
     away() {
