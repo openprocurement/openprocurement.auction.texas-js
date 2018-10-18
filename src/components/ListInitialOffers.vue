@@ -6,7 +6,17 @@
     <div v-for="(bid, index) in priceOffers" :key="index">
       <div class="offer-container">
         <div class="offer-container__participant">
-          <div class="offer-container__participant-name">
+          <div v-if="$store.state.identification.bidderID === bid.bidder_id" class="offer-container__participant-name">
+            <div class="order-of-bidder">
+              {{ $t('Bidder') }} {{ bid.bidNumber }}
+            </div>
+            {{ bid.label[$store.state.i18n.locale] }}
+            ({{ $t('You') }})
+          </div>
+          <div v-else class="offer-container__participant-name">
+            <div class="order-of-bidder">
+              {{ $t('Bidder') }} {{ bid.bidNumber }}
+            </div>
             {{ bid.label[$store.state.i18n.locale] }}
           </div>
         </div>
@@ -63,6 +73,11 @@ export default {
     font-size: 13px;
     font-weight: 600;
     display: flex;
+    flex-direction: column;
+}
+
+.order-of-bidder {
+   text-transform:none;
 }
 
 .offer-container_bid{

@@ -12,10 +12,16 @@
           </div>
           <div class="round-container_participant-completed">
             <div v-if="$store.state.identification.bidderID === stage.bidder_id" class="round-container_participant-expended">
+              <div class="order-of-bidder">
+                {{ $t('Bidder') }} {{ stage.bidNumber }}
+              </div>
               {{ stage.label[$store.state.i18n.locale] }}
               ({{ $t('You') }})
             </div>
             <div v-else class="round-container_participant-expended">
+              <div class="order-of-bidder">
+                {{ $t('Bidder') }} {{ stage.bidNumber }}
+              </div>
               {{ stage.label[$store.state.i18n.locale] }}
             </div>
             <div class="round-container_time__watch">
@@ -117,10 +123,16 @@
           </div>
           <div class="round-container_participant-expended round-container_participant-expended_max">
             <h3 v-if="$store.state.identification.bidderID === lastBiddedRound.bidder_id" class="word-winner">
+              <div class="order-of-bidder">
+                {{ $t('Bidder') }} {{ lastBiddedRound.bidNumber }}
+              </div>
               {{ $t('winner') }}
               ({{ $t('You') }})
             </h3>
             <h3 v-else class="word-winner">
+              <div class="order-of-bidder">
+                {{ $t('Bidder') }} {{ lastBiddedRound.bidNumber }}
+              </div>
               {{ $t('winner') }}
             </h3>
             {{ lastBiddedRound.label[$store.state.i18n.locale] }}
@@ -277,6 +289,10 @@ export default {
     justify-content: center;
 }
 
+.order-of-bidder {
+   text-transform:none;
+}
+
 .round-container__time-patricipant{
     width: 70%;
     display: flex;
@@ -389,9 +405,11 @@ export default {
     width: 90%;
     height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     word-break: break-all;
     margin-right: 10px;
+    justify-content: center;
 }
 
 .round-container_participant-expended_max {
