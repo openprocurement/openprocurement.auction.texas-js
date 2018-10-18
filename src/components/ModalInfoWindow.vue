@@ -9,39 +9,44 @@
         {{ companyName }}
       </div>
       <div class="modal-container__info modal-container__info_description-Products">
-        {{ descriptionOfProducts }}
+        {{ descriptionOfProducts[`description_${$store.state.i18n.locale}`] || descriptionOfProducts['description_uk'] }} : 
+        {{ tenderTitles[`tenderTitle_${$store.state.i18n.locale}`] || tenderTitles['tenderTitle_uk'] }}
       </div>
       <div class="modal-container__info modal-container__info_step-bid">
-        {{ $t('Step reduction of Bid') }}:
-        <strong>{{ minimalStep }}</strong>
+        {{ $t('Step reduction of Bid') }}: 
+        <strong class="strong"> {{ minimalStep }}</strong>
       </div>
       <div class="modal-container__info modal-container__info_start-bid">
         {{ $t('Start price') }}:
         {{ startPrice }}
       </div>
-      <div class="modal-container__info modal-container__info_browser-id">
-        <hr>
-        Browser ID:
-        {{ browserId }}
+      <hr>
+      <div class="modal-container__info_browser-id_browser-and-session">
+        <div class="modal-container__info modal-container__info_browser-id">
+          Browser ID:
+          {{ browserId }}
+        </div>
+        <div class="modal-container__info modal-container__info_sesion-id">
+          Session ID:
+          {{ browserId }}
+        </div>
       </div>
-      <div class="modal-container__info modal-container__info_sesion-id">
-        Sesion ID:
-        {{ browserId }}
-        <hr>
-      </div>
+      <hr>
       <div class="modal-container__info modal-container__choose-languages">
-        <div>{{ $t('Language') }}</div>
+        <div class="modal-container__choose-languages__language-title">{{ $t('Language') }}</div>
         <div>
           <app-languages-toggle-switch />
         </div>
-        <hr>
       </div>
+      <hr>
     </div>
     <div class="modal-container__info modal-container__powered-by">
-      <img class="modal-container__powered-by__image" src="/static_texas/images/powered_by_open-procurement.png" alt="powered_by_open-procurement.svg">
+      <a href="https://openprocurement.io/en">
+        <img class="modal-container__powered-by__image" src="/static_texas/images/powered_by_open-procurement.png" alt="powered_by_open-procurement.svg">
+      </a>
       <div class="modal-container__powered-by__container">
         Powered by
-        <a class="modal-container__powered-by__container_link" href="https://openprocurement.io/en">OpenProcurement</a>
+        <p class="open-procurement-text">OpenProcurement</p>
       </div>
     </div>
   </div>
@@ -71,11 +76,15 @@ export default {
       default: null
     },
     descriptionOfProducts: {
-      type: String,
+      type: Object,
       default: null
     },
     minimalStep: {
       type: Number,
+      default: null
+    },
+    tenderTitles: {
+      type: Object,
       default: null
     },
   },
@@ -90,12 +99,13 @@ export default {
 <style>
 
 .modal-container-wrapper{
-    width: 30%;
+    font-family: 'Roboto',sans-serif;
+    width: 20%;
     height: 91vh;
     margin-right: 30px;
     background-color: #ffffff;
     position: fixed;
-    top: 96px;
+    top: 95px;
     z-index: 2;
     display: flex;
     flex-direction: column;
@@ -103,15 +113,18 @@ export default {
     align-items: center;
     box-shadow: 200px -1px 0px 4000px rgba(36, 30, 30, 0.5);
     overflow-y: auto;
+    border-top: 2px solid lightgray;
 }
 
 .modal-container{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     flex-wrap: wrap;
     width: 100%;
+    min-height: 400px;
+
 }
 
 .modal-container__info{
@@ -120,7 +133,6 @@ export default {
     font-size: 14px;
     width: 95%;
     flex-wrap: wrap;
-    margin-bottom: 10px;
 }
 
 .modal-container__info_description-Products{
@@ -132,6 +144,11 @@ export default {
     position: relative;
     width: 100%;
     margin-bottom: 0;
+    flex-wrap: nowrap;
+}
+
+.modal-container__info_browser-id {
+   margin-bottom: 7px;
 }
 
 .modal-container__powered-by__image {
@@ -143,24 +160,43 @@ export default {
     filter: none;
 }
 
+.bold_p {
+  font-weight: 600;
+}
+
+.modal-container__info_browser-id_browser-and-session {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+}
+
 .modal-container__powered-by__container {
     color: #ffffff;
     position: absolute;
-    bottom: 14%;
+    bottom: 40px;
     display: flex;
     justify-content: center;
     width: 100%;
     font-size: 10px;
 }
 
+.modal-container__choose-languages__language-title {
+  margin-bottom: 10px;
+}
+
+.open-procurement-text {
+  text-decoration: underline;
+  margin-left: 2px;
+}
+
+.modal-container__info_step-bid {
+  flex-direction: row;
+  align-items: last baseline;
+}
+
 .modal-container__powered-by__container_link {
     color: #ffffff;
     margin-left: 7px;
-    border: none;
-}
-
-.modal-container__powered-by__container_link:hover {
-    color: yellow;
     border: none;
 }
 
@@ -182,6 +218,35 @@ export default {
 .modal-container__tender-number__info-icon {
   width: 25px;
   height: 25px;
+}
+
+hr {
+  background-color: lightgray;
+  height: 1px;
+  border: 0;
+  width: 100%;
+}
+
+.strong {
+  margin-left: 2px;
+}
+
+@media screen  and (max-height: 580px){
+  .modal-container-wrapper {
+    height: 84vh;
+  }
+}
+
+@media screen  and (max-height: 480px){
+  .modal-container-wrapper {
+    height: 80vh;
+  }
+}
+
+@media screen  and (max-height: 280px){
+  .modal-container-wrapper {
+    height: 67vh;
+  }
 }
 
 </style>
