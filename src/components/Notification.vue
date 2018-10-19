@@ -1,10 +1,23 @@
 <template>
   <div class="notifications-container">
-    <notifications :max="1" :style="{color: '#0c5460', backgroundColor: '#d1ecf1', width: bgWidth, borderLeft: borderLeft, fontSize: fontSize, backgroundImage: bgImage, borderRadius: borderRadius, boxShadow: '1px 0 6px -3px #0c5460' }"
-                   group="auth" class="custom-notifications"/>
+    <notifications :max="1" :style="{color: '#0c5460', backgroundColor: '#d1ecf1', width: bgWidth, borderLeft: borderLeft, fontSize: fontSize,backgroundImage: bgImage, borderRadius: borderRadius, boxShadow: '1px 0 6px -3px #0c5460' }"
+                   group="auth" class="custom-notifications">
+      <template slot="body" slot-scope="props">
+        <div>
+          <a class="close" @click="props.close">
+            <i class="fa fa-fw fa-close" />
+          </a>
+          <div class="text-title-info" v-html="props.item.text" />
+        </div>
+      </template>
+    </notifications>
+
     <notifications :style="{color: '#856404', backgroundColor: '#fff3cd', width: bgWidth, borderLeft: borderLeft, fontSize: fontSize, backgroundImage: bgImage, borderRadius: borderRadius, boxShadow: '1px 0 6px -3px #fff3cd'}" 
                    group="kickClient" class="custom-notifications">
       <template slot="body" slot-scope="props">
+        <a class="close" @click="props.close">
+          <i class="fa fa-fw fa-close" />
+        </a>
         <div class="kick-client-template">
           {{ $t(props.item.text) }}
           <button class="kick-button" @click="kickNewClient(props.item.title) || props.close()">
@@ -16,6 +29,9 @@
 
     <notifications group="utils" class="custom-notifications">
       <template slot="body" slot-scope="props">
+        <a class="close" @click="props.close">
+          <i class="fa fa-fw fa-close" />
+        </a>
         <div v-if="props.item.type === 'warning'" :style="{display: display, alignItems: alignItems, fontSize: fontSize, paddingLeft: paddingLeft, color: '#856404', height: bgHeight, backgroundColor: '#fff3cd', width: bgWidth, borderLeft: borderLeft, backgroundImage: bgImage, borderRadius: borderRadius, boxShadow: '1px 0 6px -3px #fff3cd'}">
           {{ $t(props.item.text) }}
         </div>
@@ -41,7 +57,7 @@ export default {
       borderLeft: 'none',
       display: 'flex',
       alignItems: 'center',
-      paddingLeft: '50px',
+      paddingLeft: '42px',
       bgImage: '',
       borderRadius: '5px',
       fontSize: '17px'
@@ -67,18 +83,31 @@ export default {
 };
 </script>
 <style>
+.fa {
+  font-size: 17px !important;
+  color: grey !important; 
+}
+.text-title-info{ 
+  margin-left: 50px;
+}
 .kick-client-template {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-left: 20px;
   margin-top: 5px;
+  margin-right: 55px;
 }
 .custom-notifications {
   display: flex;
   position: static !important;
   width: 100% !important;
   flex-direction: column;
+}
+
+.close {
+  position: absolute;
+  right: 5%;
 }
 
 .notifications-container {
@@ -92,6 +121,9 @@ export default {
 .notification-wrapper {
   height: 45px;
   min-width: 324px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
 }
 
 .kick-button {
@@ -121,9 +153,18 @@ export default {
 @media screen and (max-width: 478px) {
   .notification-wrapper{
     display: flex !important;
-    min-height: 50px !important;
+    min-height: 85px !important;
     align-items: center !important;
   }
+
+.kick-client-template {
+    flex-direction: column;
+    align-items: center;
+ }
+
+.kick-button {
+  height: 20px;
+}
 }
 
 </style>
