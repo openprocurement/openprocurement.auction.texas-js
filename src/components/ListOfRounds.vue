@@ -12,14 +12,14 @@
           </div>
           <div class="round-container_participant-completed">
             <div v-if="$store.state.identification.bidderID === stage.bidder_id" class="round-container_participant-expended">
-              <div class="order-of-bidder">
+              <div v-if="stage.bidNumber" class="order-of-bidder">
                 {{ $t('Bidder') }} {{ stage.bidNumber }}
               </div>
               {{ stage.label[$store.state.i18n.locale] }}
               ({{ $t('You') }})
             </div>
             <div v-else class="round-container_participant-expended">
-              <div class="order-of-bidder">
+              <div v-if="stage.bidNumber" class="order-of-bidder">
                 {{ $t('Bidder') }} {{ stage.bidNumber }}
               </div>
               {{ stage.label[$store.state.i18n.locale] }}
@@ -123,14 +123,14 @@
           </div>
           <div class="round-container_participant-expended round-container_participant-expended_max">
             <h3 v-if="$store.state.identification.bidderID === lastBiddedRound.bidder_id" class="word-winner">
-              <div class="order-of-bidder">
+              <div v-if="lastBiddedRound.bidNumber" class="order-of-bidder">
                 {{ $t('Bidder') }} {{ lastBiddedRound.bidNumber }}
               </div>
               {{ $t('winner') }}
               ({{ $t('You') }})
             </h3>
             <h3 v-else class="word-winner">
-              <div class="order-of-bidder">
+              <div v-if="lastBiddedRound.bidNumber" class="order-of-bidder">
                 {{ $t('Bidder') }} {{ lastBiddedRound.bidNumber }}
               </div>
               {{ $t('winner') }}
@@ -485,12 +485,16 @@ export default {
    flex-direction: row;
  }
 
+ .round-container_completed {
+   height: 90px;
+ }
+
  .round-container__time-patricipant-not-set {
    justify-content: space-around;
  }
 
  .round-container_max {
-   height: 110px;
+   height: 130px;
    margin-top: 0;
    padding-left: 0;
  }
