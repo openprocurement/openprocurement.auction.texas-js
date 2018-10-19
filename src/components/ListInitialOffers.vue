@@ -7,14 +7,14 @@
       <div class="offer-container">
         <div class="offer-container__participant">
           <div v-if="$store.state.identification.bidderID === bid.bidder_id" class="offer-container__participant-name">
-            <div class="order-of-bidder">
+            <div v-if="bid.bidNumber" class="order-of-bidder">
               {{ $t('Bidder') }} {{ bid.bidNumber }}
             </div>
             {{ bid.label[$store.state.i18n.locale] }}
             ({{ $t('You') }})
           </div>
           <div v-else class="offer-container__participant-name">
-            <div class="order-of-bidder">
+            <div v-if="bid.bidNumber" class="order-of-bidder">
               {{ $t('Bidder') }} {{ bid.bidNumber }}
             </div>
             {{ bid.label[$store.state.i18n.locale] }}
@@ -89,6 +89,7 @@ export default {
     height: 90%;
     background-color: #e9e9e9;
     margin-right: 3px;
+    margin-left: 3px;
     font-family: 'Oswald', sans-serif;
     font-size: 20px;
 }
@@ -112,6 +113,7 @@ export default {
    .offer-container {
      flex-direction: column;
      justify-content: initial;
+     height: 65px;
    }
    .offer-container__participant {
      width: 100%;
