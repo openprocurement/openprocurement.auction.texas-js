@@ -231,6 +231,12 @@ hr {
   margin-left: 2px;
 }
 
+@media screen  and (max-width: 478px){
+  .modal-container__tender-number {
+    margin-top: 15px;
+  }
+}
+
 @media screen  and (max-height: 580px){
   .modal-container-wrapper {
     height: 84vh;

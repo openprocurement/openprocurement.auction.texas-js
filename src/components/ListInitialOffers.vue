@@ -52,7 +52,6 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 50px;
     border: 1px solid #a1a1a1;
     margin-bottom: 10px;
 }
@@ -66,7 +65,7 @@ export default {
     font-size: 18px;
     font-weight: 800;
     text-transform: uppercase;
-    word-break: break-all;
+    min-height: 50px;
 }
 
 .offer-container__participant-name{
@@ -84,12 +83,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    align-self: center;
     width: 30%;
-    height: 90%;
     background-color: #e9e9e9;
-    margin-right: 3px;
-    margin-left: 3px;
     font-family: 'Oswald', sans-serif;
     font-size: 20px;
 }
@@ -113,17 +108,18 @@ export default {
    .offer-container {
      flex-direction: column;
      justify-content: initial;
-     height: 65px;
+     min-height: 50px;
    }
    .offer-container__participant {
      width: 100%;
      margin-left: 0;
      justify-content: center;
-     height: 50%;
+     min-height: 50%;
    }
    .offer-container_bid {
      width: 100%;
      height: 50%;
+     margin: 0;
    }
 }
 
