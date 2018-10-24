@@ -67,7 +67,7 @@
         {{ $t('Round') }}
         {{ currentRoundNumber }}
       </h3>      
-      <div class="round-container round-container_active">
+      <div class="round-container round-container_active round-container_active-round">
         <div class="round-container__time-patricipant round-container__time-patricipant-active">
           <div class="round-container_time-active">
             <div 
@@ -84,7 +84,7 @@
           </div>
           <div class="round-container_participant_active" />       
         </div>
-        <div class="round-container_bid round-container_bid_active">
+        <div class="round-container_bid round-container_bid_active round-container_bid_active-round">
           <h4 class="round-container_bid__amount">
             {{ stages[stages.length - 1].amount }}
             {{ $t('UAH') }}
@@ -153,6 +153,9 @@
         </div>
       </div>
     </div>
+    <div v-if="state ==='completed' && results.length === 0" class="round-container round-unsuccessful-container ">
+      {{ $t('The auction is unsuccessful') }}
+    </div>
   </div>
 </template>
 
@@ -193,6 +196,10 @@ export default {
     },
     currentTime: {
       type: Number,
+      default: null
+    },
+    results: {
+      type: Array,
       default: null
     }
   },
@@ -261,12 +268,26 @@ export default {
     margin-bottom: 25px;
 }
 .round-container_active{
-    height: 50px;
+    min-height: 50px;
+}
+
+.round-unsuccessful-container {
+   min-height: 60px;
+   background-color: #e9e9e9;
+   font-family: 'Montserrat', sans-serif;
+   font-weight: 600;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 16px;
 }
 
 .round-container_completed{
-    height: 60px;
     margin-top: 10px;
+}
+
+.round-container_bid_active-round {
+    background-color: #e7f5ac !important;
 }
 
 .round-container_time-active{
@@ -301,13 +322,17 @@ export default {
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     font-weight: 500;
+    min-height: 50px;
+}
+
+.round-container_active-round {
+   background-color: #e7f5ac;
 }
 
 .round-container__time-patricipant-active{
-    height: 95%;
-    background-color: #e7f5ac;
     margin: auto;
     margin-left: 1px;
+    background-color: #e7f5ac;
 }
 
 .round-container__time-patricipant-not-set {
@@ -326,11 +351,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    align-self: center;
     min-width: 30%;
-    height: 90%;
     background-color: #e9e9e9;
-    margin-right: 3px;
 }
 
 .round-container_bid_not-set {
@@ -365,8 +387,6 @@ export default {
 }
 
 .round-container_bid_active{
-    height: 95%;
-    background-color: #e7f5ac;
     margin: auto;
     margin-right: 1px;
 }
@@ -407,7 +427,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    word-break: break-all;
     margin-right: 10px;
     justify-content: center;
 }
@@ -465,6 +484,9 @@ export default {
   .watch-in-round{
     margin-right: 14px;
  }
+ .line {
+    position: relative;
+}
 }
 
 @media screen and (max-width: 478px) {
@@ -474,7 +496,7 @@ export default {
 
  .round-container_bid {
     width: 100%;
-    margin: 0 1px 0 1px;
+    margin: 0;
     height: 50%;
  }
  .round-container__time-patricipant {
@@ -486,7 +508,7 @@ export default {
  }
 
  .round-container_completed {
-   height: 90px;
+   min-height: 90px;
  }
 
  .round-container__time-patricipant-not-set {
@@ -494,7 +516,6 @@ export default {
  }
 
  .round-container_max {
-   height: 130px;
    margin-top: 0;
    padding-left: 0;
  }
@@ -515,10 +536,6 @@ export default {
    height: 90px;
    margin-left: 0;
    justify-content: center;
- }
-
- .round-container_active {
-   height: 90px
  }
 }
 
