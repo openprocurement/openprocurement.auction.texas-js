@@ -183,7 +183,7 @@ export default {
         },
         completed: {
           type: 'completed',
-          textStatus: 'Completed',
+          textStatus: 'Sold',
           timeStatus: 'auction is completed by the licitator',
         },
 
