@@ -18,6 +18,7 @@ const english = {
   'Ukrainian': 'Ukrainian',
   'Client': 'Client',
   'Edit': 'Edit',
+  'Sold': 'Sold',
   'Info': 'Info',
   'Price offers': 'Price offers',
   'Language': 'Language',

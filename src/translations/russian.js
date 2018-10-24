@@ -18,6 +18,7 @@ const russian = {
   'Ukrainian': 'Украинский',
   'Client': 'Клиент',
   'Edit': 'Изменить',
+  'Sold': 'Продано',
   'Info': 'Информация',
   'Price offers': 'Ценовые предложения',
   'Language': 'Язык',
