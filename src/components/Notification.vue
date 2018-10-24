@@ -7,7 +7,9 @@
           <a class="close" @click="props.close">
             <i class="fa fa-fw fa-close" />
           </a>
-          <div class="text-title-info" v-html="props.item.text" />
+          <div class="text-title-info">
+            {{ $t(props.item.text) }}
+          </div>
         </div>
       </template>
     </notifications>
@@ -19,7 +21,7 @@
           <i class="fa fa-fw fa-close" />
         </a>
         <div class="kick-client-template">
-          {{ $t(props.item.text) }}
+          {{ $t('kickClient', {'IP': props.item.text}) }}
           <button class="kick-button" @click="kickNewClient(props.item.title) || props.close()">
             Kick
           </button>
@@ -86,6 +88,7 @@ export default {
 .fa {
   font-size: 17px !important;
   color: grey !important; 
+  cursor:pointer;
 }
 .text-title-info{ 
   margin-left: 50px;
@@ -119,7 +122,7 @@ export default {
 }
 
 .notification-wrapper {
-  height: 45px;
+  min-height: 50px;
   min-width: 324px !important;
   display: flex !important;
   align-items: center !important;
@@ -130,8 +133,13 @@ export default {
   margin-left: 15px;
   width: 100px;
   height: 30px;
-  background-color: lightcoral;
+  background-color: rgb(239, 222, 168);
   margin-left: 80px !important;
+}
+
+.kick-button:hover {
+  background-color: lightcoral;
+  color: #727272;
 }
 
 .vue-notification {
@@ -164,7 +172,11 @@ export default {
 
 .kick-button {
   height: 20px;
-}
+ }
+
+.close {
+  top: 60% ;
+ }
 }
 
 </style>

@@ -30,6 +30,7 @@
         :type="statusMessage[state].type"
         :text-status="statusMessage[state].textStatus"
         :state="state"
+        :results="results"
         :current-round-number="currentRoundNumber"
         :remained-time-of-round="remainedTimeOfRound" />
     </header>
@@ -62,6 +63,7 @@
       <app-list-initial-offers :price-offers="priceOffers" />
       <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed' || state == 'preAnnouncement'" 
                           :start-price="startPrice"
+                          :results="results"
                           :current-time="currentTime"
                           :remained-time-of-round="remainedTimeOfRound"
                           :state="state" 
@@ -137,6 +139,7 @@ export default {
   data(){
     return {
       stages: [{}],
+      results: [],
       pouchDB: null,
       isListeningOnChanges: false,
       currentRoundNumber: null,
@@ -362,7 +365,7 @@ export default {
     top: 0;
     width: 100%;
     min-width: 324px;
-    height: 95px;
+    min-height: 95px;
     background-color: #ffffff;
     box-shadow: 0 4px 9px 1px rgba(29, 29, 29, 0.09);
     display: flex;
@@ -377,38 +380,17 @@ export default {
 }
 
 .container-wrapper {
-    max-width: 1200px;
-    padding-right: 40px;
-    padding-left: 40px;
+    max-width: 807px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-right: auto;
     margin-left: auto;
 }
 
-@media screen and (max-width: 1400px) {
-  .container-wrapper{
-    max-width: 1200px;
-  }
-}
-
-@media screen and (max-width: 1200) {
-  .container-wrapper {
-    max-width: 1140px;
-  }
-}
-
-@media screen and (max-width: 992px) {
-  .container-wrapper {
-    max-width: 960px;
-  }
-  .modal-container-wrapper {
-    width: 270px !important;
-}
-}
-
-@media screen and (max-width: 768px) {
-  .container-wrapper {
-    max-width: 720px;
-  }
+@media screen and (max-width: 1200px) {
+   .modal-container-wrapper {
+    width: 290px !important;
+ }
 }
 
 @media screen and (max-width: 478px) {

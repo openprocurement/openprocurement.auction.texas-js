@@ -175,7 +175,6 @@ export default {
 }
 .clock-container__time{
     display: flex;
-    justify-content: space-between;
     margin-top: 5px;
 }
 
@@ -217,6 +216,7 @@ export default {
     font-size: 16px;
     font-weight: 600;
     line-height: 16px;
+    margin-right: 5px;
 }
 
 .clock-container__status-time {
@@ -237,6 +237,8 @@ export default {
   .clock-container-wrapper{
     width: 100%;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-bottom: auto;
   }
 }
 </style>

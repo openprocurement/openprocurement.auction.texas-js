@@ -33,7 +33,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     font-weight: 400;
     border: 1px solid #a1a1a1;
     margin-bottom: 50px;
