@@ -32,9 +32,9 @@ export default {
     valueForOptionSelect() {
       let options = [{value: 'Select amount', text: `${this.$store.state.i18n.translations[this.$store.state.i18n.locale]['Select amount']}`}];
       let calculateBid = this.currentBid;
-      let minimalIncreaseBid = Math.floor(calculateBid / this.minimalStep) * this.minimalStep;
+      let minimalIncreaseBid = Math.round((Math.floor(calculateBid / this.minimalStep) * this.minimalStep) * 100) / 100;
       for (let i = 0; i < 1600; i++){
-        minimalIncreaseBid  =  (minimalIncreaseBid + this.minimalStep)
+        minimalIncreaseBid  =  Math.round((minimalIncreaseBid + this.minimalStep) * 100) / 100;
         options.push(
           {value: minimalIncreaseBid, text: `${minimalIncreaseBid} ${this.$store.state.i18n.translations[this.$store.state.i18n.locale]['UAH']}`},
         )
