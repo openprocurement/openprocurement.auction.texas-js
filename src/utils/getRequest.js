@@ -19,6 +19,7 @@ const fillAuctionData = (context, data) => {
   context.tenderTitles.tenderTitle_uk = data.title
   context.tenderTitles.tenderTitle_ru = data.title_ru
   context.tenderTitles.tenderTitle_en = data.title_en
+  context.results = data.results
   parseCurrentStage(data.stages, data.current_stage, context)
 }
 
