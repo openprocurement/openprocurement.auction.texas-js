@@ -34,11 +34,9 @@
         <vue-headful v-if="$store.state.terminatedStates.indexOf(state) !== -1"
                      :title="($t(calculateTitle.timeStatus) + ' ' + $t(calculateTitle.time))" />
         <vue-headful v-else-if="($store.state.terminatedStates.indexOf(state) === -1) && (days === 0)"
-                     :title="calculateTitle.hours+':' + 
-                     + calculateTitle.minutes + ':' + calculateTitle.seconds + ' ' +$t(calculateTitle.timeStatus)" />
+                     :title="calculateTitle.hours+':'+ calculateTitle.minutes + ':' + calculateTitle.seconds + ' ' +$t(calculateTitle.timeStatus)" />
         <vue-headful v-else
-                     :title="calculateTitle.days + $t('days') + ' '+calculateTitle.hours+':' + 
-                     + calculateTitle.minutes + ':' + calculateTitle.seconds + ' ' +$t(calculateTitle.timeStatus)" />
+                     :title="calculateTitle.days + $t('days') + ' '+calculateTitle.hours+':' + calculateTitle.minutes + ':' + calculateTitle.seconds + ' ' +$t(calculateTitle.timeStatus)" />
       </div>
     </div>
   </div>
@@ -82,7 +80,7 @@ export default {
   data() {
     let end = null
     if (this.endDate) {
-      end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a')
+      end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, HH:mm:ss a')
     }
     return {
       timeRemaining: null,
@@ -108,16 +106,16 @@ export default {
       return {
         time: this.end,
         days: this.days,
-        hours: this.hours,
-        minutes: this.minutes,
-        seconds: this.seconds,
+        hours: ((this.hours.toString()).length === 1)? (`0${this.hours}`): (this.hours),
+        minutes: ((this.minutes.toString()).length === 1)? (`0${this.minutes}`): this.minutes,
+        seconds: ((this.seconds.toString()).length === 1)? (`0${this.seconds}`): (this.seconds),
         timeStatus: this.timeStatus
       }
     }
   },
   watch: {
     endDate () {
-      this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a')
+      this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, HH:mm:ss')
     },
     syncedTime () {
       if (this.syncedTime) {
@@ -149,7 +147,7 @@ export default {
   },
   updated(){
     moment.locale(this.$store.state.i18n.locale)
-    this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, h:mm:ss a')
+    this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, HH:mm:ss')
   },
   methods: {
     away() {
