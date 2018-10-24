@@ -106,9 +106,9 @@ export default {
       return {
         time: this.end,
         days: this.days,
-        hours: ((this.hours.toString()).length === 1)? (`0${this.hours}`): (this.hours),
-        minutes: ((this.minutes.toString()).length === 1)? (`0${this.minutes}`): this.minutes,
-        seconds: ((this.seconds.toString()).length === 1)? (`0${this.seconds}`): (this.seconds),
+        hours: ((this.hours.toString()).length === 1)? `0${this.hours}`: this.hours,
+        minutes: ((this.minutes.toString()).length === 1)? `0${this.minutes}`: this.minutes,
+        seconds: ((this.seconds.toString()).length === 1)? `0${this.seconds}`: this.seconds,
         timeStatus: this.timeStatus
       }
     }
