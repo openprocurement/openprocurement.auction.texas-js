@@ -29,8 +29,8 @@ export default {
               if (data.hasOwnProperty(clientId)) {
                 component.$notify({
                   group: 'kickClient',
-                  text: component.$t('In the room came a new user') + ' (IP:' + data[clientId].ip + ') ' + component.$t('prohibit connection'),
-                  duration: 5000,
+                  text: ' (IP:' + data[clientId].ip + ') ',
+                  duration: 30000,
                   title: clientId // TODO: try to find better solution to put client id to notification
                 });
               }
