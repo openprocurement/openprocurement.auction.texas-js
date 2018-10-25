@@ -70,7 +70,7 @@ const english = {
   'until the round starts': 'until the round starts',
   'until the round ends': 'until the round ends',
   'until the results announcement': 'until the results announcement',
-  'auction is completed by the licitator': 'auction is completed by the licitator',
+  'Auction is completed by the licitator': 'Auction is completed by the licitator',
   'Аuction was canceled': 'Аuction was canceled',
   'Completed': 'Completed',
   'Canceled': 'Canceled',
