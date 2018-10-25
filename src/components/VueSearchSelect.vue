@@ -6,6 +6,7 @@
 </template>
 <script>
 import { MultiSelect } from 'vue-search-select'
+import formatNumber from '../utils/formatNumber'
 export default {
   components: {
     MultiSelect
@@ -36,7 +37,7 @@ export default {
       for (let i = 0; i < 1600; i++){
         minimalIncreaseBid  =  Math.round((minimalIncreaseBid + this.minimalStep) * 100) / 100;
         options.push(
-          {value: minimalIncreaseBid, text: `${minimalIncreaseBid} ${this.$store.state.i18n.translations[this.$store.state.i18n.locale]['UAH']}`},
+          {value: minimalIncreaseBid, text: `${formatNumber(minimalIncreaseBid)} ${this.$store.state.i18n.translations[this.$store.state.i18n.locale]['UAH']}`},
         )
       }
       return options
@@ -48,6 +49,9 @@ export default {
       this.item.text = String(item[0].text)
       this.$emit('setSelectedValue', this.item.value);
     },
+    formatNumber(number){
+      return formatNumber(number)
+    }
   },
 }
 </script> 

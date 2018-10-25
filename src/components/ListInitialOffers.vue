@@ -21,7 +21,8 @@
           </div>
         </div>
         <div class="offer-container_bid">
-          <h4 class="round-container_bid__amount">{{ bid.amount }} 
+          <h4 class="round-container_bid__amount">
+            {{ formatNumber(bid.amount) }}
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -31,11 +32,17 @@
 </template>
 
 <script>
+import formatNumber from '../utils/formatNumber'
 export default {
   props: {
     priceOffers: {
       type: Array,
       default: null
+    }
+  },
+  methods: {
+    formatNumber(number){
+      return formatNumber(number)
     }
   }
 };

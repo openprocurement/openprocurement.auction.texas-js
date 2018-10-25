@@ -22,7 +22,7 @@
         <h6 class="approval-question">
           {{ $t('Accept price offer') }}
         </h6>
-        <h3 class="approval-mount">{{ currentBid }}</h3>
+        <h3 class="approval-mount">{{ formatNumber(currentBid) }}</h3>
       </div>
       <button 
         v-scroll-to="'#active-round'"
@@ -38,6 +38,7 @@
 <script>
 import VueSearchSelect from './VueSearchSelect.vue'
 import axios from 'axios'
+import formatNumber from '../utils/formatNumber'
 
 export default {
   components: {
@@ -63,6 +64,9 @@ export default {
     }
   },
   methods: {
+    formatNumber(number){
+      return formatNumber(number)
+    },
     addNewBidIncrease() {
       if(!this.selected) return 
       this.submitBid(this.selected);
