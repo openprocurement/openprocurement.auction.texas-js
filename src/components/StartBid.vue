@@ -4,7 +4,7 @@
       {{ $t('Start price') }}
     </h5>
     <div class="start-pricing-container__block">
-      <h4 class="start-pricing-container__block__amount">{{ startPrice }} 
+      <h4 class="start-pricing-container__block__amount">{{ formatNumber(startPrice) }} 
         {{ $t('UAH') }}
       </h4>
     </div>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import formatNumber from '../utils/formatNumber'
 export default {
   props: {
     startPrice: {
@@ -21,6 +22,11 @@ export default {
   },
   data () {
     return { friends: 5 }  
+  },
+  methods:{
+    formatNumber(number){
+      return formatNumber(number)
+    }
   }
 }
 </script>

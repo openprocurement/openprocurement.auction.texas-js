@@ -30,7 +30,8 @@
           </div>
         </div>
         <div class="round-container_bid">
-          <div class="round-container_bid__amount">{{ stage.amount }} 
+          <div class="round-container_bid__amount">
+            {{ formatNumber(stage.amount) }} 
             {{ $t('UAH') }}
           </div>
         </div>
@@ -55,7 +56,8 @@
           </div>
         </div>
         <div class="round-container_bid">
-          <h4 class="round-container_bid__amount">{{ stage.amount }}
+          <h4 class="round-container_bid__amount">
+            {{ formatNumber(stage.amount) }}
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -86,7 +88,7 @@
         </div>
         <div class="round-container_bid round-container_bid_active round-container_bid_active-round">
           <h4 class="round-container_bid__amount">
-            {{ stages[stages.length - 1].amount }}
+            {{ formatNumber(stages[stages.length - 1].amount) }}
             {{ $t('UAH') }}
           </h4>
         </div>
@@ -142,7 +144,8 @@
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
-          <h4 class="round-container_bid__amount round-container_bid_max__bid-count">{{ lastBiddedRound.amount }}
+          <h4 class="round-container_bid__amount round-container_bid_max__bid-count">
+            {{ formatNumber(lastBiddedRound.amount) }}
             {{ $t('UAH') }}
           </h4>
           <div class="round-container_bid_max-block">
@@ -160,6 +163,7 @@
 </template>
 
 <script>
+import formatNumber from '../utils/formatNumber'
 import RadialProgressBar from './RadialProgressBar.vue'
 import AppListInitialOffers from './ListInitialOffers.vue'
 import calculatingDurationTime from '../utils/calculatingDurationTime'
@@ -247,6 +251,11 @@ export default {
     remainedTimeOfRound() {
       let calculate = calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end );
       this.value = (100 - (this.remainedTimeOfRound / calculate * 100)).toFixed(2);
+    }
+  },
+  methods: {
+    formatNumber(number){
+      return formatNumber(number)
     }
   }
 };

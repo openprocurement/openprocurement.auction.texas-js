@@ -14,11 +14,11 @@
       </div>
       <div class="modal-container__info modal-container__info_step-bid">
         {{ $t('Step reduction of Bid') }}: 
-        <strong class="strong"> {{ minimalStep }}</strong>
+        <strong class="strong"> {{ formatNumber(minimalStep) }}</strong>
       </div>
       <div class="modal-container__info modal-container__info_start-bid">
         {{ $t('Start price') }}:
-        {{ startPrice }}
+        {{ formatNumber(startPrice) }}
       </div>
       <hr>
       <div class="modal-container__info_browser-id_browser-and-session">
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import formatNumber from '../utils/formatNumber'
 import AppLanguagesToggleSwitch from './LanguagesToggleSwitch';
 export default {
   components:{
@@ -92,6 +93,9 @@ export default {
     showOrHideModalWindow() {
       this.$emit('showOrHideModalWindow', true)
     },
+    formatNumber(number){
+      return formatNumber(number)
+    }
   }
 }
 </script>
