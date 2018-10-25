@@ -39,8 +39,8 @@
                            :current-stage="currentStage"
                            :stages="stages"
                            :current-time="currentTime" />
-    <app-hong-audio-track v-if="currentStage === 0" :browser-name="browserName" />
-    <app-hong-sounds-text v-if="currentStage === 0" />
+    <app-hong-audio-track v-if="currentStage === 0 || state === 'preAnnouncement'" :browser-name="browserName" />
+    <app-hong-sounds-text v-if="currentStage === 0 || state === 'preAnnouncement'" />
     <app-notification/>
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
@@ -184,7 +184,7 @@ export default {
         completed: {
           type: 'completed',
           textStatus: 'Sold',
-          timeStatus: 'auction is completed by the licitator',
+          timeStatus: 'Auction is completed by the licitator',
         },
 
         canceled: {
