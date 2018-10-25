@@ -71,7 +71,7 @@ const russian = {
   'until the round starts': 'до начала раунда',
   'until the round ends': ' до завершения раунда',
   'until the results announcement': 'до объявления результатов',
-  'auction is completed by the licitator': 'аукцион завершен лицитатором',
+  'Auction is completed by the licitator': 'Аукцион завершен лицитатором',
   'Аuction was canceled': 'Аукцин отменен',
   'prohibit connection': 'запретить подключение',
   'Step reduction of Bid': 'Шаг уменьшения торгов',

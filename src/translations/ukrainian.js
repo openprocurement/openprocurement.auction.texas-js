@@ -72,7 +72,7 @@ const ukrainian = {
   'until the round starts': 'до початку раунду',
   'until the round ends': 'до завершення раунду',
   'until the results announcement': 'до оголошення результатів',
-  'auction is completed by the licitator': 'аукціон завершено ліцитатором',
+  'Auction is completed by the licitator': 'Аукціон завершено ліцитатором',
   'Аuction was canceled': 'Аукціон відмінений',
   'prohibit connection': 'заборонити підключення',
   'Step reduction of Bid': 'Крок зменшення торгів',

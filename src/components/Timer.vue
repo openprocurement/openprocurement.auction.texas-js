@@ -30,8 +30,9 @@
         <div v-if="state === 'completed'">
           {{ end }}
         </div>
-
-        <vue-headful v-if="$store.state.terminatedStates.indexOf(state) !== -1"
+        <vue-headful v-if="state === 'pendingSyncData'"
+                     :title="($t(calculateTitle.timeStatus))" />
+        <vue-headful v-else-if="$store.state.terminatedStates.indexOf(state) !== -1"
                      :title="($t(calculateTitle.timeStatus) + ' ' + $t(calculateTitle.time))" />
         <vue-headful v-else-if="($store.state.terminatedStates.indexOf(state) === -1) && (days === 0)"
                      :title="calculateTitle.hours+':'+ calculateTitle.minutes + ':' + calculateTitle.seconds + ' ' +$t(calculateTitle.timeStatus)" />
