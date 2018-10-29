@@ -140,6 +140,7 @@ export default {
   width: 100%;
   max-height: 105px !important;
   position: absolute;
+  top:27px;
 }
 
 .autocomplete-result {

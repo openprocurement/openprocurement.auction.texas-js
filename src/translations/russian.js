@@ -64,7 +64,6 @@ const russian = {
   'Announce': 'Огласить',
   'The auction is unsuccessful': 'Аукцион неуспешный',
   'Unsuccessful': 'Безуспешный',
-  'kickClient': 'В кабинет зашел новый пользователь {IP} запретить подключение',
   'In the room came a new user': 'В кабинет зашел новый пользователь',
   'until the auction starts': 'до начала аукциона',
   'until your turn': 'до вашей очереди',

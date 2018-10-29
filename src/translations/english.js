@@ -63,7 +63,6 @@ const english = {
   'Synchronization failed': 'Synchronization failed',
   'Possible results': 'Possible results',
   'Announce': 'Announce',
-  'kickClient': 'In the room came a new user {IP} prohibit connection',
   'In the room came a new user': 'In the room came a new user',
   'until the auction starts': 'until the auction starts',
   'until your turn': 'until your turn',
