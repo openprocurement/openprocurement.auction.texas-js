@@ -5,15 +5,12 @@
         <h6 class="approval-question announce-price-offer">
           {{ $t('Announce price offer') }}
         </h6>
-        <vue-search-select
-          :current-bid="currentBid"
-          :minimal-step="minimalStep"
-          @setSelectedValue="setSelectedValue"/>
+        <vue-search-select :items="valueForOptionSelect" @setSelectedValue="setSelectedValue" />
       </div>
       <button v-scroll-to="'#active-round'" :disabled="selected === null"  
               class="button butoon__increase"
               type="submit" 
-              @click="addNewBidIncrease">
+              @click.stop="addNewBidIncrease">
         {{ $t("Announce") }}
       </button>
     </div>
@@ -28,7 +25,7 @@
         v-scroll-to="'#active-round'"
         type="submit" 
         class="button button__approval" 
-        @click="addNewBidApprove">
+        @click.stop="addNewBidApprove">
         {{ $t('Accept') }}
       </button>
     </div>
@@ -39,10 +36,11 @@
 import VueSearchSelect from './VueSearchSelect.vue'
 import axios from 'axios'
 import formatNumber from '../utils/formatNumber'
+import { createECDH } from 'crypto';
 
 export default {
   components: {
-    VueSearchSelect
+    VueSearchSelect, 
   },
   props : {
     startPrice : {
@@ -63,12 +61,26 @@ export default {
       selected: null
     }
   },
+  computed: {
+    valueForOptionSelect() {
+      let options = [{value: 'null', text: 'Select amount'}];
+      let calculateBid = this.currentBid;
+      let minimalIncreaseBid = Math.round((Math.floor(calculateBid / this.minimalStep) * this.minimalStep) * 100) / 100;
+      for (let i = 0; i < 1600; i++){
+        minimalIncreaseBid  =  Math.round((minimalIncreaseBid + this.minimalStep) * 100) / 100;
+        options.push(
+          {value: minimalIncreaseBid.toString(), text: `${formatNumber(minimalIncreaseBid)} ${this.$store.state.i18n.translations[this.$store.state.i18n.locale]['UAH']}`},
+        )
+      }
+      return options
+    },
+  },
   methods: {
     formatNumber(number){
       return formatNumber(number)
     },
     addNewBidIncrease() {
-      if(!this.selected) return 
+      if((!this.selected) || (this.selected === 'null')) return 
       this.submitBid(this.selected);
       this.selected = null;
     },
@@ -77,6 +89,10 @@ export default {
       this.selected = null;
     },
     setSelectedValue(value){
+      if((!this.value) || (this.value === 'null') ){
+        this.selected = null
+      }
+
       this.selected = value;
     },
     submitBid (amount) {
@@ -107,7 +123,7 @@ export default {
           // notify that we need to reload page
           this.$notify({
             group: 'utils',
-            text: this.$t('Ability to submit bids has been lost. Wait until page reloads.'),
+            text: 'Ability to submit bids has been lost. Wait until page reloads.',
             duration: 10000,
             type: 'error'
           })
@@ -129,12 +145,6 @@ export default {
     height: 100%;
     display: flex;
     border: 1px solid lightgrey;
-}
-
-.fa{
-    color: lightgrey; 
-    font-size: 30px;
-    background: white;
 }
 
 .select-choice-bid-wrapper{

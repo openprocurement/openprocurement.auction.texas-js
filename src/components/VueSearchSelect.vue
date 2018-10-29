@@ -1,93 +1,165 @@
 <template>
-  <multi-select :options="valueForOptionSelect"
-                :selected-option="item"
-                :placeholder="$t(item.text)"
-                @select="onSelect($event)" />
+  <div class="autocomplete">
+    <input class="search" 
+           :placeholder="`${$store.state.i18n.translations[$store.state.i18n.locale]['Select amount']}`" 
+           v-model="search" 
+           @input="onChange" 
+           @click="toggleClick"
+           @keyup.down="onArrowDown" 
+           @keyup.up="onArrowUp" 
+           @keyup.enter="onEnter">
+    <input>
+    <ul id="autocomplete-results" v-show="isOpen" 
+        class="autocomplete-results">
+      <li class="loading" v-if="isLoading">
+        Loading results...
+      </li>
+      <li v-else v-for="(result, i) in results" :key="i" 
+          @click="setResult(result)"
+          class="autocomplete-result" :class="{ 'is-active': i === orderCount }">
+        {{ $t(result.text) }}
+      </li>
+    </ul>
+  </div>
 </template>
+
 <script>
-import { MultiSelect } from 'vue-search-select'
 import formatNumber from '../utils/formatNumber'
 export default {
-  components: {
-    MultiSelect
-  },
-  props : {
-    currentBid: {
-      type:Number,
-      default: null
+  props: {
+    items: {
+      type: Array,
+      required: false,
+      default: () => []
     },
-    minimalStep: {
-      type:Number,
-      default: null
-    },
-  },    
-  data () {
-    return {
-      item: {
-        value: 'Select amount',
-        text: 'Select amount'
-      }
+    isAsync: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
-  computed: {
-    valueForOptionSelect() {
-      let options = [{value: 'Select amount', text: `${this.$store.state.i18n.translations[this.$store.state.i18n.locale]['Select amount']}`}];
-      let calculateBid = this.currentBid;
-      let minimalIncreaseBid = Math.round((Math.floor(calculateBid / this.minimalStep) * this.minimalStep) * 100) / 100;
-      for (let i = 0; i < 1600; i++){
-        minimalIncreaseBid  =  Math.round((minimalIncreaseBid + this.minimalStep) * 100) / 100;
-        options.push(
-          {value: minimalIncreaseBid, text: `${formatNumber(minimalIncreaseBid)} ${this.$store.state.i18n.translations[this.$store.state.i18n.locale]['UAH']}`},
-        )
+
+  data() {
+    return {
+      isOpen: false,
+      results: [],
+      search: "",
+      searchForPicker: "",
+      isLoading: false,
+      orderCount:0
+    };
+  },
+  watch: {
+    items: function(val, oldValue) {
+      // actually compare them
+      if (val.length !== oldValue.length) {
+        this.results = val;
+        this.isLoading = false;
       }
-      return options
-    },
+    }
   },
   methods: {
-    onSelect (item) {
-      this.item.value = item[0].value
-      this.item.text = String(item[0].text)
-      this.$emit('setSelectedValue', this.item.value);
+    onChange() {
+      // Let's warn the parent that a change was made
+      this.$emit("input", this.search);
+
+      // Is the data given by an outside ajax request?
+      if (this.isAsync) {
+        this.isLoading = true;
+      } else {
+        // Let's search our flat array
+        this.filterResults();
+        this.isOpen = true;
+      }
     },
-    formatNumber(number){
-      return formatNumber(number)
+
+    filterResults(item) {
+      // first uncapitalize all the things
+      this.results = this.items.filter(item => {
+        return item.value.toLowerCase().startsWith(this.search.toLowerCase());
+      });
+    },
+    toggleClick(){
+      if(this.search === ''){
+        this.filterResults()
+      }
+      for (let i=0; i < this.items.length; i++){
+        if(this.items[i].value === this.searchForPicker){
+          this.orderCount = i;
+        }
+      }
+      this.isOpen = !this.isOpen;
+    },
+    setResult(result) {
+      this.search = result.text;
+      this.searchForPicker = result.value
+      this.isOpen = false;
+      this.$emit('setSelectedValue', result.value);
+    },
+
+    handleClickOutside(evt) {
+      if (!this.$el.contains(evt.target)) {
+        this.isOpen = false;
+      }
     }
   },
 }
-</script> 
+</script>
+
+
+
 <style>
 
-.text.default {
-  color: #000 !important;
+ .search {
+  background-color: #fff;
+  width: 100%;
+  border: 1px solid lightgray;
+  height: 27px;
+  padding-left: 10px;
+  background-image: url("/static_texas/images/arrow_down.png");
+  background-repeat: no-repeat;
+  background-position-x: 94%;
+  background-position-y: 50%;
+  cursor: pointer;
+ }
+
+ .search:focus {
+     border-color:#9ab913;
+ }
+
+.autocomplete {
+  position: relative;
+  width: 100%;
 }
 
-.ui.dropdown .menu > .item {
-  border-bottom: 1px solid #9ab913 !important;
-  height: 27px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-div.menu.visible {
+.autocomplete-results {
+  background-color: #fff;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  width: 100%;
   max-height: 105px !important;
-  border-color: #9ab913 !important;
+  position: absolute;
 }
 
-.ui.selection.dropdown {
-  border-radius: 0 !important;
-  height: 27px !important;
-  
+.autocomplete-result {
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #9ab913;
+  border-bottom: none;
 }
 
-.ui.selection.dropdown:hover {
-  border-color: #9ab913 !important;
-}
-
-.ui.dropdown .menu.visible > .item.current{
-  background-color: #9ab913 !important;
-  color: #fff !important;
-  border-top:none;
+.autocomplete-result.is-active,
+.autocomplete-result:hover {
+    color: #fff;
+    border-top:none;
+    height: 27px;
+    background-color: #9ab913;
 }
 
 </style>
