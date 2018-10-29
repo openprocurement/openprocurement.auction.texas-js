@@ -21,9 +21,9 @@
           <i class="fa fa-fw fa-close" />
         </a>
         <div class="kick-client-template">
-          {{ $t('kickClient', {'IP': props.item.text}) }}
+          {{ $t('In the room came a new user') + ' ' + props.item.text }}
           <button class="kick-button" @click="kickNewClient(props.item.title) || props.close()">
-            Kick
+            {{ $t('prohibit connection') }}
           </button>
         </div>
       </template>
@@ -131,7 +131,8 @@ export default {
 
 .kick-button {
   margin-left: 15px;
-  width: 100px;
+  width: auto;
+  padding: 0 5px;
   height: 30px;
   background-color: rgb(239, 222, 168);
   margin-left: 80px !important;
