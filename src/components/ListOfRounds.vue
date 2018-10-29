@@ -72,8 +72,7 @@
       <div class="round-container round-container_active round-container_active-round">
         <div class="round-container__time-patricipant round-container__time-patricipant-active">
           <div class="round-container_time-active">
-            <div 
-              class="round-container_time-active__watch-icon">
+            <div class="round-container_time-active__watch-icon">
               <radial-progress-bar
                 v-if="state !== 'pendingOfRound' && (value > 0 && value < 100)"
                 :value="value"
