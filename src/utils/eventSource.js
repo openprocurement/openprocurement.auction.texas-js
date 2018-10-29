@@ -64,7 +64,7 @@ export default {
         if (!this.isObserverNotifyCalled) {
           component.$notify({
             group: 'auth',
-            text: component.$t('You are an observer and cannot bid.'),
+            text: 'You are an observer and cannot bid.',
             duration: -1
           })
           this.isObserverNotifyCalled = true
