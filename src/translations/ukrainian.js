@@ -64,7 +64,6 @@ const ukrainian = {
   'Synchronization failed': 'Помилка синхронізації',
   'Possible results': 'Можливі результати',
   'Announce': 'Оголосити',
-  'kickClient': 'В кабінет зайшов новий користувач {IP} заборонити підключення',
   'In the room came a new user': 'В кабінет зайшов новий користувач',
   'until the auction starts': 'до початку аукціону',
   'until your turn': 'до вашої черги',
