@@ -37,7 +37,7 @@ export default {
           })
           component.$notify({
             group: 'utils',
-            text: component.$t('Successfully reconnected.'),
+            text: 'Successfully reconnected.',
             duration: 2000,
             type: 'success'
           })
@@ -55,7 +55,7 @@ export default {
         if (!this.isRetried) {
           component.$notify({
             group: 'utils',
-            text: component.$t('Internet connection is lost. Trying to reconnect.'),
+            text: 'Internet connection is lost. Trying to reconnect.',
             duration: -1,
             type: 'warning'
           })

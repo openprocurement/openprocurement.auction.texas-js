@@ -77,8 +77,7 @@
       <h4 v-if="state == 'pendingOfRound'" class = "footer-container__text">
         {{ $t('Waiting for start of round') }}
       </h4>
-      <h4
-        v-else-if="state == 'pendingOfAuction'" class = "footer-container__text">
+      <h4 v-else-if="state == 'pendingOfAuction'" class = "footer-container__text">
         {{ $t('Waiting for start of auction') }}
       </h4>
       <app-increasing-and-approval v-else-if="isShowBidForm"
@@ -190,7 +189,7 @@ export default {
         canceled: {
           type: 'canceled',
           textStatus: 'Canceled',
-          timeStatus: 'Аuction was canceled',
+          timeStatus: 'Auction was canceled',
         },
         redefined: {
           type: 'redefined',
@@ -248,7 +247,7 @@ export default {
     } else {
       this.$notify({
         group: 'auth',
-        text: this.$t('You are an observer and cannot bid.'),
+        text: 'You are an observer and cannot bid.',
         duration: -1
       })
     }
@@ -298,7 +297,7 @@ export default {
       if (this.currentStage === -1) {
         this.$notify({
           group: 'utils',
-          text: this.$t('Please wait for the auction start.'),
+          text: 'Please wait for the auction start.',
           duration: 120000, // TODO: make logic to remove single notification
           type: 'warning'
         })

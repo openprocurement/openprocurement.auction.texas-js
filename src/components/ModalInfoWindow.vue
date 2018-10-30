@@ -13,7 +13,7 @@
         {{ tenderTitles[`tenderTitle_${$store.state.i18n.locale}`] || tenderTitles['tenderTitle_uk'] }}
       </div>
       <div class="modal-container__info modal-container__info_step-bid">
-        {{ $t('Step reduction of Bid') }}: 
+        {{ $t('Step auction of Bid') }}: 
         <strong class="strong"> {{ formatNumber(minimalStep) }}</strong>
       </div>
       <div class="modal-container__info modal-container__info_start-bid">
