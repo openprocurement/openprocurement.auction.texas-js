@@ -26,13 +26,14 @@ export default {
           fontFamily: 'Arial',
           fontWeight: 'normal',
           squareCorners: false,
-          noBorder: false
+          noBorder: false,
+
         },
         size: {
           fontSize: 14,
           height: 42,
-          padding: 7,
-          width: 250
+          padding: 11,
+          width: 280
         },
         items: {
           delay: .4,
@@ -56,10 +57,9 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .toggle-switch{
   max-width: 90%;
 }
-
 </style>
 

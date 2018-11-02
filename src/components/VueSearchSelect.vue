@@ -1,23 +1,22 @@
 <template>
   <div class="autocomplete">
-    <input class="search" 
+    <input class="search" :class="'arrow-' + isOpen"
            :placeholder="`${$store.state.i18n.translations[$store.state.i18n.locale]['Select amount']}`" 
-           v-model="search" 
-           @input="onChange" 
-           @click="toggleClick"
-           @keyup.down="onArrowDown" 
-           @keyup.up="onArrowUp" 
-           @keyup.enter="onEnter">
-    <input>
+           v-model.trim="search" 
+           @input="onChange()" 
+           @click="toggleClick">
     <ul id="autocomplete-results" v-show="isOpen" 
         class="autocomplete-results">
-      <li class="loading" v-if="isLoading">
-        Loading results...
-      </li>
-      <li v-else v-for="(result, i) in results" :key="i" 
+      <li v-for="(result, i) in results" :key="i" 
           @click="setResult(result)"
           class="autocomplete-result" :class="{ 'is-active': i === orderCount }">
         {{ $t(result.text) }}
+        <div v-if="result.text !== 'Select amount'">
+          {{ $t('UAH') }}
+        </div>
+      </li>
+      <li class="autocomplete-result_not-found" v-if="results.length === 0">
+        {{ $t('Not found appropriate price offer') }}
       </li>
     </ul>
   </div>
@@ -32,75 +31,68 @@ export default {
       required: false,
       default: () => []
     },
-    isAsync: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
   },
 
   data() {
     return {
-      isOpen: false,
+      isOpen: false, 
       results: [],
       search: "",
       searchForPicker: "",
-      isLoading: false,
-      orderCount:0
+      orderCount: 0,
+      kindCurrency: this.$store.state.i18n.translations[this.$store.state.i18n.locale]['UAH']
     };
-  },
-  watch: {
-    items: function(val, oldValue) {
-      // actually compare them
-      if (val.length !== oldValue.length) {
-        this.results = val;
-        this.isLoading = false;
-      }
-    }
   },
   methods: {
     onChange() {
+      this.$emit('setSelectedValue', '');
       // Let's warn the parent that a change was made
-      this.$emit("input", this.search);
-
-      // Is the data given by an outside ajax request?
-      if (this.isAsync) {
-        this.isLoading = true;
-      } else {
-        // Let's search our flat array
-        this.filterResults();
-        this.isOpen = true;
+      this.$emit("input", (this.search));
+      if( this.search === ''){
+        this.searchForPicker = ''
+        this.orderCount = 0
       }
+      // Let's search our flat array
+      this.filterResults();
+      this.isOpen = true;
     },
-
-    filterResults(item) {
+    filterResults() {
       // first uncapitalize all the things
       this.results = this.items.filter(item => {
-        return item.value.toLowerCase().startsWith(this.search.toLowerCase());
+        return item.value.startsWith(this.search.replace(/ /g,"").replace(/,/g,"."))
       });
     },
     toggleClick(){
       if(this.search === ''){
         this.filterResults()
       }
+      this.isOpen = !this.isOpen;
+      this.scrollToActiveBidAmount()
+    },
+    setResult(result) {
+      this.results = this.items;
+      if(result.text !== 'Select amount'){
+        this.search =  result.text + this.kindCurrency
+      }
+      else{
+        this.search =  result.text
+      } 
+      this.searchForPicker = result.value
+      this.isOpen = false;
+      if (this.search === 'Select amount'){
+        this.search = ''
+      }
+      this.$emit('setSelectedValue', result.value);
       for (let i=0; i < this.items.length; i++){
         if(this.items[i].value === this.searchForPicker){
           this.orderCount = i;
         }
       }
-      this.isOpen = !this.isOpen;
     },
-    setResult(result) {
-      this.search = result.text;
-      this.searchForPicker = result.value
-      this.isOpen = false;
-      this.$emit('setSelectedValue', result.value);
-    },
-
-    handleClickOutside(evt) {
-      if (!this.$el.contains(evt.target)) {
-        this.isOpen = false;
-      }
+    scrollToActiveBidAmount(){
+      const list = document.getElementById("autocomplete-results"),
+        targetLi = document.querySelector('.is-active');
+      list.scrollTop = (targetLi.offsetTop - 50);
     }
   },
 }
@@ -116,11 +108,25 @@ export default {
   border: 1px solid lightgray;
   height: 27px;
   padding-left: 10px;
-  background-image: url("/static_texas/images/arrow_down.png");
   background-repeat: no-repeat;
   background-position-x: 94%;
   background-position-y: 50%;
   cursor: pointer;
+  margin-top: 15px;
+ }
+
+ .autocomplete-result_not-found{
+  list-style: none;
+  color: red;
+  margin-top: 3px;
+ }
+
+ .arrow-true{
+   background-image: url("/static_texas/images/arrow_up.png");
+ }
+
+ .arrow-false{
+   background-image: url("/static_texas/images/arrow_down.png");
  }
 
  .search:focus {
@@ -140,7 +146,7 @@ export default {
   width: 100%;
   max-height: 105px !important;
   position: absolute;
-  top:27px;
+  top: 42px;
 }
 
 .autocomplete-result {

@@ -1,13 +1,14 @@
 <template>
   <div class="increase-approval-container">
-    <div class="container-bid increase-bid-container">
+    <div :data-tip="`${$store.state.i18n.translations[$store.state.i18n.locale]['Choose a price offer (multiple of the minimum step']}-${minimalStep} ${$store.state.i18n.translations[$store.state.i18n.locale]['UAH']})`"
+         class="container-bid increase-bid-container">
       <div class="select-choice-bid-wrapper">
         <h6 class="approval-question announce-price-offer">
           {{ $t('Announce price offer') }}
         </h6>
         <vue-search-select :items="valueForOptionSelect" @setSelectedValue="setSelectedValue" />
       </div>
-      <button v-scroll-to="'#active-round'" :disabled="selected === null"  
+      <button v-scroll-to="'#active-round'" :disabled="selected === '' || selected === null || selected === 'null'"  
               class="button butoon__increase"
               type="submit" 
               @click.stop="addNewBidIncrease">
@@ -69,7 +70,7 @@ export default {
       for (let i = 0; i < 1600; i++){
         minimalIncreaseBid  =  Math.round((minimalIncreaseBid + this.minimalStep) * 100) / 100;
         options.push(
-          {value: minimalIncreaseBid.toString(), text: `${formatNumber(minimalIncreaseBid)} ${this.$store.state.i18n.translations[this.$store.state.i18n.locale]['UAH']}`},
+          {value: minimalIncreaseBid.toString(), text: `${formatNumber(minimalIncreaseBid)}`},
         )
       }
       return options
@@ -174,11 +175,11 @@ export default {
 .butoon__increase{
     background-color: #9ab913;
     border-bottom: 3px solid #85a10f;
-    height: 41px;
+    height: 43px;
 }
 
-.butoon__increase:hover{
-    background-color: #bdce73;
+.butoon__increase:hover:enabled{
+  background-color: #bbdb2a;
 }
 
 .button__approval{
@@ -237,6 +238,34 @@ export default {
     background: white;
 }
 
+[data-tip] {
+	position:relative;
+
+}
+
+[data-tip]:after {
+	display:none;
+	content:attr(data-tip);
+	position:absolute;
+  top: 10px;
+  left: 0;
+	background:lightgray;
+	color:#000;
+	z-index:9;
+	font-size: 0.75em;
+	min-height:18px;
+	line-height:18px;
+	border-radius: 3px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+[data-tip]:hover:after,
+[data-tip]:focus:after
+ {
+	display:flex;
+}
+
 option{
     border-bottom: 1px solid #9ab913;
     border-top: 1px solid #9ab913;
@@ -268,9 +297,19 @@ option{
 
 @media screen and (max-width: 478px) {
    .increase-approval-container{
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+  }
+
+  .container-bid{
     width: 95%;
-    display: flex;
-    justify-content: center;
+    margin-left: 0;
+  }
+
+  .increase-bid-container{
+    margin-bottom: 45px;
   }
 
   .select-choice-bid-wrapper {
