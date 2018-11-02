@@ -7,6 +7,7 @@
       :auction-id="auctionId"
       :start-price="startPrice"
       :browser-id="browserId"
+      :session-id="sessionId"
       :company-name="companyName"
       :minimal-step="minimalStep"
       :description-of-products="descriptionOfProducts"
@@ -107,11 +108,12 @@ import {getAuctionRequest} from '../utils/getRequest';
 import AppFooterLogin from '../components/FooterLogin';
 import AppReturnButton from '../components/ReturnButton'
 import parseCurrentStage from '../utils/parseCurrentStage';
-import {getCookieByName} from '@/utils/utils';
+import {getCookieByName, deleteCookie, setCookie} from "../utils/utils"
+import generateUUID from "../utils/generateUUID"
 import PouchDBSync from '../utils/CouchPouch';
 import EventSource from '../utils/eventSource';
 import axios from 'axios'
-
+import {logMSG} from '../utils/getRequest'
 
 export default {
   components :{
@@ -150,10 +152,11 @@ export default {
       auctionId: '',
       browserName: '',
       currentTime: null,
+      browserId: '',
+      sessionId:'',
       lastSync: null,
       showLoginForm: false,
       loginAllowed: false,
-      browserId: '',
       companyName: '',
       descriptionOfProducts: {},
       tenderTitles: {},
@@ -235,8 +238,22 @@ export default {
     this.pouchDB = PouchDBSync.initialize(this)
     this.$store.commit('setAuctionUUID', this.id)
     getAuctionRequest(this, this.$store.state.id)
+    logMSG(window.dataLayer, this.$store.state)
   },
   mounted() {
+    //check session id
+    if(getCookieByName('browserId') === ''){
+      setCookie("browserId",generateUUID() , 365)
+    }
+    this.browserId = getCookieByName('browserId');
+
+    //check browser id
+    if(sessionStorage.getItem('sessionId') === ''){
+      sessionStorage.setItem('sessionId', generateUUID());
+    }
+    sessionStorage.setItem('sessionId', generateUUID());
+    this.sessionId = sessionStorage.getItem('sessionId')
+
     //GTM
     this.$gtm.trackView('MyScreenName', 'currentpath'); 
     //scrolling on bottom
@@ -398,6 +415,10 @@ export default {
     padding-right: 10px;
     padding-left: 10px;
   }
+
+  .footer-container_active{
+    height: 420px !important;
+  }
 }
 
 .footer-container{
@@ -448,5 +469,7 @@ export default {
     text-transform: uppercase;
   
 }
+
+
 
 </style>

@@ -28,7 +28,7 @@
         </div>
         <div class="modal-container__info modal-container__info_sesion-id">
           Session ID:
-          {{ browserId }}
+          {{ sessionId }}
         </div>
       </div>
       <hr>
@@ -68,10 +68,6 @@ export default {
       type: Number,
       default: null
     },
-    browserId: {
-      type: String,
-      default: null
-    },
     companyName: {
       type: String,
       default: null
@@ -86,6 +82,14 @@ export default {
     },
     tenderTitles: {
       type: Object,
+      default: null
+    },
+    browserId: {
+      type: String,
+      default: null
+    },
+    sessionId: {
+      type: String,
       default: null
     },
   },
@@ -105,6 +109,7 @@ export default {
 .modal-container-wrapper{
     font-family: 'Roboto',sans-serif;
     width: 20%;
+    min-width: 280px;
     height: 91vh;
     margin-right: 30px;
     background-color: #ffffff;
