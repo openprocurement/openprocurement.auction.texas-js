@@ -1,12 +1,20 @@
 <template>
   <div class="not-found-container">
-    {{ $t("Not Found") }}
+    <div v-if="refresh">
+      {{ $t("Not Found") }}
+    </div>
   </div> 
 </template>
 
 <script>
 export default {
+  data(){
+    return{
+      refresh: false
+    }
+  },
   created() {
+    window.onload = ()=> this.refresh = true
     document.title = '-'
   }
 }
