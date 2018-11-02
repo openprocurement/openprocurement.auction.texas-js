@@ -25,7 +25,7 @@
               {{ stage.label[$store.state.i18n.locale] }}
             </div>
             <div class="round-container_time__watch">
-              {{ stage.time | moment("hh:mm:ss") }}
+              {{ stage.time | moment("HH:mm:ss") }}
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
               <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
             </div>
             <div class="round-container_time__watch">
-              {{ stage.time | moment("hh:mm:ss") }}
+              {{ stage.time | moment("HH:mm:ss") }}
             </div>
           </div>
           <div v-if="$store.state.identification.bidderID === stage.bidder_id" class="round-container_participant_active">
@@ -80,7 +80,7 @@
                 min="0" max="100" />
             </div>
             <div class="round-container_time__watch  round-container_time-active__watch">
-              {{ stages[stages.length - 1].planned_end | moment("hh:mm:ss") }}
+              {{ stages[stages.length - 1].planned_end | moment("HH:mm:ss") }}
             </div>
           </div>
           <div class="round-container_participant_active" />       
@@ -104,7 +104,7 @@
             <svg class="watch-in-round watch-in-round-not-set" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>cross</title><path d="M15.13,18.93" transform="translate(-1.05 -1.13)"/><path d="M14,18.91" transform="translate(-1.05 -1.13)"/><path d="M15.08,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15.08,1.13Zm0,25.69A11.66,11.66,0,1,1,26.74,15.16,11.65,11.65,0,0,1,15.08,26.82Z" transform="translate(-1.05 -1.13)"/><path d="M21.73,9.84,20.4,8.51l-5.32,5.32L9.76,8.51,8.43,9.84l5.32,5.32L8.43,20.48l1.33,1.33,5.32-5.32,5.32,5.32,1.33-1.33-5.32-5.32Zm0,0" transform="translate(-1.05 -1.13)" stroke="#000" stroke-miterlimit="10"/></svg>
           </div>
           <div class="round-container_time__watch">
-            {{ lastRoundWithoutBidder.planned_end | moment("hh:mm:ss") }}
+            {{ lastRoundWithoutBidder.planned_end | moment("HH:mm:ss") }}
           </div>
         </div>
         <div class="round-container_bid round-container_bid_not-set">
@@ -139,7 +139,7 @@
             {{ lastBiddedRound.label[$store.state.i18n.locale] }}
           </div>
           <div class="round-container_time__watch">
-            {{ lastBiddedRound.time | moment("hh:mm:ss") }}
+            {{ lastBiddedRound.time | moment("HH:mm:ss") }}
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
@@ -541,10 +541,22 @@ export default {
  }
 
  .round-container__time-patricipant-active {
-   height: 90px;
+   min-height: 50px;
    margin-left: 0;
    justify-content: center;
  }
-}
 
+ .round-container_time-active{
+   margin-left: 0;
+   width: auto
+ }
+
+.round-container_participant_active{
+  width: auto;
+ }
+
+ .round-container_time-active__watch-icon{
+   margin-right: 25px;
+ }
+}
 </style>
