@@ -40,8 +40,8 @@
                            :current-stage="currentStage"
                            :stages="stages"
                            :current-time="currentTime" />
-    <app-hong-audio-track v-if="currentStage === 0 || state === 'preAnnouncement'" :browser-name="browserName" />
-    <app-hong-sounds-text v-if="currentStage === 0 || state === 'preAnnouncement'" />
+    <app-hong-audio-track v-if="currentStage === 0 || trigger" :browser-name="browserName" />
+    <app-hong-sounds-text v-if="currentStage === 0 || trigger" />
     <app-notification/>
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
@@ -74,7 +74,7 @@
                           @getCurrentRoundNumber="getCurrentRoundNumber" />
     </main>
     <footer v-if="state !== 'completed' && !showLoginForm && $store.state.identification.bidderID !== ''" 
-            :class="'footer-container_' + state" class="footer-container">
+            class="footer-container">
       <h4 v-if="state == 'pendingOfRound'" class = "footer-container__text">
         {{ $t('Waiting for start of round') }}
       </h4>
@@ -139,6 +139,8 @@ export default {
   data(){
     return {
       stages: [{}],
+      hongTrigger: false,
+      trigger: false,
       results: [],
       pouchDB: null,
       isListeningOnChanges: false,
@@ -231,6 +233,11 @@ export default {
           "tenderId": 788
         });
       }
+    },
+    hongTrigger () {
+      if(this.hongTrigger) {
+        return this.hong()
+      }
     }
   },
   created() {
@@ -250,7 +257,6 @@ export default {
       sessionStorage.setItem('sessionId', generateUUID());
     }
     this.sessionId = sessionStorage.getItem('sessionId')
-
     //GTM
     this.$gtm.trackView('MyScreenName', 'currentpath'); 
     //scrolling on bottom
@@ -272,6 +278,12 @@ export default {
     EventSource.evtSrc.close();
   },
   methods: {
+    hong(){
+      let self = this
+      this.trigger = true
+      setTimeout(function(){
+        self.trigger = false }, 10000)
+    },
     syncWithServerTime () {
       axios.get(`${this.$store.state.urls.serverURL}get_current_server_time`, {
         'params': {
@@ -349,7 +361,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lato|Montserrat|Oswald|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Lato|Montserrat|Oswald:300|Roboto');
 
  .footer-container_hide {
    display: none;
@@ -413,7 +425,7 @@ export default {
     padding-left: 10px;
   }
 
-  .footer-container_active{
+  .footer-container{
     height: 420px !important;
   }
 }
@@ -426,7 +438,7 @@ export default {
     min-width: 324px;
     background-color: #e9e9e9;
     border-top: 3px solid #d9d9d9;
-    height: 95px;
+    height: 220px;
 }
 
 .footer-container__text {
@@ -435,10 +447,6 @@ export default {
     line-height: 25.5px;
     text-transform: uppercase;
     font-family: 'Roboto', sans-serif;
-}
-
-.footer-container_active{
-    height: 220px;
 }
 
 .container-main__tender-number{
