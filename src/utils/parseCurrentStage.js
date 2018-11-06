@@ -25,6 +25,7 @@ const parseCurrentStage = (stages, currentStage, context) =>{
     }
     else if (stages[currentStage].type === 'pre-announcement') {
       context.state = 'preAnnouncement';
+      context.hongTrigger = true;
     }
   }
 

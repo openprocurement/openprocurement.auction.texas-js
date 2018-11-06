@@ -99,7 +99,6 @@ export default {
 .round-container_bid__amount {
     font-family: 'Oswald', sans-serif;
     font-size: 20px;
-    font-weight: 400;
 }
 
 .list-offers-container__start-offers-label{

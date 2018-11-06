@@ -102,17 +102,37 @@ export default {
 
 <style>
 
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+   font-family: 'Roboto', sans-serif;
+   font-weight: 200;
+}
+::-moz-placeholder { /* Firefox 19+ */
+   font-family: 'Roboto', sans-serif;
+   font-weight: 200;
+}
+:-ms-input-placeholder { /* IE 10+ */
+   font-family: 'Roboto', sans-serif;
+   font-weight: 200;
+}
+:-moz-placeholder { /* Firefox 18- */
+   font-family: 'Roboto', sans-serif;
+   font-weight: 200;
+}
+
  .search {
+  font-family: 'Oswald',sans-serif;
   background-color: #fff;
   width: 100%;
   border: 1px solid lightgray;
   height: 27px;
+  font-size: 17px;
   padding-left: 10px;
   background-repeat: no-repeat;
   background-position-x: 94%;
   background-position-y: 50%;
   cursor: pointer;
   margin-top: 15px;
+  font-weight: 600;
  }
 
  .autocomplete-result_not-found{
@@ -150,9 +170,11 @@ export default {
 }
 
 .autocomplete-result {
+  font-family: 'Oswald',sans-serif;
+  font-weight: 600;
+  font-size: 17px;
   list-style: none;
   text-align: left;
-  padding: 4px 2px;
   cursor: pointer;
   display: flex;
   align-items: center;
