@@ -226,8 +226,8 @@ export default {
 
 .approval-mount {
     font-size: 24px;
-    font-weight: 400;
     font-family: 'Oswald', sans-serif;
+    font-weight: 600;
 }
 
 .select-bid{

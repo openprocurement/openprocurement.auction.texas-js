@@ -48,7 +48,6 @@ export default {
 .start-pricing-container__block__amount {
     font-family: 'Oswald', sans-serif;
     font-size: 24px;
-    font-weight: 400;
 }
 
 .start-pricing-container__label{
