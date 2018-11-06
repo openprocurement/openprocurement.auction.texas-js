@@ -76,7 +76,7 @@ const ukrainian = {
   'prohibit connection': 'заборонити підключення',
   'Not found appropriate price offer': 'Не знайдено відповідну цінову пропозицію',
   'Step auction of Bid': 'Крок зростання торгів',
-  'Choose a price offer (multiple of the minimum step': 'Виберіть пропозицію ціни (кратну мінімальному кроку',
+  'Choose a price offer which is a multiple of the minimal step': 'Виберіть цінову пропозицію, яка відповідає мінімальному кроку',
   'Start price': 'Стартова ціна',
   'winner': 'переможець',
   'Your bid appears too low': 'Ви ввели дуже малу суму, ви впевнені?',

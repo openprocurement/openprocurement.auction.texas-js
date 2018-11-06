@@ -76,7 +76,7 @@ const russian = {
   'Аuction was canceled': 'Аукцин отменен',
   'prohibit connection': 'запретить подключение',
   'Step auction of Bid': 'Шаг увеличение торгов',
-  'Choose a price offer (multiple of the minimum step': 'Выберите  предложение цены (кратное минимальному шагу',
+  'Choose a price offer which is a multiple of the minimal step': 'Выберите ценовое предложение, которое кратно минимальному шагу',
   'Start price': 'Стартовая цена',
   'Please use the correct link': 'Пожалуйста, используйте правильную ссылку',
   'Your bid appears too low': 'Вы ввели очень маленькую сумму, вы уверены?',

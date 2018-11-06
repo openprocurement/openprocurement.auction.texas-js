@@ -33,7 +33,7 @@ const english = {
   'Time': 'Time',
   'You': 'You',
   'All bidders': 'All bidders',
-  'Choose a price offer (multiple of the minimum step': 'Choose a price offer (multiple of the minimum step',
+  'Choose a price offer which is a multiple of the minimal step': 'Choose a price offer which is a multiple of the minimal step',
   'Pause': 'Pause',
   'The auction is unsuccessful': 'The auction is unsuccessful',
   'Unsuccessful': 'Unsuccessful',

@@ -1,6 +1,6 @@
 <template>
   <div class="increase-approval-container">
-    <div :data-tip="`${$store.state.i18n.translations[$store.state.i18n.locale]['Choose a price offer (multiple of the minimum step']}-${minimalStep} ${$store.state.i18n.translations[$store.state.i18n.locale]['UAH']})`"
+    <div :data-tip="`${$store.state.i18n.translations[$store.state.i18n.locale]['Choose a price offer which is a multiple of the minimal step']}(${minimalStep} ${$store.state.i18n.translations[$store.state.i18n.locale]['UAH']})`"
          class="container-bid increase-bid-container">
       <div class="select-choice-bid-wrapper">
         <h6 class="approval-question announce-price-offer">
@@ -9,7 +9,7 @@
         <vue-search-select :items="valueForOptionSelect" @setSelectedValue="setSelectedValue" />
       </div>
       <button v-scroll-to="'#active-round'" :disabled="selected === '' || selected === null || selected === 'null'"  
-              class="button butoon__increase"
+              class="button button__increase"
               type="submit" 
               @click.stop="addNewBidIncrease">
         {{ $t("Announce") }}
@@ -172,13 +172,13 @@ export default {
     cursor: pointer;
 }
 
-.butoon__increase{
+.button__increase{
     background-color: #9ab913;
     border-bottom: 3px solid #85a10f;
     height: 43px;
 }
 
-.butoon__increase:hover:enabled{
+.button__increase:hover:enabled{
   background-color: #bbdb2a;
 }
 
