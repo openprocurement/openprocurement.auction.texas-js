@@ -1,11 +1,12 @@
 import {getCookieByName, deleteCookie} from "../utils/utils"
+import detectIE from "../utils/detectIE"
+import eventSourcePolyfill from "./eventSourcePolyfill"
 var retry = require('retry')
-
 export default {
   evtSrc: null,
   isObserverNotifyCalled: false,
   ableToSubscribe () {
-    return Boolean(getCookieByName('auctions_loggedin'));
+    return (Boolean(getCookieByName('auctions_loggedin')) || detectIE())
   },
   initialize (component) {
 
@@ -19,8 +20,8 @@ export default {
     operation.attempt((currentAttempt) => {
       console.log('Initialize event on attempt number ' + currentAttempt.toString())
       let eventSourceURL = `${component.$store.state.urls.auctionURL}/${component.$store.state.id}/${component.$store.state.urls.eventSource}`;
-      this.evtSrc = new EventSource(eventSourceURL, {withCredentials: true});
-
+      // this.evtSrc = new EventSource(eventSourceURL, {withCredentials: true}) || new eventSourcePolyfill.EventSource(eventSourceURL, {withCredentials: true});
+      this.evtSrc = new eventSourcePolyfill.eventSource(eventSourceURL);
       this.evtSrc.addEventListener('ClientsList', e => {
         let data = JSON.parse(e.data);
         if (!!Object.keys(component.$store.state.clients).length) {
