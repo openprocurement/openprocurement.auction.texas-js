@@ -61,4 +61,9 @@ export default {
     z-index: 3;
 }
 
+@media screen and (max-width: 478px) {
+  .style-bar-line {
+    top: 96px;
+  }
+}
 </style>

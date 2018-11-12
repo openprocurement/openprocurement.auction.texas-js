@@ -92,7 +92,7 @@ export default {
     scrollToActiveBidAmount(){
       const list = document.getElementById("autocomplete-results"),
         targetLi = document.querySelector('.is-active');
-      list.scrollTop = (targetLi.offsetTop - 50);
+      list.scrollTop = ((targetLi.offsetTop || 0) - 50);
     }
   },
 }

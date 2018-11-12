@@ -114,9 +114,7 @@ export default {
 }
 
 .notifications-container {
-  display: flex;
   position: fixed;
-  flex-direction: column;
   width: 100%;
   top: 100px !important;
 }
