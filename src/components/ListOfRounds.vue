@@ -262,6 +262,11 @@ export default {
 
 <style scoped>
 
+.round-container_time__watch-icon{
+  display: flex;
+  align-items: center;
+}
+
 .round-container_time-active__watch-icon {
   display: flex;
   justify-content: center;
@@ -371,8 +376,6 @@ export default {
 .watch-in-round{
     width: 27px;
     height: 27px;
-    margin-right: 12px;
-    margin-left: 3px;
 }
 
 .watch-in-round-not-set {
@@ -475,6 +478,7 @@ export default {
     font-weight: 600;
     line-height: 16px;
     margin-bottom: 10px;
+
 }
 
 .announcement {

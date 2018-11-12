@@ -244,7 +244,6 @@ export default {
   }
   .clock-container-wrapper{
     width: 100%;
-    justify-content: space-evenly;
     flex-wrap: wrap;
     margin-bottom: auto;
   }

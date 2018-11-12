@@ -90,7 +90,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    min-width: 30%;
     background-color: #e9e9e9;
     font-family: 'Oswald', sans-serif;
     font-size: 20px;

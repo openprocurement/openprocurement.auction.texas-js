@@ -40,7 +40,7 @@
       </div>
       <hr>
     </div>
-    <div class="modal-container__info modal-container__powered-by">
+    <div class="modal-container__powered-by">
       <a href="https://openprocurement.io/en" target="_blank">
         <img class="modal-container__powered-by__image" src="/static_texas/images/powered_by_open-procurement.png" alt="powered_by_open-procurement.svg">
       </a>
@@ -108,7 +108,7 @@ export default {
 
 .modal-container-wrapper{
     font-family: 'Roboto',sans-serif;
-    width: 20%;
+    width: 22%;
     min-width: 280px;
     height: 91vh;
     margin-right: 30px;
@@ -132,8 +132,8 @@ export default {
     justify-content: space-around;
     flex-wrap: wrap;
     width: 100%;
+    height: 400px;
     min-height: 400px;
-
 }
 
 .modal-container__info{
@@ -151,9 +151,11 @@ export default {
 .modal-container__powered-by{
     display: flex;
     position: relative;
-    width: 100%;
     margin-bottom: 0;
+    flex-direction: column;
     flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .modal-container__info_browser-id {
@@ -183,9 +185,12 @@ export default {
     color: #ffffff;
     position: absolute;
     bottom: 40px;
+    right: 0;
+    left: 0;
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 95%;
+    flex-direction: row;
     font-size: 10px;
 }
 

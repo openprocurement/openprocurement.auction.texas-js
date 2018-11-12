@@ -173,6 +173,10 @@ export default {
   .status-label-container{
     width: 100%;
     margin-right: 0;
+    height: 25px;
+ }
+ .status-label-container__sign{
+   height: 95%;
  }
 }
 </style>

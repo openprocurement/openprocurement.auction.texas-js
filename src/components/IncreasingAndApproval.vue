@@ -310,6 +310,11 @@ option{
 
   .increase-bid-container{
     margin-bottom: 45px;
+    margin-top: 10px;
+  }
+
+  .approval-container{
+    margin-bottom: 10px;
   }
 
   .select-choice-bid-wrapper {

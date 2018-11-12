@@ -388,6 +388,7 @@ export default {
     position: fixed;
     left: 0;
     top: 0;
+    height: 95px;
     width: 100%;
     min-width: 324px;
     min-height: 95px;
@@ -425,8 +426,15 @@ export default {
     padding-left: 10px;
   }
 
+  footer{
+    overflow-y: auto;
+  }
+
   .footer-container{
-    height: 420px !important;
+    /* height: 420px !important; */
+  }
+  .container-main {
+    /* margin-bottom: 430px; */
   }
 }
 
