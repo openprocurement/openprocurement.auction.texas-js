@@ -35,7 +35,8 @@ module.exports = {
         'state', // for vuex state
         'acc', // for reduce accumulators
         'e', // for e.returnvalue
-        'context' // for context.value
+        'context', // for context.value
+        'global' //for polyfill (eventSource)
       ]
     }],
     // allow debugger during development
