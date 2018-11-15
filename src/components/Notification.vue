@@ -120,7 +120,9 @@ export default {
 }
 
 .notification-wrapper {
-  min-height: 50px;
+  min-height: 50px;  
+  height: auto !important;  
+  height: 50px; 
   min-width: 324px !important;
   display: flex !important;
   align-items: center !important;

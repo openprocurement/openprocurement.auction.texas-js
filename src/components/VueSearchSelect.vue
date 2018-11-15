@@ -1,6 +1,6 @@
 <template>
   <div class="autocomplete">
-    <input class="search" :class="'arrow-' + isOpen"
+    <input id="input_search" class="search" :class="{ 'arrow-up': isOpen, 'arrow-down': !isOpen }"
            :placeholder="`${$store.state.i18n.translations[$store.state.i18n.locale]['Select amount']}`" 
            v-model.trim="search" 
            @input="onChange()" 
@@ -9,6 +9,7 @@
         class="autocomplete-results">
       <li v-for="(result, i) in results" :key="i" 
           @click="setResult(result)"
+          id="autocomplete-result"
           class="autocomplete-result" :class="{ 'is-active': i === orderCount }">
         {{ $t(result.text) }}
         <div v-if="result.text !== 'Select amount'">
@@ -127,6 +128,7 @@ export default {
   height: 27px;
   font-size: 17px;
   padding-left: 10px;
+  padding-right: 40px;
   background-repeat: no-repeat;
   background-position-x: 94%;
   background-position-y: 50%;
@@ -141,11 +143,11 @@ export default {
   margin-top: 3px;
  }
 
- .arrow-true{
+ .arrow-up{
    background-image: url("/static_texas/images/arrow_up.png");
  }
 
- .arrow-false{
+ .arrow-down{
    background-image: url("/static_texas/images/arrow_down.png");
  }
 
@@ -167,6 +169,7 @@ export default {
   max-height: 105px !important;
   position: absolute;
   top: 42px;
+  z-index: 2;
 }
 
 .autocomplete-result {
@@ -181,13 +184,13 @@ export default {
   justify-content: center;
   border: 1px solid #9ab913;
   border-bottom: none;
+  min-height: 27px;
 }
 
 .autocomplete-result.is-active,
 .autocomplete-result:hover {
     color: #fff;
     border-top:none;
-    height: 27px;
     background-color: #9ab913;
 }
 

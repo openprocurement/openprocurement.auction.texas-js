@@ -43,7 +43,7 @@
             <div class="round-container_time__watch-icon">
               <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
             </div>
-            <div class="round-container_time__watch">
+            <div class="round-container_time__watch round-container_time__watch_active">
               {{ stage.time | moment("HH:mm:ss") }}
             </div>
           </div>
@@ -103,7 +103,7 @@
           <div class="round-container_time-completed round-container_time-completed_not-set">
             <svg class="watch-in-round watch-in-round-not-set" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>cross</title><path d="M15.13,18.93" transform="translate(-1.05 -1.13)"/><path d="M14,18.91" transform="translate(-1.05 -1.13)"/><path d="M15.08,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15.08,1.13Zm0,25.69A11.66,11.66,0,1,1,26.74,15.16,11.65,11.65,0,0,1,15.08,26.82Z" transform="translate(-1.05 -1.13)"/><path d="M21.73,9.84,20.4,8.51l-5.32,5.32L9.76,8.51,8.43,9.84l5.32,5.32L8.43,20.48l1.33,1.33,5.32-5.32,5.32,5.32,1.33-1.33-5.32-5.32Zm0,0" transform="translate(-1.05 -1.13)" stroke="#000" stroke-miterlimit="10"/></svg>
           </div>
-          <div class="round-container_time__watch">
+          <div class="round-container_time__watch round-container_time__watch_not-set">
             {{ lastRoundWithoutBidder.planned_end | moment("HH:mm:ss") }}
           </div>
         </div>
@@ -122,24 +122,26 @@
           <div class="round-container_time-completed">
             <svg class="watch-in-round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.06 28.06"><title>checkmark_clock</title><path d="M15.13,18.93" transform="translate(-1 -1.13)"/><path d="M21.27,8.74a1.25,1.25,0,0,0-1.7.46l-5.13,8.32h0L10.57,12.4a1.29,1.29,0,1,0-2.08,1.51s3,4.31,4.76,6.62a1.49,1.49,0,0,0,2.39,0c2-3.11,6-10.06,6-10.06A1.25,1.25,0,0,0,21.27,8.74Z" transform="translate(-1 -1.13)"/><path d="M14,18.91" transform="translate(-1 -1.13)"/><path d="M15,1.13a14,14,0,1,0,14,14A14,14,0,0,0,15,1.13Zm0,25.69A11.66,11.66,0,1,1,26.69,15.16,11.65,11.65,0,0,1,15,26.82Z" transform="translate(-1 -1.13)"/></svg>
           </div>
-          <div class="round-container_participant-expended round-container_participant-expended_max">
-            <h3 v-if="$store.state.identification.bidderID === lastBiddedRound.bidder_id" class="word-winner">
-              <div v-if="lastBiddedRound.bidNumber" class="order-of-bidder">
-                {{ $t('Bidder') }} {{ lastBiddedRound.bidNumber }}
-              </div>
-              {{ $t('winner') }}
-              ({{ $t('You') }})
-            </h3>
-            <h3 v-else class="word-winner">
-              <div v-if="lastBiddedRound.bidNumber" class="order-of-bidder">
-                {{ $t('Bidder') }} {{ lastBiddedRound.bidNumber }}
-              </div>
-              {{ $t('winner') }}
-            </h3>
-            {{ lastBiddedRound.label[$store.state.i18n.locale] }}
-          </div>
-          <div class="round-container_time__watch">
-            {{ lastBiddedRound.time | moment("HH:mm:ss") }}
+          <div class="round-container_participant-completed">
+            <div class="round-container_participant-expended round-container_participant-expended_max">
+              <h3 v-if="$store.state.identification.bidderID === lastBiddedRound.bidder_id" class="word-winner">
+                <div v-if="lastBiddedRound.bidNumber" class="order-of-bidder">
+                  {{ $t('Bidder') }} {{ lastBiddedRound.bidNumber }}
+                </div>
+                {{ $t('winner') }}
+                ({{ $t('You') }})
+              </h3>
+              <h3 v-else class="word-winner">
+                <div v-if="lastBiddedRound.bidNumber" class="order-of-bidder">
+                  {{ $t('Bidder') }} {{ lastBiddedRound.bidNumber }}
+                </div>
+                {{ $t('winner') }}
+              </h3>
+              {{ lastBiddedRound.label[$store.state.i18n.locale] }}
+            </div>
+            <div class="round-container_time__watch">
+              {{ lastBiddedRound.time | moment("HH:mm:ss") }}
+            </div>
           </div>
         </div>
         <div class="round-container_bid round-container_bid_max">
@@ -147,11 +149,6 @@
             {{ formatNumber(lastBiddedRound.amount) }}
             {{ $t('UAH') }}
           </h4>
-          <div class="round-container_bid_max-block">
-            <div class="round-container_bid_max-block-count">
-              MAX
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -281,7 +278,10 @@ export default {
     margin-bottom: 25px;
 }
 .round-container_active{
-    min-height: 50px;
+    min-height: 50px;  
+    height: auto !important;  
+    height: 50px; 
+    
 }
 
 .round-unsuccessful-container {
@@ -304,7 +304,6 @@ export default {
 }
 
 .round-container_time-active{
-    margin-left: -40px;
     width: 20%;
     display: flex;
     justify-content: space-between;
@@ -330,12 +329,13 @@ export default {
 .round-container__time-patricipant{
     width: 70%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     font-weight: 500;
     min-height: 50px;
+    height:auto !important; 
+    height: 50px; 
 }
 
 .round-container_active-round {
@@ -356,31 +356,44 @@ export default {
     font-weight: 300;
     font-family: 'Oswald', sans-serif;
     display: flex;
-    align-items: center
+    align-items: center;
+    margin-right: 12px;
+    margin-left: 12px;
 }
 
+.round-container_time__watch_active{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.round-container_time__watch_not-set{
+    margin-right: 0;
+    margin-left: 0;
+}
 
 .round-container_bid{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 30%;
+    width: 30%;
     background-color: #e9e9e9;
 }
 
 .round-container_bid_not-set {
     position: relative;
-    background-color: initial;
+    background-color: #fff;
 }
 
 .watch-in-round{
     width: 27px;
     height: 27px;
+    margin-right: 12px;
+    margin-left: 12px;
 }
 
 .watch-in-round-not-set {
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 12px;
+    margin-left: 12px;
 }
 
 .line {
@@ -392,6 +405,7 @@ export default {
 }
 
 .round-container_bid__amount {
+    font-weight: 600;
     font-family: 'Oswald', sans-serif;
     font-size: 20px;
 }
@@ -408,8 +422,14 @@ export default {
     font-size: 15px;
     font-weight: 800;
     line-height: 21.18px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
+.round-container_time-active__watch{
+    margin-left: 0;
+    margin-right: 0; 
+}
 .max-round-container{
     margin-top: 30px;
 }
@@ -417,7 +437,6 @@ export default {
 .round-container_max{
     background-color: #e7f5ac;
     margin-top: 15px;
-    padding-left: 5px;
 }
 
 .round-container_participant__order-number{
@@ -437,7 +456,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-right: 10px;
     justify-content: center;
 }
 
@@ -449,27 +467,6 @@ export default {
 
 .round-container_bid_max{
     background-color: #e7f5ac;
-    justify-content: space-between;
-}
-
-.round-container_bid_max-block{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
-    height: 100%;
-    width: 17px;
-    font-size: initial;
-}
-
-.round-container_bid_max__bid-count{
-    margin: 0 auto;
-}
-
-.round-container_bid_max-block-count{
-    transform: rotate(-90deg);
-    color: #000000;
-    font-family: 'Montserrat', sans-serif;
 }
 
 .round-label {
@@ -522,25 +519,9 @@ export default {
    min-height: 90px;
  }
 
- .round-container__time-patricipant-not-set {
-   justify-content: space-around;
- }
-
  .round-container_max {
    margin-top: 0;
    padding-left: 0;
- }
- .round-container_bid_max{
-   flex-direction: column;
- }
-
- .round-container_bid_max-block-count {
-   transform: rotate(360deg);
- }
-
- .round-container_bid_max-block {
-   height: 20px;
-   width: 100%; 
  }
 
  .round-container__time-patricipant-active {
@@ -550,8 +531,8 @@ export default {
  }
 
  .round-container_time-active{
-   margin-left: 0;
-   width: auto
+   width: 100%;
+   justify-content: center;
  }
 
 .round-container_participant_active{
@@ -560,6 +541,10 @@ export default {
 
  .round-container_time-active__watch-icon{
    margin-right: 25px;
+ }
+
+ .progress-ring{
+   margin-left: 0;
  }
 }
 </style>

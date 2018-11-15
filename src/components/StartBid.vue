@@ -4,7 +4,7 @@
       {{ $t('Start price') }}
     </h5>
     <div class="start-pricing-container__block">
-      <h4 class="start-pricing-container__block__amount">{{ formatNumber(startPrice) }} 
+      <h4 id="start-pricing_amount" class="start-pricing-container__block__amount">{{ formatNumber(startPrice) }} 
         {{ $t('UAH') }}
       </h4>
     </div>
@@ -39,7 +39,9 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: 50px;
+    min-height: 50px;  
+    height: auto !important;  
+    height: 50px; 
     font-weight: 400;
     border: 1px solid #a1a1a1;
     margin-bottom: 50px;

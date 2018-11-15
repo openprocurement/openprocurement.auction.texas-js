@@ -133,7 +133,9 @@ export default {
     flex-wrap: wrap;
     width: 100%;
     height: 400px;
-    min-height: 400px;
+    min-height: 400px;  
+    height: auto !important;  
+    height: 400px; 
 }
 
 .modal-container__info{

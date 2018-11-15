@@ -28,7 +28,9 @@ export default {
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
-    min-height: 50px;
+    min-height: 50px;  
+    height: auto !important;  
+    height: 50px; 
     padding-left: 50px;
 }
 </style>
