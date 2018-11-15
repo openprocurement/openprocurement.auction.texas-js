@@ -391,7 +391,9 @@ export default {
     height: 95px;
     width: 100%;
     min-width: 324px;
-    min-height: 95px;
+    min-height: 95px;  
+    height: auto !important;  
+    height: 95px; 
     background-color: #ffffff;
     box-shadow: 0 4px 9px 1px rgba(29, 29, 29, 0.09);
     display: flex;

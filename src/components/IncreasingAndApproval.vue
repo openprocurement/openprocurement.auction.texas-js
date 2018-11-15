@@ -9,6 +9,7 @@
         <vue-search-select :items="valueForOptionSelect" @setSelectedValue="setSelectedValue" />
       </div>
       <button v-scroll-to="'#active-round'" :disabled="selected === '' || selected === null || selected === 'null'"  
+              id="button__increase"
               class="button button__increase"
               type="submit" 
               @click.stop="addNewBidIncrease">
@@ -20,11 +21,12 @@
         <h6 class="approval-question">
           {{ $t('Accept price offer') }}
         </h6>
-        <h3 class="approval-mount">{{ formatNumber(currentBid) }}</h3>
+        <h3 id="approval-mount" class="approval-mount">{{ formatNumber(currentBid) }}</h3>
       </div>
       <button 
         v-scroll-to="'#active-round'"
         type="submit" 
+        id="button__approval"
         class="button button__approval" 
         @click.stop="addNewBidApprove">
         {{ $t('Accept') }}
@@ -173,6 +175,9 @@ export default {
 }
 
 .button__increase{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     background-color: #9ab913;
     border-bottom: 3px solid #85a10f;
     height: 43px;
@@ -253,7 +258,9 @@ export default {
 	color:#000;
 	z-index:9;
 	font-size: 0.75em;
-	min-height:18px;
+  min-height: 18px;  
+  height: auto !important;  
+  height: 18px; 
 	line-height:18px;
 	border-radius: 3px;
   width: 100%;

@@ -46,6 +46,7 @@ export default {
 .progress-ring {
   width: 38px;
   height: 38px;
+  margin-left: 12px;
 }
 
 .progress-ring_circle {
