@@ -20,8 +20,12 @@ export default {
     operation.attempt((currentAttempt) => {
       console.log('Initialize event on attempt number ' + currentAttempt.toString())
       let eventSourceURL = `${component.$store.state.urls.auctionURL}/${component.$store.state.id}/${component.$store.state.urls.eventSource}`;
-      // this.evtSrc = new EventSource(eventSourceURL, {withCredentials: true}) || new eventSourcePolyfill.EventSource(eventSourceURL, {withCredentials: true});
-      this.evtSrc = new eventSourcePolyfill.eventSource(eventSourceURL);
+      if(detectIE() === false){
+        this.evtSrc = new EventSource(eventSourceURL, {withCredentials: true});
+      }
+      else{
+        this.evtSrc = new eventSourcePolyfill.eventSource(eventSourceURL);
+      }
       this.evtSrc.addEventListener('ClientsList', e => {
         let data = JSON.parse(e.data);
         if (!!Object.keys(component.$store.state.clients).length) {
