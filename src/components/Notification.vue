@@ -51,6 +51,12 @@
 import kickClient from "@/utils/kickClient";
 
 export default {
+  props: {
+    browserIeVersion: {
+      type: Number,
+      default: null
+    },
+  },
   data() {
     return {
       bgWidth: '100%',
@@ -81,7 +87,7 @@ export default {
     kickNewClient(clientId) {
       kickClient(this.$store.state, clientId)
     }
-  }
+  },
 };
 </script>
 <style>
@@ -89,6 +95,7 @@ export default {
   font-size: 17px !important;
   color: grey !important; 
   cursor:pointer;
+  padding-left: 10px;
 }
 .text-title-info{ 
   margin-left: 50px;
@@ -116,7 +123,8 @@ export default {
 .notifications-container {
   position: fixed;
   width: 100%;
-  top: 100px !important;
+  top: 150px !important;
+  z-index: 1;
 }
 
 .notification-wrapper {
@@ -133,7 +141,7 @@ export default {
   margin-left: 15px;
   width: auto;
   padding: 0 5px;
-  height: 30px;
+  min-height: 30px;
   background-color: rgb(239, 222, 168);
   margin-left: 80px !important;
 }
@@ -162,7 +170,7 @@ export default {
 @media screen and (max-width: 478px) {
   .notification-wrapper{
     display: flex !important;
-    min-height: 85px !important;
+    min-height: 65px !important;
     align-items: center !important;
   }
 
@@ -171,13 +179,18 @@ export default {
     align-items: center;
  }
 
-.kick-button {
-  height: 20px;
- }
-
 .close {
   top: 60% ;
  }
 }
 
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {  
+    .notification-wrapper{
+      display: block !important;
+    }
+
+   .kick-client-template{
+    margin-left : 40px !important;
+  } 
+}
 </style>

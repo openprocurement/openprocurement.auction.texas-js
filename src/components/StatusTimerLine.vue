@@ -19,11 +19,7 @@ export default {
     stages: {
       type: Array,
       default: null
-    },
-    currentTime: {
-      type: Number,
-      default: null
-    },
+    }
   },
   data(){
     return{
@@ -61,9 +57,16 @@ export default {
     z-index: 3;
 }
 
+@media screen and (max-height: 480px) {
+  .style-bar-line{
+    top: 50px;
+  }
+}
+
 @media screen and (max-width: 478px) {
   .style-bar-line {
     top: 96px;
   }
 }
+
 </style>

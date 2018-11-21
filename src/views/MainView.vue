@@ -8,22 +8,23 @@
       :start-price="startPrice"
       :browser-id="browserId"
       :session-id="sessionId"
+      :browser-ie-version="browserIeVersion"
       :company-name="companyName"
       :minimal-step="minimalStep"
       :description-of-products="descriptionOfProducts"
       @showOrHideModalWindow="showOrHideModalWindow" />
-    <header class="header_container">
+    <header class="header_container" :class="'header_container__'+ state">
       <app-timer 
         :date="endTimerDate"
         :current-type="currentType"
         :time-status="statusMessage[state].timeStatus"
         :state="state"
+        :current-stage="currentStage"
         :end-date="endDate"
         :synced-time="lastSync"
         @stateUpdate="stateUpdate"
         @checkTimeOut="checkTimeOut"
         @getRemainedTimeofRound="getRemainedTimeofRound"
-        @getCurrentTime="getCurrentTime"
         @showOrHideModalWindow="showOrHideModalWindow"
         @hideModalWindow="hideModalWindow" />
       <app-status-info-label 
@@ -38,11 +39,10 @@
     <app-status-timer-line v-if="$store.state.terminatedStates.indexOf(state) === -1 && state !== 'pendingSyncData'"
                            :remained-time-of-round="remainedTimeOfRound"
                            :current-stage="currentStage"
-                           :stages="stages"
-                           :current-time="currentTime" />
+                           :stages="stages" />
     <app-hong-audio-track v-if="currentStage === 0 || trigger" :browser-name="browserName" />
     <app-hong-sounds-text v-if="currentStage === 0 || trigger" />
-    <app-notification/>
+    <app-notification :browser-ie-version="browserIeVersion" />
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
         <div class="container-main__image-container">
@@ -65,7 +65,6 @@
       <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed' || state == 'preAnnouncement'" 
                           :start-price="startPrice"
                           :results="results"
-                          :current-time="currentTime"
                           :remained-time-of-round="remainedTimeOfRound"
                           :state="state" 
                           :current-stage="currentStage"
@@ -109,6 +108,7 @@ import AppFooterLogin from '../components/FooterLogin';
 import AppReturnButton from '../components/ReturnButton'
 import parseCurrentStage from '../utils/parseCurrentStage';
 import {getCookieByName, deleteCookie, setCookie} from "../utils/utils"
+import detectIE from '../utils/detectIE'
 import generateUUID from "../utils/generateUUID"
 import PouchDBSync from '../utils/CouchPouch';
 import EventSource from '../utils/eventSource';
@@ -146,13 +146,13 @@ export default {
       isListeningOnChanges: false,
       currentRoundNumber: null,
       currentStage: -1,
+      browserIeVersion: null,
       currentType: 'english',
       state: 'pendingSyncData',
       endDate: null,
       showOrHide: false,
       auctionId: '',
       browserName: '',
-      currentTime: null,
       browserId: '',
       sessionId:'',
       lastSync: null,
@@ -209,7 +209,7 @@ export default {
           type: 'pending',
           textStatus: 'Waiting',
           timeStatus: "Waiting for the disclosure of the participants\' names"
-        }
+        },
       },
     };
   },
@@ -246,6 +246,10 @@ export default {
     getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
+    if (detectIE() !== false){
+      this.browserIeVersion = detectIE();
+    }
+    console.log('browserrr',this.browserIeVersion)
     //check session id
     if(getCookieByName('browserId') === ''){
       setCookie("browserId",generateUUID() , 365)
@@ -332,9 +336,7 @@ export default {
     getRemainedTimeofRound(remainedTime) {
       this.remainedTimeOfRound = remainedTime;
     },
-    getCurrentTime(currentTime) {
-      this.currentTime = currentTime;
-    },
+
     hideModalWindow() {
       this.showOrHide = false
     },
@@ -392,14 +394,13 @@ export default {
     width: 100%;
     min-width: 324px;
     min-height: 95px;  
-    height: auto !important;  
     height: 95px; 
     background-color: #ffffff;
     box-shadow: 0 4px 9px 1px rgba(29, 29, 29, 0.09);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 2;
+    z-index: 3;
     }
 
 .container-main{
@@ -415,12 +416,6 @@ export default {
     margin-left: auto;
 }
 
-@media screen and (max-width: 1200px) {
-   .modal-container-wrapper {
-    width: 290px !important;
- }
-}
-
 @media screen and (max-width: 478px) {
   .container-wrapper {
     width: 100%;
@@ -430,13 +425,6 @@ export default {
 
   footer{
     overflow-y: auto;
-  }
-
-  .footer-container{
-    /* height: 420px !important; */
-  }
-  .container-main {
-    /* margin-bottom: 430px; */
   }
 }
 
@@ -485,6 +473,47 @@ export default {
   
 }
 
+@media screen and (max-height: 480px){
+  .footer-container{
+    height: 110px;
+    overflow-y: scroll;
+  }
 
+  .header_container{
+    height: 50px;
+    min-height: 0;
+  }
+
+  .modal-container-wrapper{
+    top: 53px;
+  }
+
+  .style-bar-line{
+    top: 50px;
+  }
+
+  .modal-container__powered-by{
+    padding-bottom: 45px;
+  }
+}
+
+@media screen and (max-height: 300px) {
+  .footer-container{
+    height: 70px;
+  }
+}
+
+@media screen and (max-width: 478px) {
+  .header_container{
+    height: 95px;
+    min-height: 95px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .header_container__completed{
+    height: 95px;
+    min-height: 95px;
+  }
+}
 
 </style>
