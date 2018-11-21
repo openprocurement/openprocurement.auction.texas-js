@@ -61,13 +61,14 @@ export default {
     width: 100%;
     border: 1px solid #a1a1a1;
     margin-bottom: 10px;
+    line-height: 24px;
 }
 
 .offer-container__participant{
     width: 70%;
     display: flex;
     align-items: center;
-    margin-left: 45px;
+    padding-left: 51px;
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     font-weight: 800;
@@ -80,8 +81,6 @@ export default {
 .offer-container__participant-name{
     font-size: 13px;
     font-weight: 600;
-    display: flex;
-    flex-direction: column;
 }
 
 .order-of-bidder {
@@ -120,7 +119,7 @@ export default {
    }
    .offer-container__participant {
      width: 100%;
-     margin-left: 0;
+     padding-left: 0;
      justify-content: center;
      min-height: 50%;
    }

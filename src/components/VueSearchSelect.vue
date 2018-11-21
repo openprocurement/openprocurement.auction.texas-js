@@ -4,11 +4,11 @@
            :placeholder="`${$store.state.i18n.translations[$store.state.i18n.locale]['Select amount']}`" 
            v-model.trim="search" 
            @input="onChange()" 
-           @click="toggleClick">
+           @click.stop="toggleClick">
     <ul id="autocomplete-results" v-show="isOpen" 
         class="autocomplete-results">
       <li v-for="(result, i) in results" :key="i" 
-          @click="setResult(result)"
+          @click.stop="setResult(result)"
           id="autocomplete-result"
           class="autocomplete-result" :class="{ 'is-active': i === orderCount }">
         {{ $t(result.text) }}
@@ -185,6 +185,8 @@ export default {
   border: 1px solid #9ab913;
   border-bottom: none;
   min-height: 27px;
+  height: auto !important;
+  height: 27px;
 }
 
 .autocomplete-result.is-active,
