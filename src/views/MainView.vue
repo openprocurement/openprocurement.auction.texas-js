@@ -268,18 +268,26 @@ export default {
     // init event-source
     if (EventSource.ableToSubscribe()) {
       EventSource.initialize(this)
+      console.info({message: 'Start private session'})
     } else {
       this.$notify({
         group: 'auth',
         text: 'You are an observer and cannot bid.',
         duration: -1
       })
+      console.info({message: 'Start anonymous session'})
     }
+    console.info({
+      message: 'Start session for texas auction',
+      browser_client_id: this.browserId,
+      auctionID: this.auctionId
+    })
   },
   beforeDestroy() {
     // Make sure to close the connection with the events server
     // when the component is destroyed, or we'll have ghost connections!
-    EventSource.evtSrc.close();
+    console.info({message: 'Close window'})
+    if (EventSource.evtSrc) EventSource.evtSrc.close()
   },
   methods: {
     hong(){
@@ -304,19 +312,24 @@ export default {
           }
         }
         if (this.currentStage >= -1 && this.$route.query.wait) {
+          console.info({message: "login allowed " + this.currentStage})
           this.showLoginForm = true
+          console.info({message: 'client wait for login'})
           if (countdownSeconds < 900) {
             this.loginAllowed = true
           } else {
             this.loginAllowed = false
             setTimeout(() => {this.loginAllowed = true}, (countdownSeconds - 900) * 1000)
           }
+          console.info({message: 'LOGIN ALLOWED ' + this.loginAllowed})
         }
         if (!this.isListeningOnChanges && this.currentStage >= 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1)
           PouchDBSync.startSync(this)
+        else if (this.$store.state.terminatedStates.indexOf(this.state) !== -1)
+          console.info({message: 'Auction ends already'})
       }).catch((e) => {
         // log error
-        console.log('get_current_server_time error')
+        console.error({message: 'get_current_server_time error', error_data: e})
       })
     },
     holdRoundTime() {
