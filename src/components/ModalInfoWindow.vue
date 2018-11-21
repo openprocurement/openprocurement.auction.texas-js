@@ -1,6 +1,7 @@
 <template>
-  <div class="modal-container-wrapper" @click.stop="showOrHideModalWindow">
-    <div class="modal-container">
+  <div class="modal-container-wrapper" :class=" { 'modal-container-wrapper_IE': browserIeVersion === 11 }"
+       @click.stop="showOrHideModalWindow">
+    <div class="modal-container" :class=" { 'modal-container_IE': browserIeVersion === 11 }">
       <div class="modal-container__info modal-container__tender-number">
         {{ auctionId }}
         <svg class="modal-container__tender-number__info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.33 25.33"><path d="M20.67,7.37A12.67,12.67,0,1,0,33.33,20,12.68,12.68,0,0,0,20.67,7.37Zm0,23.77A11.11,11.11,0,1,1,31.77,20,11.12,11.12,0,0,1,20.67,31.15Zm0,0" transform="translate(-8 -7.37)"/><path d="M21.68,15a1.3,1.3,0,1,1-1.3-1.3,1.3,1.3,0,0,1,1.3,1.3Zm0,0" transform="translate(-8 -7.37)"/><path d="M20.53,18.42a.78.78,0,0,0-.78.78v6.63a.78.78,0,0,0,1.56,0V19.2a.78.78,0,0,0-.78-.78Zm0,0" transform="translate(-8 -7.37)"/></svg>
@@ -41,9 +42,8 @@
       <hr>
     </div>
     <div class="modal-container__powered-by">
-      <a href="https://openprocurement.io/en" target="_blank">
-        <img class="modal-container__powered-by__image" src="/static_texas/images/powered_by_open-procurement.png" alt="powered_by_open-procurement.svg">
-      </a>
+      <a class="powered-by__link" href="https://openprocurement.io/en" target="_blank" />
+      <img class="modal-container__powered-by__image" src="/static_texas/images/powered_by_open-procurement.png" alt="powered_by_open-procurement.svg">
       <div class="modal-container__powered-by__container">
         Powered by
         <p class="open-procurement-text">OpenProcurement</p>
@@ -65,6 +65,10 @@ export default {
       default: null
     },
     startPrice: {
+      type: Number,
+      default: null
+    },
+    browserIeVersion: {
       type: Number,
       default: null
     },
@@ -110,12 +114,12 @@ export default {
     font-family: 'Roboto',sans-serif;
     width: 22%;
     min-width: 280px;
-    height: 91vh;
+    height: 100%;
     margin-right: 30px;
     background-color: #ffffff;
     position: fixed;
     top: 95px;
-    z-index: 2;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -125,18 +129,19 @@ export default {
     border-top: 2px solid lightgray;
 }
 
-.modal-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
+ .modal-container-wrapper_IE{
+    display: block;
+ }
+
+ .modal-container{
     width: 100%;
-    height: 400px;
-    min-height: 400px;  
-    height: auto !important;  
-    height: 400px; 
+    margin-left: 25px;
 }
+
+ .modal-container_IE {
+    margin-left: 10px;
+    min-height: 64%;
+ }
 
 .modal-container__info{
     display: flex;
@@ -144,6 +149,8 @@ export default {
     font-size: 14px;
     width: 95%;
     flex-wrap: wrap;
+    margin-bottom: 10px;
+    line-height: 24px;
 }
 
 .modal-container__info_description-Products{
@@ -151,17 +158,8 @@ export default {
 }
 
 .modal-container__powered-by{
-    display: flex;
     position: relative;
-    margin-bottom: 0;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.modal-container__info_browser-id {
-   margin-bottom: 7px;
+    padding-bottom: 70px;
 }
 
 .modal-container__powered-by__image {
@@ -177,6 +175,19 @@ export default {
   font-weight: 600;
 }
 
+.powered-by__link{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+ .modal-container__info_browser-id, .modal-container__info_sesion-id{
+   margin-bottom: 10px;
+ }
+
 .modal-container__info_browser-id_browser-and-session {
   display: flex;
   flex-direction: column;
@@ -186,7 +197,7 @@ export default {
 .modal-container__powered-by__container {
     color: #ffffff;
     position: absolute;
-    bottom: 40px;
+    bottom: 95px;
     right: 0;
     left: 0;
     display: flex;
@@ -225,6 +236,7 @@ export default {
     display: flex;
     flex-direction: initial;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
 .modal-container__tender-number {
@@ -241,6 +253,7 @@ hr {
   height: 1px;
   border: 0;
   width: 100%;
+  margin-left: -15px;
 }
 
 .strong {
@@ -253,21 +266,18 @@ hr {
   }
 }
 
-@media screen  and (max-height: 580px){
-  .modal-container-wrapper {
-    height: 84vh;
-  }
+@media screen and (max-width: 1200px) {
+   .modal-container-wrapper {
+    width: 300px !important;
+ }
 }
 
-@media screen  and (max-height: 480px){
-  .modal-container-wrapper {
-    height: 80vh;
+@media screen and (max-height: 480px) {
+  .modal-container-wrapper{
+    top: 49px;
   }
-}
-
-@media screen  and (max-height: 280px){
-  .modal-container-wrapper {
-    height: 67vh;
+  .modal-container__powered-by{
+    padding-bottom: 45px;
   }
 }
 
