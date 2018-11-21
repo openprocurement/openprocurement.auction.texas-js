@@ -9,3 +9,12 @@ build_release:
 	npm run build-release
 	echo "Pack static to tar.gz"
 	cd ${RELEASE_FOLDER} && tar -zcvf ../${RELEASE_FOLDER}.tar.gz . && cd ..
+
+
+build_stage_release:
+	echo ${VERSION}
+	rm -rf ${RELEASE_FOLDER} ${RELEASE_FOLDER}.tar.gz
+	echo "Build release static for stage"
+	npm run build-release
+	echo "Pack static to tar.gz"
+	cd ${RELEASE_FOLDER} && tar -zcvf ../stage_${RELEASE_FOLDER}.tar.gz . && cd ..
