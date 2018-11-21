@@ -219,6 +219,7 @@ export default {
 }
 
 .approval-question{
+    width: 100%;
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
@@ -226,10 +227,12 @@ export default {
 }
 
 .announce-price-offer {
+    width: 100%;
     margin-bottom: 10px;
 }
 
 .approval-mount {
+    width: 100%;
     font-size: 24px;
     font-family: 'Oswald', sans-serif;
     font-weight: 600;
@@ -307,7 +310,6 @@ option{
     width: 100%;
     flex-direction: column;
     align-items: center;
-    margin: auto;
   }
 
   .container-bid{
@@ -317,7 +319,7 @@ option{
 
   .increase-bid-container{
     margin-bottom: 45px;
-    margin-top: 10px;
+    margin-top: 210px;
   }
 
   .approval-container{
@@ -326,6 +328,19 @@ option{
 
   .select-choice-bid-wrapper {
     width: 97%;
+  }
+}
+
+@media screen and (max-height: 480px) {
+  .increase-approval-container{
+    margin-top: 110px;
+  }
+}
+
+
+@media screen and (max-height: 300px) {
+  .increase-approval-container{
+    margin-top: 70px;
   }
 }
 </style>

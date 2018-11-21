@@ -71,7 +71,7 @@
       </h3>      
       <div class="round-container round-container_active round-container_active-round">
         <div class="round-container__time-patricipant round-container__time-patricipant-active">
-          <div class="round-container_time-active">
+          <div class="round-container_time-active round-container_time-active_green">
             <div class="round-container_time-active__watch-icon">
               <radial-progress-bar
                 v-if="state !== 'pendingOfRound' && (value > 0 && value < 100)"
@@ -83,7 +83,6 @@
               {{ stages[stages.length - 1].planned_end | moment("HH:mm:ss") }}
             </div>
           </div>
-          <div class="round-container_participant_active" />       
         </div>
         <div class="round-container_bid round-container_bid_active round-container_bid_active-round">
           <h4 class="round-container_bid__amount">
@@ -152,8 +151,10 @@
         </div>
       </div>
     </div>
-    <div v-if="state ==='completed' && results.length === 0" class="round-container round-unsuccessful-container ">
-      {{ $t('The auction is unsuccessful') }}
+    <div v-if="state ==='completed' && results.length === 0" class="round-container round-unsuccessful-container">
+      <div>
+        {{ $t('The auction is unsuccessful') }}
+      </div>
     </div>
   </div>
 </template>
@@ -191,10 +192,6 @@ export default {
       default: null
     },
     currentStage: {
-      type: Number,
-      default: null
-    },
-    currentTime: {
       type: Number,
       default: null
     },
@@ -276,21 +273,17 @@ export default {
     width: 100%;
     border: 1px solid #a1a1a1;
     margin-bottom: 25px;
-}
-.round-container_active{
-    min-height: 50px;  
-    height: auto !important;  
-    height: 50px; 
-    
+    line-height: 24px;
 }
 
 .round-unsuccessful-container {
+   display: flex;
+   justify-content: center;
    min-height: 60px;
+   height: 60px; 
    background-color: #e9e9e9;
    font-family: 'Montserrat', sans-serif;
    font-weight: 600;
-   display: flex;
-   justify-content: center;
    align-items: center;
    font-size: 16px;
 }
@@ -452,11 +445,6 @@ export default {
     font-weight: 600;
     text-transform: uppercase;
     width: 90%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
 }
 
 .round-container_participant-expended_max {
@@ -531,12 +519,15 @@ export default {
  }
 
  .round-container_time-active{
-   width: 100%;
+   width: 50%;
    justify-content: center;
+ }
+ .round-container_time-active_green {
+   width: 100%;
  }
 
 .round-container_participant_active{
-  width: auto;
+  width: 50%;
  }
 
  .round-container_time-active__watch-icon{
