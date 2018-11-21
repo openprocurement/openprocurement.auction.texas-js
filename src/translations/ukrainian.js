@@ -63,6 +63,7 @@ const ukrainian = {
   'Internet connection is lost. Attempt to restart after 1 sec': 'З\'єднання з інтернетом втрачено. спроба перезавантаження через 1 сек',
   'Synchronization failed': 'Помилка синхронізації',
   'Possible results': 'Можливі результати',
+  'Waiting for the update of page': 'Очікується оновлення сторінки',
   'Announce': 'Оголосити',
   'In the room came a new user': 'В кабінет зайшов новий користувач',
   'until the auction starts': 'до початку аукціону',

@@ -3,6 +3,9 @@
     <div v-if="refresh">
       {{ $t("Not Found") }}
     </div>
+    <div v-else>
+      {{ $t('Waiting for the update of page') }}
+    </div>
   </div> 
 </template>
 

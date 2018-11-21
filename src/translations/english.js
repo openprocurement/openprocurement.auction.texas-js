@@ -59,6 +59,7 @@ const english = {
   'seconds': 'sec',
   'minimum': 'minimum',
   'Auction was canceled': 'Auction was canceled',
+  'Waiting for the update': 'Waiting for the update of page',
   'Not found appropriate price offer': 'Not found appropriate price offer',
   'Internet connection is lost. Attempt to restart after 1 sec': 'Internet connection is lost. Attempt to restart after 1 sec',
   'Auction has not started and will be rescheduled': 'Auction has not started and will be rescheduled',
