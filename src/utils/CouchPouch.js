@@ -1,4 +1,6 @@
 import PouchDB from 'pouchdb'
+import {getCookieByName} from "../utils/utils"
+import detectIE from "../utils/detectIE"
 import {fillAuctionData} from '@/utils/getRequest'
 var retry = require('retry')
 
@@ -16,10 +18,14 @@ export default {
       minTimeout: 1 * 1000,
       maxTimeout: 60 * 1000,
     })
+    console.info({
+      message: "Setup connection to remote_db",
+      auctions_loggedin: Boolean(getCookieByName('auctions_loggedin')) || detectIE()
+    })
     // TODO: Notify user that connection lost and connection retry is started with button to reload page
     // and remove that notification if connection was successfully set up
     operation.attempt((currentAttempt) => {
-      console.log('Start sync with CouchDB with attempts number ' + currentAttempt.toString())
+      console.log({message: 'Start sync with CouchDB with attempts number ' + currentAttempt.toString()})
       this.changesObj = component.pouchDB.changes({
         timeout: 40000 - Math.ceil(Math.random() * 10000),
         heartbeat: 10000,
@@ -41,11 +47,18 @@ export default {
             duration: 2000,
             type: 'success'
           })
-          console.log('Successfully reconnected.')
+          console.debug({
+            message: 'Successfully reconnected.'
+          })
           this.isRetried = false
         }
         if (component.id === change.id) {
           fillAuctionData(component, change.doc)
+          console.info({
+            message: 'Change current_stage',
+            current_stage: change.doc.current_stage,
+            stages: (change.doc.stages || []).length - 1
+          })
           component.syncWithServerTime()
           if (component.$store.state.terminatedStates.indexOf(component.state) !== -1) {
             this.changesObj.cancel()
@@ -63,9 +76,9 @@ export default {
         }
         this.changesObj.cancel()
         if (operation.retry(err)) {
-          console.log('Retring long pool connection')
+          console.debug({message: 'Retrying long pool connection'})
         }
-        console.log('sync error', err)
+        console.error({message: 'Synchronization failed'})
       })
     })
 

@@ -28,12 +28,25 @@ const getAuctionRequest =  (context, id) =>{
   axios.get(`${context.$store.state.urls.databaseURL}/${id}`)
     .then(response => {
       if (response.data.auction_type !== 'texas') {
+        console.error({message: 'Please use the correct link to view the auction.'})
         router.push({name: 'errorAuctiontType'})}
       fillAuctionData(context, response.data)
       context.syncWithServerTime()
     }).catch(error => {
-      console.log(error)
-      router.push({name: 'errorId'})
+      if (error) {
+        if (error.response.status == 404) {
+          console.error({
+            message: 'Not Found Error',
+            error_data: error
+          })
+          router.push({name: 'errorId'})
+        } else {
+          console.error({
+            message: 'Server Error',
+            error_data: error
+          })
+        }
+      }
     })
 }
 
