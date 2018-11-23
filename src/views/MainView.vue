@@ -246,10 +246,10 @@ export default {
     getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
+    // for detect IE or Edge
     if (detectIE() !== false){
       this.browserIeVersion = detectIE();
     }
-    console.log('browserrr',this.browserIeVersion)
     //check session id
     if(getCookieByName('browserId') === ''){
       setCookie("browserId",generateUUID() , 365)
