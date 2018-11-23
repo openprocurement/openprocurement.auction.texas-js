@@ -37,31 +37,31 @@ export default {
 <style>
 
 .button_login-container {
+    position: fixed;
+    bottom: 3%;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 .butoon_login{
-    height: 60px;
     color:#ffffff;
     font-size: 20px;
     font-weight: 500;
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
     background-color: rgb(48, 148, 48);
-    width: 90%;
+    width: 55%;
+    max-width: 757px;
     height: 41px;
 }
 
 .positionLogin {
-    position: fixed;
-    bottom: 3%;
     z-index: 1;
 }
 
 .close-login-container {
     display: flex;
-    flex-direction: column
+    flex-direction: column;
 }
 
 .close-login-container__later {
@@ -77,5 +77,16 @@ export default {
     background-color: rgb(9, 116, 9);
 }
 
+@media screen and (max-width: 1400px) {
+  .butoon_login{
+    width: 756px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .butoon_login{
+   width: 94%;
+  }
+}
 
 </style>
