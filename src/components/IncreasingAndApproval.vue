@@ -6,9 +6,11 @@
         <h6 class="approval-question announce-price-offer">
           {{ $t('Announce price offer') }}
         </h6>
-        <vue-search-select :items="valueForOptionSelect" @setSelectedValue="setSelectedValue" />
+        <vue-search-select :items="valueForOptionSelect"
+                           @allowClickAnnounce="allowClickAnnounce" 
+                           @setSelectedValue="setSelectedValue" />
       </div>
-      <button v-scroll-to="'#active-round'" :disabled="selected === '' || selected === null || selected === 'null'"  
+      <button v-scroll-to="'#active-round'" :disabled="selected === '' || selected === null || selected === 'null' || isAllowClickAnnounce"  
               id="button__increase"
               class="button button__increase"
               type="submit" 
@@ -61,7 +63,8 @@ export default {
   },
   data(){
     return{
-      selected: null
+      selected: null,
+      isAllowClickAnnounce: false
     }
   },
   computed: {
@@ -97,6 +100,10 @@ export default {
       }
 
       this.selected = value;
+    },
+
+    allowClickAnnounce(check){
+      this.isAllowClickAnnounce = check
     },
     submitBid (amount) {
       this.checkAuthorization()
