@@ -44,6 +44,11 @@ export default {
       kindCurrency: this.$store.state.i18n.translations[this.$store.state.i18n.locale]['UAH']
     };
   },
+  watch: {
+    isOpen(){
+      this.$emit('allowClickAnnounce', this.isOpen);
+    }
+  },
   methods: {
     onChange() {
       this.$emit('setSelectedValue', '');
@@ -55,7 +60,6 @@ export default {
       }
       // Let's search our flat array
       this.filterResults();
-      this.isOpen = true;
     },
     filterResults() {
       // first uncapitalize all the things
