@@ -13,6 +13,9 @@
         <h6 v-if="( timeRemaining <= -600 ) && ( currentStage === -1 ) " class="clock-container__status-time">
           {{ $t('Auction has not started and will be rescheduled') }}
         </h6>
+        <h6 v-else-if="allowParseHealthResponse && ( !healthResponse )" class="clock-container__status-time">
+          {{ $t('Something was wrong. We will try to resolve the problem') }}
+        </h6>
         <h6 v-else-if="(state !=='pendingSyncData')" class="clock-container__status-time">
           {{ $t(timeStatus) }}
         </h6>
@@ -43,6 +46,7 @@
           {{ end }}
         </div>
         <vue-headful v-if="state === 'pendingSyncData' && timeRemaining >=-5" :title="0 + ' ' + $t('seconds')" />
+        <vue-headful v-else-if="allowParseHealthResponse && ( !healthResponse )" :title="$t('Something was wrong. We will try to resolve the problem')" />
         <vue-headful v-else-if="state === 'pendingSyncData' || timeRemaining === null || timeRemaining < -6" :title="$t(calculateTitle.timeStatus)" />
         <vue-headful v-else-if="$store.state.terminatedStates.indexOf(state) !== -1"
                      :title="($t(calculateTitle.timeStatus) + ' ' + $t(calculateTitle.time))" />
@@ -59,6 +63,10 @@
 import moment from 'moment'
 import vueHeadful from 'vue-headful';
 import { mixin as clickaway } from 'vue-clickaway';
+import {getCookieByName} from "../utils/utils"
+import axios from 'axios'
+const timeForWaitingHealthRequest = -20;
+const maxTimeForHealthRequest = -3600;
 export default {
   components: {
     vueHeadful
@@ -103,6 +111,8 @@ export default {
       timeRemaining: null,
       end: end,
       startInterval: false,
+      allowParseHealthResponse: false, 
+      healthResponse: false
     }
   },
   computed: {
@@ -149,6 +159,17 @@ export default {
       }
     },
     timeRemaining () {
+      if ( (this.timeRemaining < timeForWaitingHealthRequest) 
+      && Boolean(getCookieByName('auctions_loggedin'))
+      && (this.timeRemaining > maxTimeForHealthRequest)
+      && (this.currentStage !==-1)) {
+        this.healthRequest();
+        this.allowParseHealthResponse = true
+      }
+      else{
+        this.allowParseHealthResponse = false
+      }
+  
       this.$emit('getRemainedTimeofRound', this.timeRemaining);
       if (this.timeRemaining < 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1 && !this.isCheckTimeOutCalled) {
         this.isCheckTimeOutCalled = true
@@ -174,7 +195,21 @@ export default {
       window.setInterval(() => {
         this.timeRemaining = this.timeRemaining - 1
       },1000)
-    }
+    },
+    healthRequest () {
+      axios.get(`${this.$store.state.urls.auctionURL}/${this.$store.state.id}/health`, {
+        'params': {
+          '_nonce': Math.random().toString()
+        }
+      }).then((data) => {
+        this.healthResponse = true
+        console.info({message: 'health_request_', data:data.data.health})
+      }).catch((e) => {
+        this.healthResponse = false
+        // log error
+        console.error({message: 'health_request_error', error_data: e})
+      })
+    },
   }
 };
 </script>
