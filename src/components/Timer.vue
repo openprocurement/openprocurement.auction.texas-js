@@ -46,10 +46,10 @@
           {{ end }}
         </div>
         <vue-headful v-if="state === 'pendingSyncData' && timeRemaining >=-5" :title="0 + ' ' + $t('seconds')" />
-        <vue-headful v-else-if="allowParseHealthResponse && ( !healthResponse )" :title="$t('Something was wrong. We will try to resolve the problem')" />
-        <vue-headful v-else-if="state === 'pendingSyncData' || timeRemaining === null || timeRemaining < -6" :title="$t(calculateTitle.timeStatus)" />
         <vue-headful v-else-if="$store.state.terminatedStates.indexOf(state) !== -1"
-                     :title="($t(calculateTitle.timeStatus) + ' ' + $t(calculateTitle.time))" />
+                     :title="($t(calculateTitle.timeStatus) + ' ' + calculateTitle.time )" />
+        <vue-headful v-else-if="(state === 'pendingSyncData' || timeRemaining === null || timeRemaining < -6) && (!allowParseHealthResponse)" :title="$t(calculateTitle.timeStatus)" />
+        <vue-headful v-else-if="allowParseHealthResponse && ( !healthResponse )" :title="$t('Something was wrong. We will try to resolve the problem')" />
         <vue-headful v-else-if="($store.state.terminatedStates.indexOf(state) === -1) && (days === 0)"
                      :title="calculateTitle.hours+':'+ calculateTitle.minutes + ':' + calculateTitle.seconds + ' ' +$t(calculateTitle.timeStatus)" />
         <vue-headful v-else
@@ -159,6 +159,9 @@ export default {
       }
     },
     timeRemaining () {
+      if (this.$store.state.terminatedStates.indexOf(this.state) !== -1){
+        this.timeRemaining = null
+      }
       if ( (this.timeRemaining < timeForWaitingHealthRequest) 
       && Boolean(getCookieByName('auctions_loggedin'))
       && (this.timeRemaining > maxTimeForHealthRequest)
@@ -169,7 +172,7 @@ export default {
       else{
         this.allowParseHealthResponse = false
       }
-  
+      
       this.$emit('getRemainedTimeofRound', this.timeRemaining);
       if (this.timeRemaining < 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1 && !this.isCheckTimeOutCalled) {
         this.isCheckTimeOutCalled = true
