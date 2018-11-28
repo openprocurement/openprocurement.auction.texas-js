@@ -148,11 +148,11 @@ export default {
  }
 
  .arrow-up{
-   background-image: url("/static_texas/images/arrow_up.png");
+   background-image: url("/static_texas/images/arrow_up-min.png");
  }
 
  .arrow-down{
-   background-image: url("/static_texas/images/arrow_down.png");
+   background-image: url("/static_texas/images/arrow_down-min.png");
  }
 
  .search:focus {

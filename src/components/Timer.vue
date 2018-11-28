@@ -257,8 +257,14 @@ export default {
   .clock-container-wrapper{
     width: 100%;
     flex-wrap: wrap;
-    margin-bottom: 30px;
+    margin-bottom: auto;
     margin-top: auto;
+  }
+}
+
+@media screen and (max-width: 378px) {
+  .clock-container-wrapper_completed{
+    margin-bottom: 30px;
   }
 }
 

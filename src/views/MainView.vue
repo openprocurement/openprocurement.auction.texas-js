@@ -1,95 +1,97 @@
 <template>
   <div class="app-wrapper">
     <app-unsupported-browser v-if="unsupportedBrowser" />
-    <app-return-button v-if="$store.state.identification.returnURL"/>
-    <app-modal-info-window
-      v-show="showOrHide"
-      :tender-titles="tenderTitles"
-      :auction-id="auctionId"
-      :start-price="startPrice"
-      :browser-id="browserId"
-      :session-id="sessionId"
-      :browser-ie-version="browserIeVersion"
-      :company-name="companyName"
-      :minimal-step="minimalStep"
-      :description-of-products="descriptionOfProducts"
-      @showOrHideModalWindow="showOrHideModalWindow" />
-    <header class="header_container" :class="'header_container__'+ state">
-      <app-timer 
-        :date="endTimerDate"
-        :current-type="currentType"
-        :time-status="statusMessage[state].timeStatus"
-        :state="state"
-        :current-stage="currentStage"
-        :end-date="endDate"
-        :synced-time="lastSync"
-        @stateUpdate="stateUpdate"
-        @checkTimeOut="checkTimeOut"
-        @getRemainedTimeofRound="getRemainedTimeofRound"
-        @showOrHideModalWindow="showOrHideModalWindow"
-        @hideModalWindow="hideModalWindow" />
-      <app-status-info-label 
-        :current-type="currentType"
-        :type="statusMessage[state].type"
-        :text-status="statusMessage[state].textStatus"
-        :state="state"
-        :results="results"
-        :current-round-number="currentRoundNumber"
-        :remained-time-of-round="remainedTimeOfRound" />
-    </header>
-    <app-status-timer-line v-if="$store.state.terminatedStates.indexOf(state) === -1 && state !== 'pendingSyncData'"
-                           :remained-time-of-round="remainedTimeOfRound"
-                           :current-stage="currentStage"
-                           :stages="stages" />
-    <app-hong-audio-track v-if="currentStage === 0 || trigger" :browser-name="browserName" />
-    <app-hong-sounds-text v-if="currentStage === 0 || trigger" />
-    <app-notification :browser-ie-version="browserIeVersion" />
-    <main class="container-wrapper container-main">
-      <div class="container-main__tender-number">
-        <div class="container-main__image-container">
-          <svg class="number-of-tender_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.83 22.12"><path d="M25,10.57a.66.66,0,0,0-.64-.68H20a.66.66,0,0,1-.64-.68V4.62a.66.66,0,0,0-.64-.68H14.1a1,1,0,0,0-1,1V8.52l0,0,3.74,4a1.73,1.73,0,0,1,.47,1.2h0V20.6h6.69a1,1,0,0,0,1-1v-9Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M21.2,4a.32.32,0,0,0-.55.24v4A.33.33,0,0,0,21,8.6h3.74A.34.34,0,0,0,24.94,8Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M5.17,26.06h10a1,1,0,0,0,1-1V16.13a.66.66,0,0,0-.64-.68H11.07a.66.66,0,0,1-.64-.68V10.08a.66.66,0,0,0-.64-.68H5.17a1,1,0,0,0-1,.82V24.83a1.64,1.64,0,0,0,.09.54.93.93,0,0,0,.88.68Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M12,14.06h3.74a.33.33,0,0,0,.32-.34.35.35,0,0,0-.09-.24l-2.87-3-.87-.92A.3.3,0,0,0,12,9.4a.33.33,0,0,0-.32.34v4a.33.33,0,0,0,.32.34Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/></svg>
+    <div v-if="!unsupportedBrowser">
+      <app-return-button v-if="$store.state.identification.returnURL"/>
+      <app-modal-info-window
+        v-show="showOrHide"
+        :tender-titles="tenderTitles"
+        :auction-id="auctionId"
+        :start-price="startPrice"
+        :browser-id="browserId"
+        :session-id="sessionId"
+        :browser-ie-version="browserIeVersion"
+        :company-name="companyName"
+        :minimal-step="minimalStep"
+        :description-of-products="descriptionOfProducts"
+        @showOrHideModalWindow="showOrHideModalWindow" />
+      <header class="header_container" :class="'header_container__'+ state">
+        <app-timer 
+          :date="endTimerDate"
+          :current-type="currentType"
+          :time-status="statusMessage[state].timeStatus"
+          :state="state"
+          :current-stage="currentStage"
+          :end-date="endDate"
+          :synced-time="lastSync"
+          @stateUpdate="stateUpdate"
+          @checkTimeOut="checkTimeOut"
+          @getRemainedTimeofRound="getRemainedTimeofRound"
+          @showOrHideModalWindow="showOrHideModalWindow"
+          @hideModalWindow="hideModalWindow" />
+        <app-status-info-label 
+          :current-type="currentType"
+          :type="statusMessage[state].type"
+          :text-status="statusMessage[state].textStatus"
+          :state="state"
+          :results="results"
+          :current-round-number="currentRoundNumber"
+          :remained-time-of-round="remainedTimeOfRound" />
+      </header>
+      <app-status-timer-line v-if="$store.state.terminatedStates.indexOf(state) === -1 && state !== 'pendingSyncData'"
+                             :remained-time-of-round="remainedTimeOfRound"
+                             :current-stage="currentStage"
+                             :stages="stages" />
+      <app-hong-audio-track v-if="currentStage === 0 || trigger" :browser-name="browserName" />
+      <app-hong-sounds-text v-if="currentStage === 0 || trigger" />
+      <app-notification :browser-ie-version="browserIeVersion" />
+      <main class="container-wrapper container-main">
+        <div class="container-main__tender-number">
+          <div class="container-main__image-container">
+            <svg class="number-of-tender_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.83 22.12"><path d="M25,10.57a.66.66,0,0,0-.64-.68H20a.66.66,0,0,1-.64-.68V4.62a.66.66,0,0,0-.64-.68H14.1a1,1,0,0,0-1,1V8.52l0,0,3.74,4a1.73,1.73,0,0,1,.47,1.2h0V20.6h6.69a1,1,0,0,0,1-1v-9Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M21.2,4a.32.32,0,0,0-.55.24v4A.33.33,0,0,0,21,8.6h3.74A.34.34,0,0,0,24.94,8Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M5.17,26.06h10a1,1,0,0,0,1-1V16.13a.66.66,0,0,0-.64-.68H11.07a.66.66,0,0,1-.64-.68V10.08a.66.66,0,0,0-.64-.68H5.17a1,1,0,0,0-1,.82V24.83a1.64,1.64,0,0,0,.09.54.93.93,0,0,0,.88.68Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/><path d="M12,14.06h3.74a.33.33,0,0,0,.32-.34.35.35,0,0,0-.09-.24l-2.87-3-.87-.92A.3.3,0,0,0,12,9.4a.33.33,0,0,0-.32.34v4a.33.33,0,0,0,.32.34Zm0,0" transform="translate(-4.2 -3.94)" fill="#99ba3c"/></svg>
+          </div>
+          {{ auctionId }}
         </div>
-        {{ auctionId }}
-      </div>
-      <div class="container-main__discribe-tender">
-        <div class="container-main__discribe-tender_desc container-main__discribe-tender_company-name">
-          {{ companyName }} : {{ tenderTitles[`tenderTitle_${$store.state.i18n.locale}`] || tenderTitles['tenderTitle_uk'] }}
+        <div class="container-main__discribe-tender">
+          <div class="container-main__discribe-tender_desc container-main__discribe-tender_company-name">
+            {{ companyName }} : {{ tenderTitles[`tenderTitle_${$store.state.i18n.locale}`] || tenderTitles['tenderTitle_uk'] }}
+          </div>
+          <ul class="container-main__discribe-tender_desc container-main__discribe-tender_description-products">
+            <li>
+              {{ descriptionOfProducts[`description_${$store.state.i18n.locale}`] || descriptionOfProducts['description_uk'] }}
+            </li>
+          </ul>
         </div>
-        <ul class="container-main__discribe-tender_desc container-main__discribe-tender_description-products">
-          <li>
-            {{ descriptionOfProducts[`description_${$store.state.i18n.locale}`] || descriptionOfProducts['description_uk'] }}
-          </li>
-        </ul>
-      </div>
-      <app-start-bid :start-price="startPrice" />
-      <app-list-initial-offers :price-offers="priceOffers" />
-      <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed' || state == 'preAnnouncement'" 
-                          :start-price="startPrice"
-                          :results="results"
-                          :remained-time-of-round="remainedTimeOfRound"
-                          :state="state" 
-                          :current-stage="currentStage"
-                          :price-offers="priceOffers"
-                          :stages="stages" 
-                          @getCurrentRoundNumber="getCurrentRoundNumber" />
-    </main>
-    <footer v-if="state !== 'completed' && !showLoginForm && $store.state.identification.bidderID !== ''" 
-            class="footer-container">
-      <h4 v-if="state == 'pendingOfRound'" class = "footer-container__text">
-        {{ $t('Waiting for start of round') }}
-      </h4>
-      <h4 v-else-if="state == 'pendingOfAuction'" class = "footer-container__text">
-        {{ $t('Waiting for start of auction') }}
-      </h4>
-      <app-increasing-and-approval v-else-if="isShowBidForm"
-                                   :start-price="startPrice"
-                                   :current-bid="currentBid"
-                                   :minimal-step="minimalStep"
-                                   @sentBid="holdRoundTime" />
-    </footer>
-    <footer v-else />
-    <app-footer-login v-if="showLoginForm"
-                      :allowed-login="loginAllowed"/>
+        <app-start-bid :start-price="startPrice" />
+        <app-list-initial-offers :price-offers="priceOffers" />
+        <app-list-of-rounds v-if="state == 'active' || state == 'pendingOfRound' || state == 'completed' || state == 'preAnnouncement'" 
+                            :start-price="startPrice"
+                            :results="results"
+                            :remained-time-of-round="remainedTimeOfRound"
+                            :state="state" 
+                            :current-stage="currentStage"
+                            :price-offers="priceOffers"
+                            :stages="stages" 
+                            @getCurrentRoundNumber="getCurrentRoundNumber" />
+      </main>
+      <footer v-if="state !== 'completed' && !showLoginForm && $store.state.identification.bidderID !== ''" 
+              class="footer-container">
+        <h4 v-if="state == 'pendingOfRound'" class = "footer-container__text">
+          {{ $t('Waiting for start of round') }}
+        </h4>
+        <h4 v-else-if="state == 'pendingOfAuction'" class = "footer-container__text">
+          {{ $t('Waiting for start of auction') }}
+        </h4>
+        <app-increasing-and-approval v-else-if="isShowBidForm"
+                                     :start-price="startPrice"
+                                     :current-bid="currentBid"
+                                     :minimal-step="minimalStep"
+                                     @sentBid="holdRoundTime" />
+      </footer>
+      <footer v-else />
+      <app-footer-login v-if="showLoginForm"
+                        :allowed-login="loginAllowed"/>
+    </div>
   </div>
 </template>
 <script>
@@ -246,16 +248,17 @@ export default {
     }
   },
   created() {
-    this.pouchDB = PouchDBSync.initialize(this)
-    this.$store.commit('setAuctionUUID', this.id)
-    getAuctionRequest(this, this.$store.state.id)
-  },
-  mounted() {
 
     // detect unsupported browsers
     if(UnsupportedBrowser() === true) {
       this.unsupportedBrowser = true
     }
+
+    this.pouchDB = PouchDBSync.initialize(this)
+    this.$store.commit('setAuctionUUID', this.id)
+    getAuctionRequest(this, this.$store.state.id)
+  },
+  mounted() {
 
     // for detect IE or Edge
     if (detectIE() !== false){

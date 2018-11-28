@@ -43,7 +43,7 @@
     </div>
     <div class="modal-container__powered-by">
       <a class="powered-by__link" href="https://openprocurement.io/en" target="_blank" />
-      <img class="modal-container__powered-by__image" src="/static_texas/images/powered_by_open-procurement.png" alt="powered_by_open-procurement.svg">
+      <img class="modal-container__powered-by__image" src="/static_texas/images/powered_by_open-procurement-min.png" alt="powered_by_open-procurement">
       <div class="modal-container__powered-by__container">
         Powered by
         <p class="open-procurement-text">OpenProcurement</p>
