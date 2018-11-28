@@ -1,5 +1,6 @@
 <template>
   <div class="app-wrapper">
+    <app-unsupported-browser v-if="unsupportedBrowser" />
     <app-return-button v-if="$store.state.identification.returnURL"/>
     <app-modal-info-window
       v-show="showOrHide"
@@ -105,10 +106,12 @@ import AppNotification from '../components/Notification';
 import AppListOfRounds from '../components/ListOfRounds';
 import {getAuctionRequest} from '../utils/getRequest';
 import AppFooterLogin from '../components/FooterLogin';
+import AppUnsupportedBrowser from '../components/UnsupportedBrowser';
 import AppReturnButton from '../components/ReturnButton'
 import parseCurrentStage from '../utils/parseCurrentStage';
 import {getCookieByName, deleteCookie, setCookie} from "../utils/utils"
 import detectIE from '../utils/detectIE'
+import UnsupportedBrowser from '../utils/unsupportedBrowser'
 import generateUUID from "../utils/generateUUID"
 import PouchDBSync from '../utils/CouchPouch';
 import EventSource from '../utils/eventSource';
@@ -128,7 +131,8 @@ export default {
     AppListOfRounds,
     AppFooterLogin,
     AppNotification,
-    AppReturnButton
+    AppReturnButton,
+    AppUnsupportedBrowser
   },
   props: {
     id: {
@@ -143,6 +147,7 @@ export default {
       trigger: false,
       results: [],
       pouchDB: null,
+      unsupportedBrowser: false,
       isListeningOnChanges: false,
       currentRoundNumber: null,
       currentStage: -1,
@@ -246,6 +251,12 @@ export default {
     getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
+
+    // detect unsupported browsers
+    if(UnsupportedBrowser() === true) {
+      this.unsupportedBrowser = true
+    }
+
     // for detect IE or Edge
     if (detectIE() !== false){
       this.browserIeVersion = detectIE();
