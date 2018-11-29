@@ -1,11 +1,16 @@
-
 <template>
-  <div class="not-found-container">{{ $t("Please use the correct link") }}</div>
+  <div v-if="refresh">
+    {{ $t("Please use the correct link") }}
+  </div>
+  <div v-else>
+    {{ $t('Waiting for the update of page') }}
+  </div>
 </template>
 
 <script>
 export default {
   created() {
+    window.onload = ()=> this.refresh = true
     document.title = '-'
   }
 }
