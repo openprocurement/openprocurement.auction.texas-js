@@ -347,7 +347,7 @@ option{
 
 @media screen and (max-height: 300px) {
   .increase-approval-container{
-    margin-top: 70px;
+    margin-top: 150px;
   }
 }
 </style>
