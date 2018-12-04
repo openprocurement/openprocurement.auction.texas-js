@@ -10,6 +10,7 @@ const english = {
   'Bidders': ' Bidders',
   'Bidding': 'Bidding',
   'Sounds Gong!': 'Sounds Gong!',
+  'Something was wrong. We will try to resolve the problem': 'Something was wrong. We will try to resolve the problem',
   'Accept price offer': 'Accept price offer',
   'Announce price offer': 'Announce price offer',
   'Select amount': 'Select amount',

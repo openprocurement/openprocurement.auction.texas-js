@@ -44,6 +44,7 @@ const ukrainian = {
   'UAH': 'грн',
   'shortTime': 'HH:mm',
   'Restart sync': 'Перезапуск синхронізації',
+  'Something was wrong. We will try to resolve the problem': 'Щось пішло не так. Ми спробуємо вирішити проблему',
   'Too low value': 'Надто низька заявка',
   'Too high value': 'Надто висока заявка',
   'Auction has not started and will be rescheduled': 'Аукціон не розпочався і буде перепланований',

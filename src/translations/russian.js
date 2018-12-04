@@ -21,6 +21,7 @@ const russian = {
   'Sold': 'Продано',
   'Info': 'Информация',
   'Price offers': 'Ценовые предложения',
+  'Something was wrong. We will try to resolve the problem': 'Что-то пошло не так. Мы постараемся решить проблему',
   'Language': 'Язык',
   'Login in as viewer': 'Вход в качестве зрителя',
   'Login': 'Вход',
