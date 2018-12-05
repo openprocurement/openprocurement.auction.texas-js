@@ -77,8 +77,8 @@ export default {
     },
   },
   watch: {
-    // scrolling to bottom when state changed
     state() {
+    // scrolling to bottom when state changed
       window.scrollTo(0, document.body.scrollHeight);
     },
   },

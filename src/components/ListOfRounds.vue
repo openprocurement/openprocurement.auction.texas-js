@@ -214,7 +214,7 @@ export default {
       return prevStages
     },
     currentRoundNumber () {
-      // passing currentRoundNumber to MainView
+      // passing currentRoundNumber to MainView by calling this.$emit('getCurrentRoundNumber', ...)
       this.$emit('getCurrentRoundNumber', (this.previouseStages.length + 1) )
       return this.previouseStages.length + 1
     },

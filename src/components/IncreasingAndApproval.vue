@@ -68,8 +68,8 @@ export default {
     }
   },
   computed: {
-    // calculating 1600 variants of price offers according to this.currentBid
     valueForOptionSelect() {
+    // calculating 1600 variants of price offers according to this.currentBid
       let options = [{value: 'null', text: 'Select amount'}];
       let calculateBid = this.currentBid;
       let minimalIncreaseBid = Math.round((Math.floor(calculateBid / this.minimalStep) * this.minimalStep) * 100) / 100;
@@ -86,14 +86,14 @@ export default {
     formatNumber(number){
       return formatNumber(number)
     },
-    // submit bid from select option by clicking on button__increase
     addNewBidIncrease() {
+    // submit bid from select option by clicking on button__increase
       if((!this.selected) || (this.selected === 'null')) return 
       this.submitBid(this.selected);
       this.selected = null;
     },
-    // submit bid by clicking on button__approval
     addNewBidApprove() {
+    // submit bid by clicking on button__approval
       this.submitBid(this.currentBid);
       this.selected = null;
     },
@@ -103,12 +103,12 @@ export default {
       }
       this.selected = value;
     },
-    // allow click announce button when select option is closed
     allowClickAnnounce(check){
+    // allow to click announce only if select option is closed
       this.isAllowClickAnnounce = check
     },
-    // logic of post_request of bid from bidder
     submitBid (amount) {
+    // logic of post_request of bid from bidder
       this.checkAuthorization()
       let jsonToSend = {
         bid: amount,
@@ -124,8 +124,8 @@ export default {
         console.log(error)
       })    
     },
-    // logic post_request to get confirmation of user authorization
     checkAuthorization () {
+    // logic post_request to get confirmation of user authorization
       axios.post(
         `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/check_authorization`,
         {withCredentials: true}
@@ -134,8 +134,8 @@ export default {
       }).catch((err) => {
         console.log('Error while check_authorization')
         if (err.status == 401) {
-          // notify that we need to reload page
           this.$notify({
+          // notify that we need to reload page
             group: 'utils',
             text: 'Ability to submit bids has been lost. Wait until page reloads.',
             duration: 10000,

@@ -22,8 +22,8 @@ export default {
         message: 'Initialize event on attempt number ' + currentAttempt.toString()}
       )
       let eventSourceURL = `${component.$store.state.urls.auctionURL}/${component.$store.state.id}/${component.$store.state.urls.eventSource}`
-      // using polyfill instead of native EventSource if browser is IE
       if(detectIE() === false){
+        // using polyfill instead of native EventSource if browser is IE
         this.evtSrc = new EventSource(eventSourceURL, {withCredentials: true})
       }
       else{

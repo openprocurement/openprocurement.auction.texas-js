@@ -95,8 +95,8 @@ export default {
         }
       }
     },
-    // scrolling to selected bid
     scrollToActiveBidAmount(){
+    // scrolling to selected bid
       const list = document.getElementById("autocomplete-results"),
         targetLi = document.querySelector('.is-active');
       list.scrollTop = ((targetLi.offsetTop || 0) - 50);
