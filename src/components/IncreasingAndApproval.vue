@@ -68,6 +68,7 @@ export default {
     }
   },
   computed: {
+    // calculating 1600 variants of price offers according to this.currentBid
     valueForOptionSelect() {
       let options = [{value: 'null', text: 'Select amount'}];
       let calculateBid = this.currentBid;
@@ -85,11 +86,13 @@ export default {
     formatNumber(number){
       return formatNumber(number)
     },
+    // submit bid from select option by clicking on button__increase
     addNewBidIncrease() {
       if((!this.selected) || (this.selected === 'null')) return 
       this.submitBid(this.selected);
       this.selected = null;
     },
+    // submit bid by clicking on button__approval
     addNewBidApprove() {
       this.submitBid(this.currentBid);
       this.selected = null;
@@ -98,13 +101,13 @@ export default {
       if((!this.value) || (this.value === 'null') ){
         this.selected = null
       }
-
       this.selected = value;
     },
-
+    // allow click announce button when select option is closed
     allowClickAnnounce(check){
       this.isAllowClickAnnounce = check
     },
+    // logic of post_request of bid from bidder
     submitBid (amount) {
       this.checkAuthorization()
       let jsonToSend = {
@@ -121,6 +124,7 @@ export default {
         console.log(error)
       })    
     },
+    // logic post_request to get confirmation of user authorization
     checkAuthorization () {
       axios.post(
         `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/check_authorization`,
