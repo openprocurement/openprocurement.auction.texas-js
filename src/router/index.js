@@ -8,9 +8,13 @@ import * as config from '../config.json';
 import VueGtm from 'vue-gtm';
 
 Vue.use(Router);
+
+// creating  the router instance and pass the `routes` option
 const router =  new Router({
   mode: 'history',
+  // defining routes
   routes: [
+    // each route mapes to a component
     {
       path: `/${config.auctionPrefix}/:id`,
       name: 'MainView',
@@ -31,7 +35,7 @@ const router =  new Router({
 });
 
 Vue.use(VueGtm, {
-  id: 'GTM-P4Z7SRN', // Your GTM ID
+  id: 'GTM-5QJXWB', // Your GTM ID
   enabled: true, // defaults to true. Plugin can be disabled by setting this to false for Ex: enabled: !!GDPR_Cookie (optional)
   debug: true, // Whether or not display console logs debugs (optional)
   vueRouter: router, // Pass the router instance to automatically sync with router (optional)
