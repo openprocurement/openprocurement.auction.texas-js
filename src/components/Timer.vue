@@ -96,6 +96,7 @@ export default {
   },
   data() {
     let end = null
+    // checking for existing endDate of auction and transform it to 24H format
     if (this.endDate) {
       end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, HH:mm:ss a')
     }
@@ -106,6 +107,8 @@ export default {
     }
   },
   computed: {
+    // allocation from the date of seconds, minutes, hours and days
+
     seconds() {
       return this.timeRemaining % 60
     },
@@ -118,6 +121,7 @@ export default {
     days() {
       return Math.trunc(this.timeRemaining / 60 / 60 / 24)
     },
+    // logic for setting info in title
     calculateTitle() {
       return {
         time: this.end,
@@ -133,40 +137,49 @@ export default {
     endDate () {
       this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, HH:mm:ss')
     },
+    // sync time with current_server_time and call timer method with time tick_down 
     syncedTime () {
       if (this.syncedTime) {
 
         this.isCheckTimeOutCalled = false
 
         let mathSyncedTime = Math.trunc(this.syncedTime.getTime() / 1000)
+        // adjustment timeRemaining based on got server_time
         this.timeRemaining = this.date - mathSyncedTime
 
         if (!this.startInterval && this.timeRemaining > 0) {
           this.timer()
         }
-
+        // trigger for preventing multiple calling this.timer()
         this.startInterval = true
       }
     },
     timeRemaining () {
+      // passing timeRemaining to MainView
       this.$emit('getRemainedTimeofRound', this.timeRemaining);
       if (this.timeRemaining < 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1 && !this.isCheckTimeOutCalled) {
+        // trigger property for preventing redundant calling checkTimeOut method
         this.isCheckTimeOutCalled = true
+        // checking specific conditions and call checkTimeOut method from MainView
         this.$emit('checkTimeOut')
       }
+      // checking for freezing and force updating of state
       if (this.timeRemaining >= 0 && this.state === 'pendingSyncData') {
         this.$emit('stateUpdate')
       }
     }
   },
   updated(){
+    // force change locale in moment.js for rendering endDate in the appropriate format of the selected language
     moment.locale(this.$store.state.i18n.locale)
     this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, HH:mm:ss')
   },
   methods: {
+    // trigger on click out of modal window
     away() {
       this.$emit('hideModalWindow')
     },
+    // trigger on click on burger_icon
     showOrHideModalWindow(){
       this.$emit('showOrHideModalWindow')
     },

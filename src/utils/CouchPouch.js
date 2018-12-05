@@ -6,7 +6,9 @@ var retry = require('retry')
 
 export default {
   changesObj: null,
+  // switch to true when internet connection is lost. And to false when successfully reconnected
   isRetried: false,
+  // method for init PouchDB 
   initialize (component) {
     return new PouchDB(`${component.$store.state.urls.databaseURL}`)
   },
@@ -53,6 +55,7 @@ export default {
           this.isRetried = false
         }
         if (component.id === change.id) {
+          // pass new changed data from database to another function as argument for parsing 
           fillAuctionData(component, change.doc)
           console.info({
             message: 'Change current_stage',

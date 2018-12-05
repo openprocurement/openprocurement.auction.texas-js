@@ -1,3 +1,4 @@
+// logic for setting context.state, context.endTimerDatte and another based on getted data from Api
 const parseCurrentStage = (stages, currentStage, context) =>{
   if (currentStage === -100) {
     context.state = 'canceled'

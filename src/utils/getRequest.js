@@ -23,14 +23,17 @@ const fillAuctionData = (context, data) => {
   parseCurrentStage(data.stages, data.current_stage, context)
 }
 
-
+// get request logic
 const getAuctionRequest =  (context, id) =>{
   axios.get(`${context.$store.state.urls.databaseURL}/${id}`)
     .then(response => {
+      // transfer to errorAuctiontType view when response.data.auction_type !=='texas'
       if (response.data.auction_type !== 'texas') {
         console.error({message: 'Please use the correct link to view the auction.'})
         router.push({name: 'errorAuctiontType'})}
+      // for setting all appropriate property in component based on getted data from APi
       fillAuctionData(context, response.data)
+      // call context.syncWithServerTime everytime when was called getAuctionRequest()
       context.syncWithServerTime()
     }).catch(error => {
       if (error) {
@@ -39,6 +42,7 @@ const getAuctionRequest =  (context, id) =>{
             message: 'Not Found Error',
             error_data: error
           })
+          // transfer to errorAuctionId view when error.response.status == 404
           router.push({name: 'errorId'})
         } else {
           console.error({

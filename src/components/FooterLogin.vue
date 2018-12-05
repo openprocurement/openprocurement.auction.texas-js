@@ -26,6 +26,7 @@ export default {
     }
   },
   methods: {
+    // navigate to loginURL by clicking on butoon_login
     actionLogin() {
       let loginURL = `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/login?bidder_id=${this.$route.query.bidder_id}&hash=${this.$route.query.hash}`
       location.replace(loginURL)

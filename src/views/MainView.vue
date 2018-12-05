@@ -42,7 +42,7 @@
                            :stages="stages" />
     <app-hong-audio-track v-if="currentStage === 0 || trigger" :browser-name="browserName" />
     <app-hong-sounds-text v-if="currentStage === 0 || trigger" />
-    <app-notification :browser-ie-version="browserIeVersion" />
+    <app-notification />
     <main class="container-wrapper container-main">
       <div class="container-main__tender-number">
         <div class="container-main__image-container">
@@ -241,6 +241,7 @@ export default {
     }
   },
   created() {
+    // init pouchDB
     this.pouchDB = PouchDBSync.initialize(this)
     this.$store.commit('setAuctionUUID', this.id)
     getAuctionRequest(this, this.$store.state.id)
@@ -250,13 +251,13 @@ export default {
     if (detectIE() !== false){
       this.browserIeVersion = detectIE();
     }
-    //check session id
+    //check and set session_id
     if(getCookieByName('browserId') === ''){
       setCookie("browserId",generateUUID() , 365)
     }
     this.browserId = getCookieByName('browserId');
 
-    //check browser id
+    //check and set browser_id
     if(sessionStorage.getItem('sessionId') === '' || !(sessionStorage.getItem('sessionId'))){
       sessionStorage.setItem('sessionId', generateUUID());
     }
@@ -290,13 +291,16 @@ export default {
     if (EventSource.evtSrc) EventSource.evtSrc.close()
   },
   methods: {
+    // trigger when state = preAnnouncement and run timeOut for 10sec for playback Hong
     hong(){
       let self = this
       this.trigger = true
       setTimeout(function(){
         self.trigger = false }, 10000)
     },
+    // logic for sync server time with browser time of user
     syncWithServerTime () {
+      // make get_request to specific url to get current_server_time
       axios.get(`${this.$store.state.urls.serverURL}get_current_server_time`, {
         'params': {
           '_nonce': Math.random().toString()
@@ -335,8 +339,10 @@ export default {
     holdRoundTime() {
       getAuctionRequest(this, this.$store.state.id)
     },
+    // switch state to pendingSyncData when fulfilled the conditions in Timer
     checkTimeOut() {
       this.state = 'pendingSyncData'
+      // notify warning text when currenStage === -1
       if (this.currentStage === -1) {
         this.$notify({
           group: 'utils',
@@ -349,17 +355,19 @@ export default {
     getRemainedTimeofRound(remainedTime) {
       this.remainedTimeOfRound = remainedTime;
     },
-
     hideModalWindow() {
       this.showOrHide = false
     },
     stateUpdate () {
+      // force calling parseCurrentStage
       parseCurrentStage(this.stages, this.currentStage, this)
+      // clear all notifications in group('utils') when called from Timer
       this.$notify({
         clean: true,
         group: 'utils'
       })
     },
+    // trigger for opening and closing modal window
     showOrHideModalWindow(trigger) {
       if(trigger){
         this.showOrHide = true;
@@ -368,6 +376,7 @@ export default {
         this.showOrHide = !this.showOrHide;
       }
     },
+    // got currentRoundNumber from Timer.vue
     getCurrentRoundNumber(currentRoundNumber) {
       this.currentRoundNumber = currentRoundNumber;
     },
