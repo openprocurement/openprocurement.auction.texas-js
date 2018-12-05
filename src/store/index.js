@@ -54,8 +54,8 @@ const store =  new Vuex.Store({
   }
 });
 
-// save locale to localStorage before refreshing or closing of page 
 window.onbeforeunload = function() {
+  // save locale to localStorage before refreshing or closing of page 
   localStorage.setItem('language', (((store.state.i18n.locale === 'null') || (store.state.i18n.locale === null))? ('uk'): (store.state.i18n.locale)))
 };
 const language = localStorage.getItem('language');

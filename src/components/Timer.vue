@@ -121,8 +121,8 @@ export default {
     days() {
       return Math.trunc(this.timeRemaining / 60 / 60 / 24)
     },
-    // logic for setting info in title
     calculateTitle() {
+    // logic for setting info in title
       return {
         time: this.end,
         days: this.days,
@@ -137,16 +137,13 @@ export default {
     endDate () {
       this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, HH:mm:ss')
     },
-    // sync time with current_server_time and call timer method with time tick_down 
     syncedTime () {
+    // sync time with current_server_time and call timer method with time tick_down 
       if (this.syncedTime) {
-
         this.isCheckTimeOutCalled = false
-
         let mathSyncedTime = Math.trunc(this.syncedTime.getTime() / 1000)
         // adjustment timeRemaining based on got server_time
         this.timeRemaining = this.date - mathSyncedTime
-
         if (!this.startInterval && this.timeRemaining > 0) {
           this.timer()
         }
@@ -155,7 +152,7 @@ export default {
       }
     },
     timeRemaining () {
-      // passing timeRemaining to MainView
+      // passing timeRemaining to MainView by calling this.$emit('getRemainedTimeofRound',...)
       this.$emit('getRemainedTimeofRound', this.timeRemaining);
       if (this.timeRemaining < 0 && this.$store.state.terminatedStates.indexOf(this.state) === -1 && !this.isCheckTimeOutCalled) {
         // trigger property for preventing redundant calling checkTimeOut method
@@ -175,12 +172,12 @@ export default {
     this.end = moment(Math.trunc(Date.parse(this.endDate))).format('MMMM Do YYYY, HH:mm:ss')
   },
   methods: {
-    // trigger on click out of modal window
     away() {
+    // trigger on click out of modal window
       this.$emit('hideModalWindow')
     },
-    // trigger on click on burger_icon
     showOrHideModalWindow(){
+    // trigger on click on burger_icon
       this.$emit('showOrHideModalWindow')
     },
     timer(){

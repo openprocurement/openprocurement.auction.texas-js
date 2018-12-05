@@ -247,23 +247,24 @@ export default {
     getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
-    // for detect IE or Edge
     if (detectIE() !== false){
+    // for detect IE or Edge
       this.browserIeVersion = detectIE();
     }
-    //check and set session_id
     if(getCookieByName('browserId') === ''){
+    //check and set session_id
       setCookie("browserId",generateUUID() , 365)
     }
     this.browserId = getCookieByName('browserId');
 
-    //check and set browser_id
     if(sessionStorage.getItem('sessionId') === '' || !(sessionStorage.getItem('sessionId'))){
+    //check and set browser_id
       sessionStorage.setItem('sessionId', generateUUID());
     }
     this.sessionId = sessionStorage.getItem('sessionId')
     //GTM
     this.$gtm.trackView('MyScreenName', 'currentpath'); 
+
     //scrolling on bottom
     window.scrollTo(0, document.body.scrollHeight);
     // init event-source
@@ -291,17 +292,17 @@ export default {
     if (EventSource.evtSrc) EventSource.evtSrc.close()
   },
   methods: {
-    // trigger when state = preAnnouncement and run timeOut for 10sec for playback Hong
     hong(){
+    // trigger when state = preAnnouncement and run timeOut for 10sec for playback Hong
       let self = this
       this.trigger = true
       setTimeout(function(){
         self.trigger = false }, 10000)
     },
-    // logic for sync server time with browser time of user
     syncWithServerTime () {
-      // make get_request to specific url to get current_server_time
+    // logic for sync server time with browser time of user
       axios.get(`${this.$store.state.urls.serverURL}get_current_server_time`, {
+      // make get_request to specific url to get current_server_time
         'params': {
           '_nonce': Math.random().toString()
         }
@@ -339,12 +340,12 @@ export default {
     holdRoundTime() {
       getAuctionRequest(this, this.$store.state.id)
     },
-    // switch state to pendingSyncData when fulfilled the conditions in Timer
     checkTimeOut() {
+    // switch state to pendingSyncData when fulfilled the conditions in Timer
       this.state = 'pendingSyncData'
-      // notify warning text when currenStage === -1
       if (this.currentStage === -1) {
         this.$notify({
+          // notify warning text when currenStage === -1
           group: 'utils',
           text: 'Please wait for the auction start.',
           duration: 120000, // TODO: make logic to remove single notification
@@ -367,8 +368,8 @@ export default {
         group: 'utils'
       })
     },
-    // trigger for opening and closing modal window
     showOrHideModalWindow(trigger) {
+    // trigger for opening and closing modal window
       if(trigger){
         this.showOrHide = true;
       }
@@ -376,8 +377,8 @@ export default {
         this.showOrHide = !this.showOrHide;
       }
     },
-    // got currentRoundNumber from Timer.vue
     getCurrentRoundNumber(currentRoundNumber) {
+    // got currentRoundNumber from Timer.vue
       this.currentRoundNumber = currentRoundNumber;
     },
   },
