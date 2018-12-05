@@ -20,9 +20,6 @@ export default {
       default: null 
     }
   },
-  data () {
-    return { friends: 5 }  
-  },
   methods:{
     formatNumber(number){
       return formatNumber(number)
