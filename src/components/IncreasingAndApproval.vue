@@ -108,7 +108,7 @@ export default {
       this.isAllowClickAnnounce = check
     },
     submitBid (amount) {
-    // logic of post_request of bid from bidder
+    // send bid data from bidder using XHR
       this.checkAuthorization()
       let jsonToSend = {
         bid: amount,
@@ -125,7 +125,7 @@ export default {
       })    
     },
     checkAuthorization () {
-    // logic post_request to get confirmation of user authorization
+    // get confirmation of user authorization using XHR
       axios.post(
         `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/check_authorization`,
         {withCredentials: true}
@@ -135,7 +135,7 @@ export default {
         console.log('Error while check_authorization')
         if (err.status == 401) {
           this.$notify({
-          // notify that we need to reload page
+          // notify that page will be reloaded
             group: 'utils',
             text: 'Ability to submit bids has been lost. Wait until page reloads.',
             duration: 10000,
