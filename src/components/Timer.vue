@@ -108,7 +108,6 @@ export default {
   },
   computed: {
     // allocation from the date of seconds, minutes, hours and days
-
     seconds() {
       return this.timeRemaining % 60
     },

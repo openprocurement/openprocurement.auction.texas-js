@@ -50,7 +50,7 @@ export default {
   },
   methods:{
     changeLanguage(e){
-    // globally change of language  by commit to store
+    // globally change of language by commit to store
       this.$store.commit('language', languagesListing[e.value] )
     }
   }

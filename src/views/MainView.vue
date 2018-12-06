@@ -40,7 +40,7 @@
                            :remained-time-of-round="remainedTimeOfRound"
                            :current-stage="currentStage"
                            :stages="stages" />
-    <app-hong-audio-track v-if="currentStage === 0 || trigger" :browser-name="browserName" />
+    <app-hong-audio-track v-if="currentStage === 0 || trigger" />
     <app-hong-sounds-text v-if="currentStage === 0 || trigger" />
     <app-notification />
     <main class="container-wrapper container-main">
@@ -248,17 +248,17 @@ export default {
   },
   mounted() {
     if (detectIE() !== false){
-    // for detect IE or Edge
+    // logic for detect IE or Edge
       this.browserIeVersion = detectIE();
     }
     if(getCookieByName('browserId') === ''){
-    //check and set session_id
+    // check and set session_id
       setCookie("browserId",generateUUID() , 365)
     }
     this.browserId = getCookieByName('browserId');
 
     if(sessionStorage.getItem('sessionId') === '' || !(sessionStorage.getItem('sessionId'))){
-    //check and set browser_id
+    // check and set browser_id
       sessionStorage.setItem('sessionId', generateUUID());
     }
     this.sessionId = sessionStorage.getItem('sessionId')

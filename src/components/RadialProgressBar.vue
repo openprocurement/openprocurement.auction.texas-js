@@ -24,7 +24,6 @@ export default {
   },
   computed: {
     // specific calculating of radial progress bar changing filling
-    
     theta() {
       const frac = (this.value - this.min) / (this.max - this.min) || 0;
       return frac * 2 * Math.PI;
