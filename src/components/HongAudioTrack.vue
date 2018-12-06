@@ -16,12 +16,7 @@ export default {
   },
   data(){
     return{
-      src: '/static_texas/media/gong-auction-v1-short.mp3'
-    }
-  },
-  watch:{
-    browserName(){
-      this.src = '/static_texas/media/gong-auction-v1-short.ogg'
+      src: '/static_texas/media/GongHighFinal.mp3'
     }
   },
   mounted: function () {
