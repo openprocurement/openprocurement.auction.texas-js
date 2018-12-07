@@ -69,6 +69,7 @@ export default {
   },
   computed: {
     valueForOptionSelect() {
+    // calculating 1600 variants of price offers according to this.currentBid
       let options = [{value: 'null', text: 'Select amount'}];
       let calculateBid = this.currentBid;
       let minimalIncreaseBid = Math.round((Math.floor(calculateBid / this.minimalStep) * this.minimalStep) * 100) / 100;
@@ -86,11 +87,13 @@ export default {
       return formatNumber(number)
     },
     addNewBidIncrease() {
+    // submit bid from select option by clicking on button__increase
       if((!this.selected) || (this.selected === 'null')) return 
       this.submitBid(this.selected);
       this.selected = null;
     },
     addNewBidApprove() {
+    // submit bid by clicking on button__approval
       this.submitBid(this.currentBid);
       this.selected = null;
     },
@@ -98,14 +101,14 @@ export default {
       if((!this.value) || (this.value === 'null') ){
         this.selected = null
       }
-
       this.selected = value;
     },
-
     allowClickAnnounce(check){
+    // allow to click announce only if select option is closed
       this.isAllowClickAnnounce = check
     },
     submitBid (amount) {
+    // send bid data from bidder using XHR
       this.checkAuthorization()
       let jsonToSend = {
         bid: amount,
@@ -122,6 +125,7 @@ export default {
       })    
     },
     checkAuthorization () {
+    // get confirmation of user authorization using XHR
       axios.post(
         `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/check_authorization`,
         {withCredentials: true}
@@ -130,8 +134,8 @@ export default {
       }).catch((err) => {
         console.log('Error while check_authorization')
         if (err.status == 401) {
-          // notify that we need to reload page
           this.$notify({
+          // notify that page will be reloaded
             group: 'utils',
             text: 'Ability to submit bids has been lost. Wait until page reloads.',
             duration: 10000,
@@ -347,7 +351,7 @@ option{
 
 @media screen and (max-height: 300px) {
   .increase-approval-container{
-    margin-top: 70px;
+    margin-top: 150px;
   }
 }
 </style>

@@ -1,4 +1,5 @@
 const  detectIE = () =>{
+  // logic to detect version of IE
   const ua = window.navigator.userAgent;
   const msie = ua.indexOf('MSIE ');
   if (msie > 0) {

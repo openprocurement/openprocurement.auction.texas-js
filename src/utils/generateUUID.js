@@ -1,4 +1,5 @@
 const generateUUID = () => {
+  // generate UUID number based on current time
   let d = new Date().getTime();
   let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     let r = (d + Math.random() * 16) % 16 | 0;

@@ -42,9 +42,9 @@
                              :remained-time-of-round="remainedTimeOfRound"
                              :current-stage="currentStage"
                              :stages="stages" />
-      <app-hong-audio-track v-if="currentStage === 0 || trigger" :browser-name="browserName" />
+      <app-hong-audio-track v-if="currentStage === 0 || trigger" />
       <app-hong-sounds-text v-if="currentStage === 0 || trigger" />
-      <app-notification :browser-ie-version="browserIeVersion" />
+      <app-notification />
       <main class="container-wrapper container-main">
         <div class="container-main__tender-number">
           <div class="container-main__image-container">
@@ -248,35 +248,34 @@ export default {
     }
   },
   created() {
-
     // detect unsupported browsers
     if(UnsupportedBrowser() === true) {
       this.unsupportedBrowser = true
     }
-
+    // init pouchDB
     this.pouchDB = PouchDBSync.initialize(this)
     this.$store.commit('setAuctionUUID', this.id)
     getAuctionRequest(this, this.$store.state.id)
   },
   mounted() {
-
-    // for detect IE or Edge
     if (detectIE() !== false){
+    // logic for detect IE or Edge
       this.browserIeVersion = detectIE();
     }
-    //check session id
     if(getCookieByName('browserId') === ''){
+    // check and set session_id
       setCookie("browserId",generateUUID() , 365)
     }
     this.browserId = getCookieByName('browserId');
 
-    //check browser id
     if(sessionStorage.getItem('sessionId') === '' || !(sessionStorage.getItem('sessionId'))){
+    // check and set browser_id
       sessionStorage.setItem('sessionId', generateUUID());
     }
     this.sessionId = sessionStorage.getItem('sessionId')
     //GTM
     this.$gtm.trackView('MyScreenName', 'currentpath'); 
+
     //scrolling on bottom
     window.scrollTo(0, document.body.scrollHeight);
     // init event-source
@@ -305,13 +304,16 @@ export default {
   },
   methods: {
     hong(){
+    // trigger when state = preAnnouncement and run timeOut for 10sec for playback Hong
       let self = this
       this.trigger = true
       setTimeout(function(){
         self.trigger = false }, 10000)
     },
     syncWithServerTime () {
+    // logic for sync server time with browser time of user
       axios.get(`${this.$store.state.urls.serverURL}get_current_server_time`, {
+      // make get_request to specific url to get current_server_time
         'params': {
           '_nonce': Math.random().toString()
         }
@@ -350,9 +352,11 @@ export default {
       getAuctionRequest(this, this.$store.state.id)
     },
     checkTimeOut() {
+    // switch state to pendingSyncData when fulfilled the conditions in Timer
       this.state = 'pendingSyncData'
       if (this.currentStage === -1) {
         this.$notify({
+          // notify warning text when currenStage === -1
           group: 'utils',
           text: 'Please wait for the auction start.',
           duration: 120000, // TODO: make logic to remove single notification
@@ -363,18 +367,20 @@ export default {
     getRemainedTimeofRound(remainedTime) {
       this.remainedTimeOfRound = remainedTime;
     },
-
     hideModalWindow() {
       this.showOrHide = false
     },
     stateUpdate () {
+      // force calling parseCurrentStage
       parseCurrentStage(this.stages, this.currentStage, this)
+      // clear all notifications in group('utils') when called from Timer
       this.$notify({
         clean: true,
         group: 'utils'
       })
     },
     showOrHideModalWindow(trigger) {
+    // trigger for opening and closing modal window
       if(trigger){
         this.showOrHide = true;
       }
@@ -383,6 +389,7 @@ export default {
       }
     },
     getCurrentRoundNumber(currentRoundNumber) {
+    // got currentRoundNumber from Timer.vue
       this.currentRoundNumber = currentRoundNumber;
     },
   },

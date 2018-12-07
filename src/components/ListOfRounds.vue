@@ -214,6 +214,7 @@ export default {
       return prevStages
     },
     currentRoundNumber () {
+      // passing currentRoundNumber to MainView by calling this.$emit('getCurrentRoundNumber', ...)
       this.$emit('getCurrentRoundNumber', (this.previouseStages.length + 1) )
       return this.previouseStages.length + 1
     },
@@ -243,6 +244,7 @@ export default {
   watch: {
     remainedTimeOfRound() {
       let calculate = calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end );
+      // calculation filling of radial-progress-bar in '%'
       this.value = (100 - (this.remainedTimeOfRound / calculate * 100)).toFixed(2);
     }
   },

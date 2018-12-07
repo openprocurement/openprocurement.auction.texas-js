@@ -16,7 +16,7 @@ export default {
   },
   data(){
     return{
-      src: '/static_texas/media/gong-auction-v1-short.mp3'
+      src: '/static_texas/media/GongHighFinal.mp3'
     }
   },
   mounted: function () {

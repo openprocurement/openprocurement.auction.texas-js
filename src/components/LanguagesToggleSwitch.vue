@@ -1,7 +1,7 @@
 <template>
   <toggle-switch
     :options="myOptions"
-    @change="ChangeLanguage"/> 
+    @change="changeLanguage"/> 
 </template>
 
 <script>
@@ -49,7 +49,8 @@ export default {
     }
   },
   methods:{
-    ChangeLanguage(e){
+    changeLanguage(e){
+    // globally change of language by commit to store
       this.$store.commit('language', languagesListing[e.value] )
     }
   }

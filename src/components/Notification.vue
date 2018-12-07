@@ -51,12 +51,6 @@
 import kickClient from "@/utils/kickClient";
 
 export default {
-  props: {
-    browserIeVersion: {
-      type: Number,
-      default: null
-    },
-  },
   data() {
     return {
       bgWidth: '100%',

@@ -1,7 +1,8 @@
 <template>
   <div class="button_login-container ">
     <button v-if="allowedLogin"
-            class="butoon_login positionLogin"
+            id="button_login"
+            class="button_login positionLogin"
             type="submit" 
             @click="actionLogin">
       {{ $t("Login") }}
@@ -27,6 +28,7 @@ export default {
   },
   methods: {
     actionLogin() {
+    // navigate to loginURL by clicking on button_login
       let loginURL = `${this.$store.state.urls.auctionURL}/${this.$store.state.id}/login?bidder_id=${this.$route.query.bidder_id}&hash=${this.$route.query.hash}`
       location.replace(loginURL)
     }
@@ -43,7 +45,7 @@ export default {
     display: flex;
     justify-content: center;
 }
-.butoon_login{
+.button_login{
     color:#ffffff;
     font-size: 20px;
     font-weight: 500;

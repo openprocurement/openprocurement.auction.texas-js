@@ -62,6 +62,7 @@ export default {
       this.filterResults();
     },
     filterResults() {
+      // search of suitable value bids in select
       // first uncapitalize all the things
       this.results = this.items.filter(item => {
         return item.value.startsWith(this.search.replace(/ /g,"").replace(/,/g,"."))
@@ -95,6 +96,7 @@ export default {
       }
     },
     scrollToActiveBidAmount(){
+    // scrolling to selected bid
       const list = document.getElementById("autocomplete-results"),
         targetLi = document.querySelector('.is-active');
       list.scrollTop = ((targetLi.offsetTop || 0) - 50);
@@ -103,10 +105,7 @@ export default {
 }
 </script>
 
-
-
 <style>
-
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
    font-family: 'Roboto', sans-serif;
    font-weight: 200;

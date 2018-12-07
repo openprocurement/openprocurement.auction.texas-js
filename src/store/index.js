@@ -55,6 +55,7 @@ const store =  new Vuex.Store({
 });
 
 window.onbeforeunload = function() {
+  // save locale to localStorage before refreshing or closing of page 
   localStorage.setItem('language', (((store.state.i18n.locale === 'null') || (store.state.i18n.locale === null))? ('uk'): (store.state.i18n.locale)))
 };
 const language = localStorage.getItem('language');
@@ -65,6 +66,8 @@ Vue.use(vuexI18n.plugin, store);
 Vue.i18n.add('en', english);
 Vue.i18n.add('uk', ukrainian);
 Vue.i18n.add('ru', russian);
+
+// set default language to 'uk'
 Vue.i18n.set(language || 'uk');
 
 export default store

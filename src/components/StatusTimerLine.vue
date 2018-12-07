@@ -29,6 +29,8 @@ export default {
   },
   watch: { 
     remainedTimeOfRound() {
+      // calculation width of progress bar depending on this.currentStage, this.stages[this.currentStage].type,
+      // this.stages[this.currentStage].start and this.stages[this.currentStage].planned_end
       let calculate;
       if(this.currentStage !== -1 && this.stages[this.currentStage].type !== 'pause'){
         calculate = this.remainedTimeOfRound / calculatingDurationTime(this.stages[this.currentStage].start, this.stages[this.currentStage].planned_end )
