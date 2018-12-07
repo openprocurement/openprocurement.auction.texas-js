@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import MainView from '../views/MainView';
 import ErrorAuctionId from '../views/ErrorAuctionId'
 import ErrorAuctionType from '../views/ErrorAuctionType'
+import UnsupportedBrowser from '../views/UnsupportedBrowser';
 import * as config from '../config.json';
 
 import VueGtm from 'vue-gtm';
@@ -30,6 +31,11 @@ const router =  new Router({
       path: `/${config.auctionPrefix}/:id `,
       name: 'errorAuctiontType',
       component: ErrorAuctionType,
+    },
+    {
+      path: `/${config.auctionPrefix}/:id `,
+      name: 'unsupportedBrowserPage',
+      component: UnsupportedBrowser,
     },
   ],
 });

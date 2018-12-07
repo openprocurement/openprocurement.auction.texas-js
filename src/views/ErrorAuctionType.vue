@@ -9,6 +9,11 @@
 
 <script>
 export default {
+  data(){
+    return{
+      refresh: false
+    }
+  },
   created() {
     window.onload = ()=> this.refresh = true
     document.title = '-'
