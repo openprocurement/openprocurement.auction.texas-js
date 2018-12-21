@@ -126,6 +126,7 @@ export default {
     align-items: center;
     box-shadow: 200px -1px 0px 4000px rgba(36, 30, 30, 0.5);
     overflow-y: auto;
+    overflow-x: hidden;
     border-top: 2px solid lightgray;
 }
 

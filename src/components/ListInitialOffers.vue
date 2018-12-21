@@ -119,7 +119,8 @@ export default {
    }
    .offer-container__participant {
      width: 100%;
-     padding-left: 0;
+     padding-left: 12px;
+     padding-right: 12px;
      justify-content: center;
      min-height: 50%;
    }
