@@ -72,7 +72,7 @@ export default {
     // calculating 1600 variants of price offers according to this.currentBid
       let options = [{value: 'null', text: 'Select amount'}];
       let calculateBid = this.currentBid;
-      let minimalIncreaseBid = Math.round((Math.floor(calculateBid / this.minimalStep) * this.minimalStep) * 100) / 100;
+      let minimalIncreaseBid = Math.round((Math.ceil((calculateBid) / this.minimalStep) * this.minimalStep) * 100) / 100;
       for (let i = 0; i < 1600; i++){
         minimalIncreaseBid  =  Math.round((minimalIncreaseBid + this.minimalStep) * 100) / 100;
         options.push(
