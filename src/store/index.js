@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import english from '../translations/english.js';
 import ukrainian from '../translations/ukrainian.js';
 import russian from '../translations/russian.js';
+import {getCookieByName} from "../utils/utils"
 import * as config from '../config.json';
 
 Vue.use(Vuex);
@@ -19,7 +20,17 @@ const store =  new Vuex.Store({
       couchURL: config.couchURL,
       auctionPrefix: config.auctionPrefix,
       eventSource: config.eventSource,
-      databaseURL: debug ? config.serverURL + config.databaseName : `${location.protocol + '//' + location.host + "/"}${config.databaseName}`
+      get databaseURL () { 
+        if (debug) {
+          return config.serverURL + config.databaseName
+        }
+        let dbURL = `${location.protocol + '//' + location.host + "/"}${config.databaseName}`
+
+        if (Boolean(getCookieByName('auctions_loggedin'))) {
+          dbURL = dbURL + '_secured'
+        }
+        return dbURL
+      }
     },
     identification: {
       bidderID: '',
