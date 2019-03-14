@@ -128,7 +128,6 @@ export default {
     AppListOfRounds,
     AppFooterLogin,
     AppNotification,
-    AppReturnButton
   },
   props: {
     id: {

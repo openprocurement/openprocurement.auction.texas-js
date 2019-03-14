@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '../router'
 import parseCurrentStage from './parseCurrentStage'
-
+import unsupportedBrowser from './unsupportedBrowser'
 
 const fillAuctionData = (context, data) => {
   context.priceOffers = data.initial_bids
@@ -24,6 +24,10 @@ const fillAuctionData = (context, data) => {
 }
 
 const getAuctionRequest =  (context, id) =>{
+  // detect unsupported browsers
+  if(unsupportedBrowser() === true) {
+    router.push({name: 'unsupportedBrowserPage'})
+  }
   // get request logic
   axios.get(`${context.$store.state.urls.databaseURL}/${id}`)
     .then(response => {
